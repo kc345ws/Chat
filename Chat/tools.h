@@ -20,4 +20,6 @@ void GetQQ();
 
 void ShowQQ();
 
+void AddFriend();
+
 #endif

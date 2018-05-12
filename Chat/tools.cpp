@@ -13,20 +13,20 @@ int QQid;
 void SaveQQ()
 {
 	ofstream file;
-	file.open("QQ.txt");
-	for (int i = 0; i < size(QQ); i++)
+	file.open("QQ.txt",ios::app);
+	auto iter = QQ.begin();
+	int i = 0;
+	for (i = 0; i < size(QQ); i++)
 	{
-		file << QQ[i]->QQID << endl;
-		file << QQ[i]->Qage << endl;
-		file << QQ[i]->QQPassWord << endl;
-		file << QQ[i]->QQName << endl;
-		file << QQ[i]->QQProvince << endl;
-		file << QQ[i]->QQAutograph << endl;
+
 	}
-	//for (int i = 0; i < size(QQ); i++)
-	//{
-	//	file << QQ[i]->QQID << endl;
-	//}
+		file << QQ[i-1]->QQID << endl;
+		file << QQ[i-1]->Qage << endl;
+		file << QQ[i-1]->QQPassWord << endl;
+		file << QQ[i-1]->QQName << endl;
+		file << QQ[i-1]->QQProvince << endl;
+		file << QQ[i-1]->QQAutograph << endl;
+		file << " "<<endl;
 	file.close();
 }
 
@@ -40,14 +40,14 @@ void GetQQ()
 	file.open("QQ.txt");
 	while (file.get(c))
 	{
-		if (c == '\n')
+		if (c == ' ')
 		{
 			line++;
 		}
 	}
 	file.close();
 	file.open("QQ.txt");
-	for (int i = 0; i < line / 6; i++)
+	for (int i = 0; i < line; i++)
 	{
 		file >> qqid;
 		file >> qage;
@@ -62,22 +62,24 @@ void GetQQ()
 
 void ShowQQ()
 {
+	vector<QQ_CHC*>qq;
 	int qqid, qage;
 	string qqpw, qqname, qqpv, qqag;
 	ifstream file;
 	int line = 0;
 	char c;
+
 	file.open("QQ.txt");
 	while (file.get(c))
 	{
-		if (c == '\n')
+		if (c == ' ')
 		{
 			line++;
 		}
 	}
 	file.close();
 	file.open("QQ.txt");
-	for (int i = 0; i < line / 6; i++)
+	for (int i = 0; i < line; i++)
 	{
 		file >> qqid;
 		file >> qage;
@@ -86,16 +88,16 @@ void ShowQQ()
 		file >> qqpv;
 		file >> qqag;
 		//QQ_CHC qq(qqid, qage, qqpw, qqname, qqpv,qqag);
-		QQ.emplace_back(new QQ_CHC(qqid, qage, qqpw, qqname, qqpv, qqag));
+		qq.emplace_back(new QQ_CHC(qqid, qage, qqpw, qqname, qqpv, qqag));
 	}
-	for (int i = 0; i < line / 6; i++)
+	for (int i = 0; i < line; i++)
 	{
-		cout << "QQ号:"<<QQ[i]->QQID << endl;
-		cout << "Q龄:"<<QQ[i]->Qage << endl;
-		cout << "QQ密码:"<<QQ[i]->QQPassWord << endl;
-		cout << "QQ名称:"<<QQ[i]->QQName << endl;
-		cout << "所在地区:"<<QQ[i]->QQProvince << endl;
-		cout << "个性签名:"<<QQ[i]->QQAutograph << endl;
+		cout << "QQ号:"<<qq[i]->QQID << endl;
+		cout << "Q龄:"<<qq[i]->Qage << endl;
+		cout << "QQ密码:"<<qq[i]->QQPassWord << endl;
+		cout << "QQ名称:"<<qq[i]->QQName << endl;
+		cout << "所在地区:"<<qq[i]->QQProvince << endl;
+		cout << "个性签名:"<<qq[i]->QQAutograph << endl;
 		cout << endl;
 
 	}
@@ -147,8 +149,7 @@ void Menu()
 		cout << "请选择所需功能" << endl;
 		cout << "1.登陆QQ" << endl;
 		cout << "2.注册QQ" << endl;
-		cout << "3.保存QQ" << endl;
-		cout << "4.查看已申请QQ号" << endl;
+		cout << "3.查看已申请QQ号" << endl;
 			int ch;
 			cin >> ch;
 			switch (ch)
@@ -164,11 +165,7 @@ void Menu()
 				break;
 
 			case 3:
-				SaveQQ();
-				break;
-
-			case 4:
-				GetQQ();
+				ShowQQ();
 				break;
 
 			default:
@@ -197,8 +194,9 @@ void Menu()
 
 void ApplyQQ() 
 {
+	system("CLS");
 	QQ.emplace_back(new QQ_CHC());
-
+	SaveQQ();
 }
 
 void LoginQQ()
@@ -232,7 +230,7 @@ void LoginQQ()
 		{
 			cout << "登陆成功" << endl;
 			cout << "按任意键开始使用QQ" << endl;
-			getch();
+			_getch();
 			QQMenu();
 			break;
 		}
@@ -272,13 +270,32 @@ void LoginQQ()
 void QQMenu()
 {
 	system("CLS");
+	int select;
 	cout << "欢迎使用QQ" << endl;
 	cout << "你的QQ号为:" << QQid << endl;
+	cout << "请选择使用的功能" << endl;
+	cout << "1.进入聊天室聊天" << endl;
+	cin >> select;
+	switch (select)
+	{
+	case 1:
+		Client();
+		break;
+	}
+	_getch();
+}
+
+void AddFriend()
+{
+	system("CLS");
+
 }
 
 void Client()//聊天服务器
 {
+	system("CLS");
 	// 创建套节字
+	cout << "按#键返回QQ主页" << endl;
 	SOCKET s = ::socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if (s == INVALID_SOCKET)
 	{
@@ -299,8 +316,10 @@ void Client()//聊天服务器
 
 	if (::connect(s, (sockaddr*)&servAddr, sizeof(servAddr)) == -1)
 	{
-		printf(" 连接失败connect() \n");
-		exit(0);
+		printf(" 连接聊天服务器失败connect() \n");
+		cout << "按任意键返回QQ主页" << endl;
+		_getch();
+		QQMenu();
 	}
 
 	char buff[256];
@@ -313,12 +332,16 @@ void Client()//聊天服务器
 		if (nRecv > 0)
 		{
 			buff[nRecv] = '\0';
-			printf("接收到数据：%s\n", buff);
+			printf("来自对方的消息：%s\n", buff);
 		}
 
 		// 向服务器端发送数据
 		cout << "请发送消息:" << endl;
 		cin >> szText;
+		if (szText[0] == '#')
+		{
+			QQMenu();
+		}
 		szText[255] = '\0';
 		::send(s, szText, strlen(szText), 0);
 
