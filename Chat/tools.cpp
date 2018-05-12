@@ -8,7 +8,7 @@
 CInitSock initSock; // 初始化Winsock库
 using namespace std;
 vector<QQ_CHC*>QQ;
-int QQid;
+string QQid;
 
 void SaveQQ()
 {
@@ -26,14 +26,77 @@ void SaveQQ()
 		file << QQ[i-1]->QQName << endl;
 		file << QQ[i-1]->QQProvince << endl;
 		file << QQ[i-1]->QQAutograph << endl;
-
 		file << " "<<endl;
+	file.close();
+}
+
+void SaveFriends()
+{
+	int i = 0, Myqq, n;
+	ofstream file;
+	string qq = ::QQid;
+	string txt = ".txt";
+	string filename = qq + txt;
+	file.open(filename, ios::app);
+	for (i = 0; i < size(QQ); i++)
+	{
+		if (QQ[i]->QQID == ::QQid)
+		{
+			Myqq = i;
+		}
+	}
+	for (n = 0; n < size(QQ[Myqq]->FriendList); n++)
+	{
+	}
+	file << QQ[Myqq]->FriendList[n - 1]->FriendName << endl;
+	file << QQ[Myqq]->FriendList[n - 1]->ID << endl;
+	file << " " << endl;
+	file.close();
+}
+
+void GetFriends()
+{
+	ifstream file;
+	string qq = ::QQid;
+	string txt = ".txt";
+	string filename = qq + txt;
+	string id;
+	string name;
+	char c;
+	int line = 0;
+	int Myqq;
+	file.open(filename, ios::app);
+	while (file.get(c))
+	{
+		if (c == ' ')
+		{
+			line++;
+		}
+	}
+	file.close();
+	for (int i = 0; i < size(QQ); i++)
+	{
+		if (QQ[i]->QQID == ::QQid)
+		{
+			Myqq = i;
+		}
+	}
+	QQ[Myqq]->FriendsNumber = line;
+	file.open(filename, ios::app);
+	for (int i = 0; i < line; i++)
+	{
+		file >> id;
+		file >> name;
+		QQ[Myqq]->FriendList.emplace_back(new QQFriends_CHC(name, id));
+	}
+
 	file.close();
 }
 
 void GetQQ()
 {
-	int qqid, qage;
+	int qage;
+	string qqid;
 	string qqpw, qqname, qqpv, qqag;
 	ifstream file;
 	int line = 0;
@@ -64,7 +127,8 @@ void GetQQ()
 void ShowQQ()
 {
 	vector<QQ_CHC*>qq;
-	int qqid, qage;
+	int  qage;
+	string qqid;
 	string qqpw, qqname, qqpv, qqag;
 	ifstream file;
 	int line = 0;
@@ -202,7 +266,7 @@ void ApplyQQ()
 
 void LoginQQ()
 {
-	int ID;
+	string ID;
 	bool flag = false;
 	string PassWord;
 	//vector<QQ_CHC*>::iterator iter = QQ.begin();
@@ -313,7 +377,8 @@ void QQMenu()
 void AddFriend()
 {
 	system("CLS");
-	int id, Myqq;
+	int Myqq;
+	string id;
 	string name;
 	bool flag = false;
 	cout << "请输入添加好友的QQ号" << endl;
@@ -346,6 +411,7 @@ void AddFriend()
 		QQ[Myqq]->FriendList.emplace_back(new QQFriends_CHC(name , id));
 		QQ[Myqq]->FriendsNumber++;
 	}
+	SaveFriends();
 	cout << "按任意键返回QQ主页" << endl;
 	_getch();
 	QQMenu();
@@ -354,6 +420,7 @@ void AddFriend()
 void ShowFriends()
 {
 	system("CLS");
+	GetFriends();
 	int Myqq;
 	for (int i = 0; i < size(QQ); i++)
 	{
@@ -363,7 +430,7 @@ void ShowFriends()
 		}
 	}
 	cout << "你有" << QQ[Myqq]->FriendsNumber << "个好友" <<endl;
-	for (int i = 0; i < size(QQ[Myqq]->FriendList); i++)
+	for (int i = 0; i < QQ[Myqq]->FriendsNumber; i++)
 	{
 		cout << "第" << i + 1 << "位好友" << endl;
 		cout << "姓名:"<<QQ[Myqq]->FriendList[i]->FriendName << endl;

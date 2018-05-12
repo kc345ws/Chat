@@ -12,7 +12,7 @@ QQ_CHC::QQ_CHC()
 	{
 		srand(time(0));
 	}
-	QQID = rand()*rand();;
+	QQID = rand()*rand();
 	cout << "ÄãµÄQQºÅÎª:" << QQID <<endl;
 	cout << "ÇëÊäÈëÄãµÄÃÜÂë" << endl;
 	cin >> QQPassWord;
@@ -30,7 +30,7 @@ QQ_CHC::QQ_CHC()
 	cout << "ÇëÍ×ÉÆ±£´æÕÊºÅºÍÃÜÂë" << endl;
 
 }
-QQ_CHC::QQ_CHC(int qqid, int qage, string qqpw, string qqname, string qqpv, string ag)
+QQ_CHC::QQ_CHC(string qqid, int qage, string qqpw, string qqname, string qqpv, string ag)
 {
 	QQID = qqid;
 	Qage = qage;
@@ -41,7 +41,7 @@ QQ_CHC::QQ_CHC(int qqid, int qage, string qqpw, string qqname, string qqpv, stri
 	FriendsNumber = 0;
 }
 
-QQFriends_CHC::QQFriends_CHC(string name, int id)
+QQFriends_CHC::QQFriends_CHC(string name, string id)
 {
 	FriendName = name;
 	ID = id;

@@ -16,7 +16,7 @@ public:
 
 	QQ_CHC();
 
-	QQ_CHC(int qqid, int qage, string qqpw, string qqname,string qqpv, string ag);
+	QQ_CHC(string qqid, int qage, string qqpw, string qqname,string qqpv, string ag);
 
 	friend void LoginQQ();
 
@@ -30,9 +30,13 @@ public:
 
 	friend void ShowFriends();
 
+	friend void SaveFriends();
+
+	friend void GetFriends();
+
 private:
 
-	int QQID;
+	string QQID;
 
 	int Qage;
 
@@ -59,15 +63,19 @@ public:
 
 	friend class QQ_CHC;
 
-	QQFriends_CHC(string name ,int id);
+	QQFriends_CHC(string name ,string id);
 
 	friend void ShowFriends();
+
+	friend void SaveQQ();
+
+	friend void SaveFriends();
 
 private:
 	
 	string FriendName;
 
-	int ID;
+	string ID;
 
 protected:
 

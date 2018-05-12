@@ -24,4 +24,6 @@ void AddFriend();
 
 void ShowFriends();
 
+void GetFriends();
+
 #endif
