@@ -36,7 +36,7 @@ public:
 
 private:
 
-	string QQID;
+	string QQID; 
 
 	int Qage;
 

@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include<conio.h>
 #include<windows.h>
+#include<stdlib.h>
 using namespace std;
 
 QQ_CHC::QQ_CHC()
@@ -12,7 +13,11 @@ QQ_CHC::QQ_CHC()
 	{
 		srand(time(0));
 	}
-	QQID = rand()*rand();
+	int p = rand()*rand();
+	char temp[128];
+	itoa(p , temp , 10);
+	QQID = string(temp);
+	/*QQID = rand()*rand();*/
 	cout << "ÄãµÄQQºÅÎª:" << QQID <<endl;
 	cout << "ÇëÊäÈëÄãµÄÃÜÂë" << endl;
 	cin >> QQPassWord;
