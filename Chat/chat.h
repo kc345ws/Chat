@@ -7,6 +7,7 @@
 #include"Date.h"
 using namespace std;
 class Date;
+class QQFriends_CHC;
 
 class QQ_CHC
 {
@@ -25,11 +26,17 @@ public:
 
 	friend void ShowQQ();
 
+	friend void AddFriend();
+
+	friend void ShowFriends();
+
 private:
 
 	int QQID;
 
 	int Qage;
+
+	int FriendsNumber;
 
 	string QQPassWord;//
 
@@ -41,15 +48,9 @@ private:
 
 	Date ApplyDate;
 
+	vector<QQFriends_CHC*> FriendList;
+
 };
-//ofstream &operator << (ofstream & out, const vector<QQ_CHC*>&QQ)
-//{
-//	auto iter = QQ.begin();
-//	for (iter; iter != QQ.end(); iter++)
-//	{
-//		(*iter)->QQID;
-//	}
-//}
 
 class QQFriends_CHC
 {
@@ -58,22 +59,15 @@ public:
 
 	friend class QQ_CHC;
 
-	class  Friend
-	{
+	QQFriends_CHC(string name ,int id);
 
-		string FriendName;
-
-		int ID;
-	};
-
-	QQFriends_CHC();
+	friend void ShowFriends();
 
 private:
 	
-	int FriendsNumber;
+	string FriendName;
 
-	vector<Friend> FriendList;
-
+	int ID;
 
 protected:
 

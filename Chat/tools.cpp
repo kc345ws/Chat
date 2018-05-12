@@ -26,6 +26,7 @@ void SaveQQ()
 		file << QQ[i-1]->QQName << endl;
 		file << QQ[i-1]->QQProvince << endl;
 		file << QQ[i-1]->QQAutograph << endl;
+
 		file << " "<<endl;
 	file.close();
 }
@@ -275,12 +276,36 @@ void QQMenu()
 	cout << "你的QQ号为:" << QQid << endl;
 	cout << "请选择使用的功能" << endl;
 	cout << "1.进入聊天室聊天" << endl;
+	cout << "2.添加QQ好友" << endl;
+	cout << "3,查看QQ好友" << endl;
+	cout << "0.返回主菜单" << endl;
 	cin >> select;
 	switch (select)
 	{
 	case 1:
+
 		Client();
 		break;
+
+	case 2:
+
+		AddFriend();
+		break;
+
+	case 3:
+		ShowFriends();
+		break;
+
+	case 0:
+		Menu();
+		break;
+
+	default:
+		cout << "输入错误,按任意键返回QQ主页" << endl;
+		_getch();
+		QQMenu();
+		break;
+
 	}
 	_getch();
 }
@@ -288,7 +313,66 @@ void QQMenu()
 void AddFriend()
 {
 	system("CLS");
+	int id, Myqq;
+	string name;
+	bool flag = false;
+	cout << "请输入添加好友的QQ号" << endl;
+	cin >> id;
+	for (int i = 0; i < size(QQ); i++)
+	{
+		if (QQ[i]->QQID == id)
+		{
+			flag = true;
+			name = QQ[i]->QQName;
+			cout << "添加好友成功" << endl;
+		}
+	}
+	if(flag == false)
+		{
+			cout << "该QQ还没有注册，按任意键重新输入QQ号" << endl;
+			_getch();
+			AddFriend();
+		}
+	
+	if (flag)
+	{
+		for (int i = 0; i < size(QQ); i++)
+		{
+			if (QQ[i]->QQID == ::QQid)
+			{
+				Myqq = i;
+			}
+		}
+		QQ[Myqq]->FriendList.emplace_back(new QQFriends_CHC(name , id));
+		QQ[Myqq]->FriendsNumber++;
+	}
+	cout << "按任意键返回QQ主页" << endl;
+	_getch();
+	QQMenu();
+}
 
+void ShowFriends()
+{
+	system("CLS");
+	int Myqq;
+	for (int i = 0; i < size(QQ); i++)
+	{
+		if (QQ[i]->QQID == ::QQid)
+		{
+			Myqq = i;
+		}
+	}
+	cout << "你有" << QQ[Myqq]->FriendsNumber << "个好友" <<endl;
+	for (int i = 0; i < size(QQ[Myqq]->FriendList); i++)
+	{
+		cout << "第" << i + 1 << "位好友" << endl;
+		cout << "姓名:"<<QQ[Myqq]->FriendList[i]->FriendName << endl;
+		cout << "QQ:"<<QQ[Myqq]->FriendList[i]->ID << endl;
+		cout << endl;
+	}
+	cout << "按任意键返回QQ主页" << endl;
+	_getch();
+	QQMenu();
 }
 
 void Client()//聊天服务器

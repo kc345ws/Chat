@@ -8,7 +8,7 @@ using namespace std;
 
 QQ_CHC::QQ_CHC()
 {
-	for (int i = 0; i<1000000; i++) //加强随机性
+	for (int i = 0; i<1000000; i++) //加强QQ号生成随机性
 	{
 		srand(time(0));
 	}
@@ -38,10 +38,13 @@ QQ_CHC::QQ_CHC(int qqid, int qage, string qqpw, string qqname, string qqpv, stri
 	QQName = qqname;
 	QQProvince = qqpv;
 	QQAutograph = ag;
+	FriendsNumber = 0;
 }
-QQFriends_CHC::QQFriends_CHC()
-{
 
+QQFriends_CHC::QQFriends_CHC(string name, int id)
+{
+	FriendName = name;
+	ID = id;
 }
 
 QQParties_CHC::QQParties_CHC()
