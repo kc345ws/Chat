@@ -26,4 +26,14 @@ void ShowFriends();
 
 void GetFriends();
 
+void AddQQParty();
+
+void CreatQQparty();
+
+void SaveQQParty();
+
+void ShowQQParty();
+
+void GetQQParty();
+
 #endif

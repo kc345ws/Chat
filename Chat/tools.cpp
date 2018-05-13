@@ -9,6 +9,7 @@ CInitSock initSock; // 初始化Winsock库
 using namespace std;
 vector<QQ_CHC*>QQ;
 string QQid;
+string QQparty;
 
 void SaveQQ()
 {
@@ -20,12 +21,12 @@ void SaveQQ()
 	{
 
 	}
-		file << QQ[i-1]->QQID << endl;
-		file << QQ[i-1]->Qage << endl;
-		file << QQ[i-1]->QQPassWord << endl;
-		file << QQ[i-1]->QQName << endl;
-		file << QQ[i-1]->QQProvince << endl;
-		file << QQ[i-1]->QQAutograph << endl;
+		file << QQ[i-1]->ReturnQQID() << endl;
+		file << QQ[i-1]->ReturnQage() << endl;
+		file << QQ[i-1]->ReturnQQPassWord() << endl;
+		file << QQ[i-1]->ReturnQQName() << endl;
+		file << QQ[i-1]->ReturnQQProvince() << endl;
+		file << QQ[i-1]->ReturnQQAutograph() << endl;
 		file << " "<<endl;
 	file.close();
 }
@@ -40,56 +41,17 @@ void SaveFriends()
 	file.open(filename, ios::app);
 	for (i = 0; i < size(QQ); i++)
 	{
-		if (QQ[i]->QQID == ::QQid)
+		if (QQ[i]->ReturnQQID() == ::QQid)
 		{
 			Myqq = i;
 		}
 	}
-	for (n = 0; n < size(QQ[Myqq]->FriendList); n++)
+	for (n = 0; n < size(QQ[Myqq]->ReturnFriendList()); n++)
 	{
 	}
-	file << QQ[Myqq]->FriendList[n - 1]->FriendName << endl;
-	file << QQ[Myqq]->FriendList[n - 1]->ID << endl;
+	file << QQ[Myqq]->ReturnFriendList()[n - 1]->ReturnFriendName() << endl;
+	file << QQ[Myqq]->ReturnFriendList()[n - 1]->ReturnID() << endl;
 	file << " " << endl;
-	file.close();
-}
-
-void GetFriends()
-{
-	ifstream file;
-	string qq = ::QQid;
-	string txt = ".txt";
-	string filename = qq + txt;
-	string id;
-	string name;
-	char c;
-	int line = 0;
-	int Myqq;
-	file.open(filename, ios::app);
-	while (file.get(c))
-	{
-		if (c == ' ')
-		{
-			line++;
-		}
-	}
-	file.close();
-	for (int i = 0; i < size(QQ); i++)
-	{
-		if (QQ[i]->QQID == ::QQid)
-		{
-			Myqq = i;
-		}
-	}
-	QQ[Myqq]->FriendsNumber = line;
-	file.open(filename, ios::app);
-	for (int i = 0; i < line; i++)
-	{
-		file >> id;
-		file >> name;
-		QQ[Myqq]->FriendList.emplace_back(new QQFriends_CHC(name, id));
-	}
-
 	file.close();
 }
 
@@ -157,12 +119,12 @@ void ShowQQ()
 	}
 	for (int i = 0; i < line; i++)
 	{
-		cout << "QQ号:"<<qq[i]->QQID << endl;
-		cout << "Q龄:"<<qq[i]->Qage << endl;
-		cout << "QQ密码:"<<qq[i]->QQPassWord << endl;
-		cout << "QQ名称:"<<qq[i]->QQName << endl;
-		cout << "所在地区:"<<qq[i]->QQProvince << endl;
-		cout << "个性签名:"<<qq[i]->QQAutograph << endl;
+		cout << "QQ号:"<<qq[i]->ReturnQQID() << endl;
+		cout << "Q龄:"<<qq[i]->ReturnQage() << endl;
+		cout << "QQ密码:"<<qq[i]->ReturnQQPassWord() << endl;
+		cout << "QQ名称:"<<qq[i]->ReturnQQName() << endl;
+		cout << "所在地区:"<<qq[i]->ReturnQQProvince() << endl;
+		cout << "个性签名:"<<qq[i]->ReturnQQAutograph() << endl;
 		cout << endl;
 
 	}
@@ -275,7 +237,7 @@ void LoginQQ()
 	::QQid = ID;
 	for (int i = 0; i < size(QQ); i++)
 	{
-		if (QQ[i]->QQID == ID)
+		if (QQ[i]->ReturnQQID() == ID)
 		{
 			flag = true;
 		}
@@ -291,7 +253,7 @@ void LoginQQ()
 	cin >> PassWord;
 	for (int i = 0 ; i < size(QQ) ; i++)
 	{
-		if (QQ[i]->QQID == ID && QQ[i]->QQPassWord == PassWord)
+		if (QQ[i]->ReturnQQID() == ID && QQ[i]->ReturnQQPassWord() == PassWord)
 		{
 			cout << "登陆成功" << endl;
 			cout << "按任意键开始使用QQ" << endl;
@@ -299,12 +261,12 @@ void LoginQQ()
 			QQMenu();
 			break;
 		}
-		else if (QQ[i]->QQID == ID && QQ[i]->QQPassWord != PassWord)
+		else if (QQ[i]->ReturnQQID() == ID && QQ[i]->ReturnQQPassWord() != PassWord)
 		{
 			cout << "密码输入错误" << endl;
 			cout << "请重新输入密码" << endl;
 			cin >> PassWord;
-			if (QQ[i]->QQPassWord == PassWord)
+			if (QQ[i]->ReturnQQPassWord() == PassWord)
 			{
 				cout << "登陆成功" << endl;
 				cout << "按任意键开始使用QQ" << endl;
@@ -385,10 +347,10 @@ void AddFriend()
 	cin >> id;
 	for (int i = 0; i < size(QQ); i++)
 	{
-		if (QQ[i]->QQID == id)
+		if (QQ[i]->ReturnQQID() == id)
 		{
 			flag = true;
-			name = QQ[i]->QQName;
+			name = QQ[i]->ReturnQQName();
 			cout << "添加好友成功" << endl;
 		}
 	}
@@ -403,12 +365,12 @@ void AddFriend()
 	{
 		for (int i = 0; i < size(QQ); i++)
 		{
-			if (QQ[i]->QQID == ::QQid)
+			if (QQ[i]->ReturnQQID() == ::QQid)
 			{
 				Myqq = i;
 			}
 		}
-		QQ[Myqq]->FriendList.emplace_back(new QQFriends_CHC(name , id));
+		QQ[Myqq]->ReturnFriendList().emplace_back(new QQFriends_CHC(name , id));
 		QQ[Myqq]->FriendsNumber++;
 	}
 	SaveFriends();
@@ -424,23 +386,215 @@ void ShowFriends()
 	int Myqq;
 	for (int i = 0; i < size(QQ); i++)
 	{
-		if (QQ[i]->QQID == ::QQid)
+		if (QQ[i]->ReturnQQID() == ::QQid)
 		{
 			Myqq = i;
 		}
 	}
-	cout << "你有" << QQ[Myqq]->FriendsNumber << "个好友" <<endl;
-	for (int i = 0; i < QQ[Myqq]->FriendsNumber; i++)
+	cout << "你有" << QQ[Myqq]->ReturnFriendsNumber() << "个好友" << endl;
+	for (int i = 0; i < QQ[Myqq]->ReturnFriendsNumber(); i++)
 	{
 		cout << "第" << i + 1 << "位好友" << endl;
-		cout << "姓名:"<<QQ[Myqq]->FriendList[i]->FriendName << endl;
-		cout << "QQ:"<<QQ[Myqq]->FriendList[i]->ID << endl;
+		cout << "姓名:" << QQ[Myqq]->ReturnFriendList()[i]->ReturnFriendName() << endl;
+		cout << "QQ:" << QQ[Myqq]->ReturnFriendList()[i]->ReturnID() << endl;
 		cout << endl;
 	}
 	cout << "按任意键返回QQ主页" << endl;
 	_getch();
 	QQMenu();
 }
+
+void GetFriends()
+{
+	ifstream file;
+	string qq = ::QQid;
+	string txt = ".txt";
+	string filename = qq + txt;
+	string id;
+	string name;
+	char c;
+	int line = 0;
+	int Myqq;
+	file.open(filename, ios::app);
+	while (file.get(c))
+	{
+		if (c == ' ')
+		{
+			line++;
+		}
+	}
+	file.close();
+	for (int i = 0; i < size(QQ); i++)
+	{
+		if (QQ[i]->ReturnQQID() == ::QQid)
+		{
+			Myqq = i;
+		}
+	}
+	QQ[Myqq]->FriendsNumber = line;
+	file.open(filename, ios::app);
+	for (int i = 0; i < line; i++)
+	{
+		file >> id;
+		file >> name;
+		QQ[Myqq]->ReturnFriendList().emplace_back(new QQFriends_CHC(name, id));
+	}
+
+	file.close();
+}
+
+void CreatQQparty()
+{
+	int Myqq;
+	system("CLS");
+	cout << "请输入你想创建的群号" << endl;
+	string ID;
+	cin >> ID;
+	::QQparty = ID;
+	cout << "请输入群名称" << endl;
+	string name;
+	cin >> name;
+	for (int i = 0; i < size(QQ); i++)
+	{
+		if (QQ[i]->ReturnQQID() == ::QQid)
+		{
+			Myqq = i;
+		}
+	}
+	QQ[Myqq]->ReturnPartyList().emplace_back(new QQParties_CHC(ID, name, ::QQid));
+	QQ[Myqq]->PartyNumbers++;
+	SaveQQParty();
+
+
+	//每个QQ都有自己的群列表
+	fstream FILE;
+	string qq;
+	qq = ::QQid;
+	string txt1 = "PartyList.txt";
+	string FILEName = qq + txt1;
+	FILE.open(FILEName, ios::app);
+	FILE << ID << endl;
+}
+
+void AddQQParty()
+{
+	system("CLS");
+	cout << "请输入你想加入的群" << endl;
+}
+
+void SaveQQParty() //每创建一个群便将该群保存成一个.txt文件
+{
+	system("CLS");
+	int i = 0, Myqq, n;
+	string ID;
+	ID = QQparty;
+	string txt = ".txt";
+	string PartyID = ID + txt;
+	fstream file;
+	file.open(PartyID, ios::app);
+	for (i = 0; i < size(QQ); i++)
+	{
+		if (QQ[i]->ReturnQQID() == ::QQid)
+		{
+			Myqq = i;
+		}
+	}
+	for (n = 0; n < size(QQ[Myqq]->ReturnPartyList()); n++)
+	{
+	}
+	file << QQ[Myqq]->ReturnFriendList()[n - 1]->ReturnFriendName() << endl;
+	file << QQ[Myqq]->ReturnFriendList()[n - 1]->ReturnID() << endl;
+	
+	file << "★" << endl;
+	file.close();
+
+}
+
+void GetQQParty() //从文件读取该QQ的群，并保存到容器中
+{
+	int Myqq, line = 0;
+	char c;
+	string txt1 = "PartyList.txt";
+
+	string txt = ".txt";
+
+	ifstream listfile;
+
+	ifstream partyfile;
+
+	string qq = ::QQid;
+
+	vector<string>party;
+
+	string temp;
+
+	string filename = qq + txt1;
+
+	listfile.open(filename);
+
+	while (listfile.get(c))
+	{
+		string x;
+		x = c;
+		temp += x;
+
+		if (c == '\n')
+		{
+			line++;
+			party.emplace_back(temp);
+			temp.clear();
+		}
+	}
+	listfile.close();
+
+
+	for (int i = 0; i < size(QQ); i++)
+	{
+		if (QQ[i]->ReturnQQID == ::QQid)
+		{
+			Myqq = i;
+		}
+	}
+
+	for (int i = 0; i < size(party); i++)
+	{
+		temp = party[i];
+		filename = temp + txt;
+		partyfile.open(filename);
+		string id;
+		string name;
+		string userid;
+		partyfile >> id;
+		partyfile >> name;
+		partyfile >> userid;
+		partyfile.close();
+		QQ[Myqq]->ReturnPartyList().emplace_back(new QQParties_CHC(id , name , userid));
+	}
+
+}
+
+void ShowQQParty()
+{
+	system("CLS");
+	int Myqq;
+	for (int i = 0; i < size(QQ); i++)
+	{
+		if (QQ[i]->ReturnQQID == ::QQid)
+		{
+			Myqq = i;
+		}
+	}
+	cout << "你共有" << QQ[Myqq]->ReturnPartyNumbers() << "个群" << endl;
+	for (int i = 0; i < QQ[Myqq]->ReturnPartyNumbers(); i++)
+	{
+		cout << "第" << QQ[Myqq]->ReturnPartyNumbers << "个群" << endl;
+		cout << "群号:" << QQ[Myqq]->ReturnPartyList()[i]->ReturnPartyID();
+		cout << "群名称:" << QQ[Myqq]->ReturnPartyList()[i]->ReturnPartyName();
+		cout << "群主:" << QQ[Myqq]->ReturnPartyList()[i]->ReturnCreatUserID();
+		cout << endl;
+	}
+}
+
 
 void Client()//聊天服务器
 {

@@ -35,6 +35,7 @@ QQ_CHC::QQ_CHC()
 	cout << "ÇëÍ×ÉÆ±£´æÕÊºÅºÍÃÜÂë" << endl;
 
 }
+
 QQ_CHC::QQ_CHC(string qqid, int qage, string qqpw, string qqname, string qqpv, string ag)
 {
 	QQID = qqid;
@@ -44,6 +45,7 @@ QQ_CHC::QQ_CHC(string qqid, int qage, string qqpw, string qqname, string qqpv, s
 	QQProvince = qqpv;
 	QQAutograph = ag;
 	FriendsNumber = 0;
+	PartyNumbers = 0;
 }
 
 QQFriends_CHC::QQFriends_CHC(string name, string id)
@@ -52,7 +54,9 @@ QQFriends_CHC::QQFriends_CHC(string name, string id)
 	ID = id;
 }
 
-QQParties_CHC::QQParties_CHC()
+QQParties_CHC::QQParties_CHC(string id, string name, string userid)
 {
-
+	PartyID = id;
+	PartyName = name;
+	CreatUserID = userid;
 }
