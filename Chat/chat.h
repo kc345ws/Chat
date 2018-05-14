@@ -87,6 +87,11 @@ public:
 		return PartyNumbers;
 	}
 
+	void ChangePartyNumbers(int num)
+	{
+		PartyNumbers = num;
+	}
+
 private:
 
 	int Qage;
