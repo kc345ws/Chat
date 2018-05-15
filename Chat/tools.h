@@ -36,4 +36,10 @@ void ShowQQParty();
 
 void GetQQParty();
 
+void PlayGame();
+
+void AddPartyMember();
+
+void AgreeMember();
+
 #endif

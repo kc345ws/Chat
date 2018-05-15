@@ -6,11 +6,14 @@
 #include "Initsock.h"
 #include<fstream>
 #include<io.h>
+#include"GreedySnake.h"
+#include<list>
 CInitSock initSock; // 初始化Winsock库
 using namespace std;
 vector<QQ_CHC*>QQ;
-string QQid;
-string QQparty;
+string QQid; //登陆的QQ号
+string QQparty;//创建的群号;
+string PartyMember; //申请加群的QQ号
 
 void SaveQQ()
 {
@@ -160,6 +163,7 @@ void ShowQQ()
 void Menu()
 {
 	system("CLS");
+	SetColor(6);
 	GetQQ();
 	int select;
 
@@ -298,6 +302,7 @@ void LoginQQ()
 void QQMenu()
 {
 	system("CLS");
+	SetColor(6);
 	int select;
 	cout << "欢迎使用QQ" << endl;
 	cout << "你的QQ号为:" << QQid << endl;
@@ -308,6 +313,7 @@ void QQMenu()
 	cout << "4.创建QQ群" << endl;
 	cout << "5.加入QQ群" << endl;
 	cout << "6.查看自己所有QQ群" << endl;
+	cout << "9.小游戏" << endl;
 	cout << "0.返回主菜单" << endl;
 	cin >> select;
 	switch (select)
@@ -336,6 +342,10 @@ void QQMenu()
 
 	case 6:
 		ShowQQParty();
+		break;
+
+	case 9:
+		PlayGame();
 		break;
 
 	case 0:
@@ -528,6 +538,7 @@ void AddQQParty()
 	}
 	cout << "请输入你想加入的群" << endl;
 	string partyid;
+	::PartyMember = partyid;
 	cin >> partyid;
 	string txt = ".txt";
 	string filename = partyid + txt;
@@ -691,6 +702,197 @@ void ShowQQParty()
 	QQMenu();
 }
 
+void AddPartyMember()
+{
+	string id;
+	int Myqq;
+	id = ::PartyMember;
+	string txt = ".txt";
+	string filename = id + txt;
+	ofstream ofile;
+	ofile.open(filename);
+	ofile << "■" <<::QQid  << endl;
+	for (int i = 0; i < size(QQ); i++)
+	{
+		if (QQ[i]->ReturnQQID() == ::QQid)
+		{
+			Myqq = i;
+		}
+	}
+	ofile.close();
+	cout << "申请入群成功,请等待群主同意" << endl;
+	cout << "按任意键返回QQ主页" << endl;
+	_getch();
+	QQMenu();
+}
+
+void AgreeMember()
+{
+	cout << "请输入要管理的群号" << endl;
+	char c;
+	int line = 0;
+	string id;
+	string txt = ".txt";
+	cin >> id;
+	string filename = id + txt;
+	ifstream infile;
+	infile.open(filename,ios::in);
+	if (!infile)
+	{
+		cout << "没有此群,请重新输入或返回QQ主页" << endl;
+		cout << "重新输入" << endl;
+		cout << "返回QQ主页" << endl;
+		int select;
+		cin >> select;
+		switch (select)
+		{
+		case 1:
+			AgreeMember();
+			break;
+
+		case 2:
+			QQMenu();
+			break;
+		}
+	}
+	infile.close();
+	fstream outfile;
+	outfile.open(filename);
+
+	string temp;
+	while (outfile.get(c))
+	{
+		if (c == '\n')
+		{
+			line++;
+		}
+		if (line == 2) //获取群主QQ号
+		{
+			temp.push_back(c);
+		}
+		
+	}
+	temp.pop_back(); //删除末尾\n
+
+	if (temp != ::QQid)
+	{
+		cout << "你不是该群的群主,无法管理该群" << endl;
+		cout << "按任意键返回QQ主页" << endl;
+		_getch();
+		QQMenu();
+	}
+
+	temp.clear();
+	while (outfile.get(c))
+	{
+		if (c == '■')
+		{
+			line++;
+		}
+		if (line == 1) //获取申请入群的人QQ号
+		{
+			temp.push_back(c);
+			temp.clear();//清除■
+			line++;
+		}
+		else if (line == 2)
+		{
+			temp.push_back(c);
+		}
+
+	}
+	outfile.close();
+	temp.pop_back();
+	cout << "你是否同意" << temp << "入群?" << endl;
+	cout << "1.同意" << endl;
+	cout << "2.拒绝" << endl;
+	int select;
+	cin >> select;
+	vector<char> content;
+	auto iter = content.begin();
+
+	int n = 0;
+	switch (select)
+	{
+	case 1:
+		outfile.open(filename, ios::in | ios::out);
+		
+		while (outfile.get(c))
+		{
+			content.push_back (c);
+		}
+
+		for (int i = 0 ; i <size(content);i++)//将未加入标记删除
+		{
+			if (content[i] = '■')
+			{
+				content[i];
+				content.erase(content.begin() + i);
+			}
+		}
+
+		outfile.close();
+		outfile.open(filename, ios::out , ios::trunc); //清空原有文件内容
+
+		for (int i = 0; i < size(content); i++) //重新写入文件
+		{
+			outfile << content[i];
+		}
+		outfile.close();
+
+		break;
+
+	default:
+		cout << "你已拒绝该请求" << endl;
+		outfile.open(filename, ios::in, ios::out);
+
+		while (outfile.get(c))
+		{
+			content.emplace_back(c);
+		}
+		outfile.close();
+
+		for (int i = 0; i < size(content); i++)
+		{
+			if (content[i] == '■')
+			{
+
+				n = i;
+
+				while (1)
+				{
+					content.erase(content.begin() + n); //删除申请人QQ
+
+					n++;
+
+					if (content[n] == '\n')
+					{
+						content.erase(content.begin() + n);
+						break;
+					}
+
+					
+				}
+				
+				break;
+			}
+		}
+
+		outfile.open(filename, ios::out, ios::trunc);//清空原有内容
+
+		for (int i = 0; i < size(content); i++)
+		{
+			outfile << content[i];//把删除申请人QQ后的文件内容重新输入文件内
+		}
+		outfile.close();
+
+		cout << "按任意键返回QQ主页" << endl;
+		_getch();
+		QQMenu();
+		break;
+	}
+}
+
 void Client()//聊天服务器
 {
 	system("CLS");
@@ -750,4 +952,14 @@ void Client()//聊天服务器
 
 	// 关闭套节字
 	::closesocket(s);
+}
+
+void PlayGame()
+{
+	Controller c;//声明一个Controller类
+
+	c.Game();//整个游戏循环
+
+	_getch();
+
 }
