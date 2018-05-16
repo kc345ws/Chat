@@ -843,18 +843,14 @@ void AgreeMember()//群主查看申请
 		/*auto iter = content.begin();
 		auto iter1 = temp.begin();*/
 		/*int m = 0;*/
-
-		
 		/*char ch1[1000];*/
-
-		
 		/*int words = 0;*/
+
 		switch (select)
 		{
 		case 1:
 			outfile.open(filename, ios::in | ios::out);
 
-			char ch;
 			while (!outfile.eof())
 			{
 
@@ -868,7 +864,6 @@ void AgreeMember()//群主查看申请
 				
 				
 				msg.push_back('\n');
-				//cout << msg << endl;
 
 			}
 
@@ -903,32 +898,48 @@ void AgreeMember()//群主查看申请
 
 			break;
 
-		default:
-			cout << "你已拒绝该请求" << endl;
-			outfile.open(filename, ios::in, ios::out);
 
-			while (outfile.get(c))
+		default:
+
+			cout << "你已拒绝该请求" << endl;
+			outfile.open(filename);
+
+			while (!outfile.eof())
 			{
-				content.emplace_back(c);
+
+				char ch[1000];
+
+				outfile.getline(ch, 1000);
+				for (int i = 0; i < strlen(ch); i++)
+				{
+					msg.push_back(ch[i]);//读取文件内容
+				}
+
+				msg.push_back('\n');
+
 			}
 			outfile.close();
 
-			for (int i = 0; i < size(content); i++)
+			/*while (outfile.get(c))
 			{
-				if (content[i] == '■')
+				content.emplace_back(c);
+			}*/
+
+			for (int i = 0; i < size(msg); i++)
+			{
+				if (msg[i] == '^')
 				{
 
 					n = i;
 
 					while (1)
 					{
-						content.erase(content.begin() + n); //删除申请人QQ
+						msg.erase(msg.begin() + n); //删除申请人QQ
 
-						n++;
 
-						if (content[n] == '\n')
+						if (msg[n] == '\n')
 						{
-							content.erase(content.begin() + n);
+							msg.erase(msg.begin() + n);
 							break;
 						}
 
@@ -941,15 +952,14 @@ void AgreeMember()//群主查看申请
 
 			outfile.open(filename, ios::out, ios::trunc);//清空原有内容
 
-			for (int i = 0; i < size(content); i++)
-			{
-				outfile << content[i];//把删除申请人QQ后的文件内容重新输入文件内
-			}
+			outfile << msg;
+
 			outfile.close();
 
 			cout << "按任意键返回QQ主页" << endl;
 			_getch();
 			QQMenu();
+
 			break;
 		}
 
