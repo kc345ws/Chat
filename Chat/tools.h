@@ -22,11 +22,13 @@ void ShowQQ();
 
 void AddFriend();
 
+void DeleteFriend();
+
 void ShowFriends();
 
 void GetFriends();
 
-void AddQQParty();
+//void AddQQParty();
 
 void CreatQQparty();
 
@@ -42,6 +44,5 @@ void AddPartyMember();
 
 void AgreeMember();
 
-string UTF8ToGB(const char* str);
 
 #endif
