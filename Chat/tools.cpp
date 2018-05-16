@@ -8,6 +8,7 @@
 #include<io.h>
 #include"GreedySnake.h"
 #include<list>
+#include <cstring>
 CInitSock initSock; // 初始化Winsock库
 using namespace std;
 vector<QQ_CHC*>QQ;
@@ -313,6 +314,7 @@ void QQMenu()
 	cout << "4.创建QQ群" << endl;
 	cout << "5.加入QQ群" << endl;
 	cout << "6.查看自己所有QQ群" << endl;
+	cout << "7.管理QQ群" << endl;
 	cout << "9.小游戏" << endl;
 	cout << "0.返回主菜单" << endl;
 	cin >> select;
@@ -337,11 +339,15 @@ void QQMenu()
 		break;
 
 	case 5:
-		AddQQParty();
+		AddPartyMember();
 		break;
 
 	case 6:
 		ShowQQParty();
+		break;
+
+	case 7:
+		AgreeMember();
 		break;
 
 	case 9:
@@ -578,6 +584,8 @@ void AddQQParty()
 	file << endl;
 	file.close();
 
+	AddPartyMember();
+
 	cout << "按任意键返回QQ主页" << endl;
 	_getch();
 	QQMenu();
@@ -704,21 +712,26 @@ void ShowQQParty()
 
 void AddPartyMember()
 {
+	system("CLS");
+	cout << "请输入你想加入的群" << endl;
+	string partyid;
+	cin >> partyid;
+	::PartyMember = partyid;
 	string id;
 	int Myqq;
 	id = ::PartyMember;
 	string txt = ".txt";
 	string filename = id + txt;
 	ofstream ofile;
-	ofile.open(filename);
-	ofile << "■" <<::QQid  << endl;
-	for (int i = 0; i < size(QQ); i++)
+	ofile.open(filename,ios::app);
+	ofile << "^" <<::QQid  << endl;
+	/*for (int i = 0; i < size(QQ); i++)
 	{
 		if (QQ[i]->ReturnQQID() == ::QQid)
 		{
 			Myqq = i;
 		}
-	}
+	}*/
 	ofile.close();
 	cout << "申请入群成功,请等待群主同意" << endl;
 	cout << "按任意键返回QQ主页" << endl;
@@ -726,7 +739,7 @@ void AddPartyMember()
 	QQMenu();
 }
 
-void AgreeMember()
+void AgreeMember()//群主查看申请
 {
 	cout << "请输入要管理的群号" << endl;
 	char c;
@@ -765,6 +778,7 @@ void AgreeMember()
 		if (c == '\n')
 		{
 			line++;
+			continue;
 		}
 		if (line == 2) //获取群主QQ号
 		{
@@ -772,27 +786,36 @@ void AgreeMember()
 		}
 		
 	}
-	temp.pop_back(); //删除末尾\n
+	/*temp.pop_back(); *///删除末尾\n
 
 	if (temp != ::QQid)
 	{
 		cout << "你不是该群的群主,无法管理该群" << endl;
 		cout << "按任意键返回QQ主页" << endl;
 		_getch();
+		_getch();
 		QQMenu();
 	}
 
+	outfile.close();
 	temp.clear();
+
+	
+	line = 0;
+	outfile.open(filename);
+	
+
 	while (outfile.get(c))
 	{
-		if (c == '■')
+		if (c == '^')
 		{
 			line++;
+			continue;
 		}
 		if (line == 1) //获取申请入群的人QQ号
 		{
 			temp.push_back(c);
-			temp.clear();//清除■
+			//temp.clear();//清除■
 			line++;
 		}
 		else if (line == 2)
@@ -801,96 +824,127 @@ void AgreeMember()
 		}
 
 	}
-	outfile.close();
-	temp.pop_back();
-	cout << "你是否同意" << temp << "入群?" << endl;
-	cout << "1.同意" << endl;
-	cout << "2.拒绝" << endl;
-	int select;
-	cin >> select;
-	vector<char> content;
-	auto iter = content.begin();
-
-	int n = 0;
-	switch (select)
-	{
-	case 1:
-		outfile.open(filename, ios::in | ios::out);
-		
-		while (outfile.get(c))
-		{
-			content.push_back (c);
-		}
-
-		for (int i = 0 ; i <size(content);i++)//将未加入标记删除
-		{
-			if (content[i] = '■')
-			{
-				content[i];
-				content.erase(content.begin() + i);
-			}
-		}
-
+		//}
 		outfile.close();
-		outfile.open(filename, ios::out , ios::trunc); //清空原有文件内容
+		temp.pop_back();
+		cout << "你是否同意" << temp << "入群?" << endl;
+		cout << "1.同意" << endl;
+		cout << "2.拒绝" << endl;
+		int select;
+		cin >> select;
 
-		for (int i = 0; i < size(content); i++) //重新写入文件
+		vector<char> content;
+
+		auto iter = content.begin();
+		auto iter1 = temp.begin();
+		int m = 0;
+
+		string msg;
+		/*char ch1[1000];*/
+
+		int n = 0;
+		/*int words = 0;*/
+		switch (select)
 		{
-			outfile << content[i];
-		}
-		outfile.close();
+		case 1:
+			outfile.open(filename, ios::in | ios::out);
 
-		break;
-
-	default:
-		cout << "你已拒绝该请求" << endl;
-		outfile.open(filename, ios::in, ios::out);
-
-		while (outfile.get(c))
-		{
-			content.emplace_back(c);
-		}
-		outfile.close();
-
-		for (int i = 0; i < size(content); i++)
-		{
-			if (content[i] == '■')
+			char ch;
+			while (!outfile.eof())
 			{
 
-				n = i;
+				char ch[1000];
 
-				while (1)
+				outfile.getline(ch,1000);
+				for (int i = 0; i < strlen(ch); i++)
 				{
-					content.erase(content.begin() + n); //删除申请人QQ
-
-					n++;
-
-					if (content[n] == '\n')
-					{
-						content.erase(content.begin() + n);
-						break;
-					}
-
-					
+					msg.push_back(ch[i]);//读取文件内容
 				}
 				
-				break;
+				
+				msg.push_back('\n');
+				//cout << msg << endl;
+
 			}
+
+			
+
+			for (int i = 0; i < size(msg); i++)//将未加入标记删除
+			{
+				if (msg[i] == '^')
+				{
+					/*			content[i];*/
+								//content.erase(content.begin() + i);
+					msg.erase(msg.begin() + i);
+				}
+			}
+			/*size(temp);*/
+			/*cout << msg;*/
+			
+
+			outfile.close();
+
+			outfile.open(filename, ios::out, ios::trunc); //清空原有文件内容
+			
+			outfile << msg;
+
+			cout << "确认申请成功" << endl;
+
+			outfile.close();
+
+			break;
+
+		default:
+			cout << "你已拒绝该请求" << endl;
+			outfile.open(filename, ios::in, ios::out);
+
+			while (outfile.get(c))
+			{
+				content.emplace_back(c);
+			}
+			outfile.close();
+
+			for (int i = 0; i < size(content); i++)
+			{
+				if (content[i] == '■')
+				{
+
+					n = i;
+
+					while (1)
+					{
+						content.erase(content.begin() + n); //删除申请人QQ
+
+						n++;
+
+						if (content[n] == '\n')
+						{
+							content.erase(content.begin() + n);
+							break;
+						}
+
+
+					}
+
+					break;
+				}
+			}
+
+			outfile.open(filename, ios::out, ios::trunc);//清空原有内容
+
+			for (int i = 0; i < size(content); i++)
+			{
+				outfile << content[i];//把删除申请人QQ后的文件内容重新输入文件内
+			}
+			outfile.close();
+
+			cout << "按任意键返回QQ主页" << endl;
+			_getch();
+			QQMenu();
+			break;
 		}
 
-		outfile.open(filename, ios::out, ios::trunc);//清空原有内容
-
-		for (int i = 0; i < size(content); i++)
-		{
-			outfile << content[i];//把删除申请人QQ后的文件内容重新输入文件内
-		}
-		outfile.close();
-
-		cout << "按任意键返回QQ主页" << endl;
-		_getch();
-		QQMenu();
-		break;
-	}
+	
 }
 
 void Client()//聊天服务器
@@ -962,4 +1016,27 @@ void PlayGame()
 
 	_getch();
 
+}
+
+string UTF8ToGB(const char* str)
+{
+	string result;
+	WCHAR *strSrc;
+	LPSTR szRes;
+
+	//获得临时变量的大小
+	int i = MultiByteToWideChar(CP_UTF8, 0, str, -1, NULL, 0);
+	strSrc = new WCHAR[i + 1];
+	MultiByteToWideChar(CP_UTF8, 0, str, -1, strSrc, i);
+
+	//获得临时变量的大小
+	i = WideCharToMultiByte(CP_ACP, 0, strSrc, -1, NULL, 0, NULL, NULL);
+	szRes = new CHAR[i + 1];
+	WideCharToMultiByte(CP_ACP, 0, strSrc, -1, szRes, i, NULL, NULL);
+
+	result = szRes;
+	delete[]strSrc;
+	delete[]szRes;
+
+	return result;
 }

@@ -42,4 +42,6 @@ void AddPartyMember();
 
 void AgreeMember();
 
+string UTF8ToGB(const char* str);
+
 #endif
