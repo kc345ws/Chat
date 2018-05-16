@@ -833,16 +833,21 @@ void AgreeMember()//群主查看申请
 		int select;
 		cin >> select;
 
-		vector<char> content;
-
-		auto iter = content.begin();
-		auto iter1 = temp.begin();
-		int m = 0;
-
+		string member = temp;
+		string PartyList = "PartyList.txt";
+		string filename1 = member + PartyList;
 		string msg;
+		vector<char> content;
+		int n = 0;
+
+		/*auto iter = content.begin();
+		auto iter1 = temp.begin();*/
+		/*int m = 0;*/
+
+		
 		/*char ch1[1000];*/
 
-		int n = 0;
+		
 		/*int words = 0;*/
 		switch (select)
 		{
@@ -891,6 +896,10 @@ void AgreeMember()//群主查看申请
 			cout << "确认申请成功" << endl;
 
 			outfile.close();
+
+			outfile.open(filename1,ios::app);
+
+			outfile << id << endl;
 
 			break;
 
