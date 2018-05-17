@@ -92,6 +92,11 @@ public:
 		PartyNumbers = num;
 	}
 
+	void ChangeFriendsNumber(int num)
+	{
+		FriendsNumber = num;
+	}
+
 private:
 
 	int Qage;

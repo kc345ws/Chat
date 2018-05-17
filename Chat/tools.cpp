@@ -539,16 +539,45 @@ void DeleteFriend()
 		}
 		
 	}
-
+	int num = QQ[Myqq]->ReturnFriendsNumber();
 	for (int i = 0; i < (QQ[Myqq]->ReturnFriendsNumber()); i++)
 	{
 		if (QQ[Myqq]->ReturnFriendList()[i]->ReturnID() == qq)
 		{
 			QQ[Myqq]->ReturnFriendList().erase(QQ[Myqq]->ReturnFriendList().begin() + i);
+			QQ[Myqq]->ReturnFriendList().resize(num - 1);//重新设置好友容器大小
+			QQ[Myqq]->ChangeFriendsNumber(num - 1);
 		}
 	}
+	
+	/*SaveFriends();*/
+	//删除本QQ中的好友QQ
+	fstream myqqfile;
+	string temp1;
+	string content1;
+	int word = 0;
+	myqqfile.open(::QQid + ".txt");
+	while (!myqqfile.eof())
+	{
+		getline(myqqfile, temp1);
+		for (int i = 0; i < size(temp1); i++)
+		{
+			content1.push_back(temp1[i]);
+			word++;
+		}
+		content1.push_back('\n');
+		word++;
+	}
+	int m = content1.find(qq);//找到好友QQ文件中本QQ的位置
+	for (int i = m; i < (m + word); i++)
+	{
+		content1.erase(content1.begin() + m);//删除
+	}
+	myqqfile.close();
+	myqqfile.open(::QQid + ".txt", ios::trunc | ios::out);
+	myqqfile << content1;
+	myqqfile.close();
 
-	SaveFriends();
 
 
 	//删除好友QQ文件中的本QQ
@@ -573,7 +602,7 @@ void DeleteFriend()
 		words++;
 	}
 
-	int m =content.find(::QQid);//找到好友QQ文件中本QQ的位置
+	m =content.find(::QQid);//找到好友QQ文件中本QQ的位置
 	for (int i = m; i < (m + words); i++)
 	{
 		content.erase(content.begin()+m);//删除
