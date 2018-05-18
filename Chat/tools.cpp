@@ -1,4 +1,4 @@
-#include<iostream>
+ï»¿#include<iostream>
 #include"tools.h"
 #include"chat.h"
 #include<conio.h>
@@ -9,15 +9,16 @@
 #include"GreedySnake.h"
 #include<list>
 #include <cstring>
-CInitSock initSock; // ³õÊ¼»¯Winsock¿â
+CInitSock initSock; // åˆå§‹åŒ–Winsockåº“
 using namespace std;
 vector<QQ_CHC*>QQ;
-string QQid; //µÇÂ½µÄQQºÅ
-string QQparty;//´´½¨µÄÈººÅ;
-string PartyMember; //ÉêÇë¼ÓÈºµÄQQºÅ
+string QQid; //ç™»é™†çš„QQå·
+string QQparty;//åˆ›å»ºçš„ç¾¤å·;
+string PartyMember; //ç”³è¯·åŠ ç¾¤çš„QQå·
+
 //int loginnum = 0;
 //string lastQQid;
-//vector<string> loginqq;//±£´æµÇÂ½¹ıµÄQQ·ÀÖ¹ÖØ¸´»ñÈ¡ºÃÓÑºÍÈº
+//vector<string> loginqq;//ä¿å­˜ç™»é™†è¿‡çš„QQé˜²æ­¢é‡å¤è·å–å¥½å‹å’Œç¾¤
 
 void SaveQQ()
 {
@@ -60,7 +61,7 @@ void SaveFriends()
 
 	if (n > 0)
 	{
-		file << "^" <<QQ[Myqq]->ReturnFriendList()[n - 1]->ReturnID() << endl;
+		file <<QQ[Myqq]->ReturnFriendList()[n - 1]->ReturnID() << endl;
 		file << QQ[Myqq]->ReturnFriendList()[n - 1]->ReturnFriendName() << endl;
 		file << " " << endl;
 		file.close();
@@ -68,7 +69,7 @@ void SaveFriends()
 	else
 	{
 		file.close();
-		file.open(filename,ios::trunc | ios::out);//Çå¿ÕÎÄ¼şÄÚÈİ
+		file.open(filename,ios::trunc | ios::out);//æ¸…ç©ºæ–‡ä»¶å†…å®¹
 		file.close();
 	}
 	
@@ -138,12 +139,12 @@ void ShowQQ()
 	}
 	for (int i = 0; i < line; i++)
 	{
-		cout << "QQºÅ:"<<qq[i]->ReturnQQID() << endl;
-		cout << "QÁä:"<<qq[i]->ReturnQage() << endl;
-		cout << "QQÃÜÂë:"<<qq[i]->ReturnQQPassWord() << endl;
-		cout << "QQÃû³Æ:"<<qq[i]->ReturnQQName() << endl;
-		cout << "ËùÔÚµØÇø:"<<qq[i]->ReturnQQProvince() << endl;
-		cout << "¸öĞÔÇ©Ãû:"<<qq[i]->ReturnQQAutograph() << endl;
+		cout << "QQå·:"<<qq[i]->ReturnQQID() << endl;
+		cout << "Qé¾„:"<<qq[i]->ReturnQage() << endl;
+		cout << "QQå¯†ç :"<<qq[i]->ReturnQQPassWord() << endl;
+		cout << "QQåç§°:"<<qq[i]->ReturnQQName() << endl;
+		cout << "æ‰€åœ¨åœ°åŒº:"<<qq[i]->ReturnQQProvince() << endl;
+		cout << "ä¸ªæ€§ç­¾å:"<<qq[i]->ReturnQQAutograph() << endl;
 		cout << endl;
 
 	}
@@ -179,13 +180,12 @@ void Menu()
 {
 	system("CLS");
 	SetColor(6);
-	GetQQ();
 	int select;
 
-	cout << "ÇëÑ¡ÔñµÇÂ½/×¢²áµÄÕÊºÅ" << endl;
+	cout << "è¯·é€‰æ‹©ç™»é™†/æ³¨å†Œçš„å¸å·" << endl;
 	cout << "1.QQ" << endl;
-	cout << "2.Î¢²©" << endl;
-	cout << "3.Î¢ĞÅ" << endl;
+	cout << "2.å¾®åš" << endl;
+	cout << "3.å¾®ä¿¡" << endl;
 
 	cin >> select;
 
@@ -193,10 +193,10 @@ void Menu()
 	{
 	case 1:
 		{
-		cout << "ÇëÑ¡ÔñËùĞè¹¦ÄÜ" << endl;
-		cout << "1.µÇÂ½QQ" << endl;
-		cout << "2.×¢²áQQ" << endl;
-		cout << "3.²é¿´ÒÑÉêÇëQQºÅ" << endl;
+		cout << "è¯·é€‰æ‹©æ‰€éœ€åŠŸèƒ½" << endl;
+		cout << "1.ç™»é™†QQ" << endl;
+		cout << "2.æ³¨å†ŒQQ" << endl;
+		cout << "3.æŸ¥çœ‹å·²ç”³è¯·QQå·" << endl;
 			int ch;
 			cin >> ch;
 			switch (ch)
@@ -217,21 +217,21 @@ void Menu()
 
 			default:
 				{
-				cout << "ÊäÈë´íÎó" << endl;
-				cout << "°´ÈÎÒâ¼ü·µ»ØÖ÷²Ëµ¥" << endl;
+				cout << "è¾“å…¥é”™è¯¯" << endl;
+				cout << "æŒ‰ä»»æ„é”®è¿”å›ä¸»èœå•" << endl;
 				getch();
 				Menu();
 				}
 			}
-			cout << "°´ÈÎÒâ¼ü·µ»ØÖ÷²Ëµ¥" << endl;
+			cout << "æŒ‰ä»»æ„é”®è¿”å›ä¸»èœå•" << endl;
 			getch();
 			Menu();
 			break;
 		}
 	default:
 		{
-		cout << "ÊäÈë´íÎó" << endl;
-		cout << "°´ÈÎÒâ¼ü·µ»ØÖ÷²Ëµ¥" << endl;
+		cout << "è¾“å…¥é”™è¯¯" << endl;
+		cout << "æŒ‰ä»»æ„é”®è¿”å›ä¸»èœå•" << endl;
 		_getch();
 		Menu();
 		break;
@@ -253,78 +253,63 @@ void LoginQQ()
 	string PassWord;
 	bool flag1 = true;
 	//vector<QQ_CHC*>::iterator iter = QQ.begin();
-	cout << "ÊäÈëÄãÒªµÇÂ½µÄQQ:" << endl;
+	cout << "è¾“å…¥ä½ è¦ç™»é™†çš„QQ:" << endl;
 	cin >> ID;
 	::QQid = ID;
-	GetFriends();//»ñÈ¡ºÃÓÑ
-	GetQQParty();//»ñÈ¡Èº
-
-	//for (int i = 0; i < size(::loginqq); i++)//·ÀÖ¹ÖØ¸´
-	//{
-	//	if (loginqq[i] == ID)
-	//	{
-	//		flag1 = false;
-	//	}
-	//}
-	//if (flag1 == true)
-	//{
-	//	GetFriends();//»ñÈ¡ºÃÓÑ
-	//	GetQQParty();//»ñÈ¡Èº
-	//}
-	//::loginqq.push_back(ID);
-
 
 	for (int i = 0; i < size(QQ); i++)
 	{
 		if (QQ[i]->ReturnQQID() == ID)
 		{
 			flag = true;
+			GetFriends();//è·å–å¥½å‹
+			GetQQParty();//è·å–ç¾¤
 		}
 	}
 	if (flag != true)
 	{
-		cout << "Ã»ÓĞ¸ÃQQºÅ£¬ÇëÏÈÉêÇë" << endl;
-		cout << "°´ÈÎÒâ¼ü·µ»ØÖ÷²Ëµ¥" << endl;
+		cout << "æ²¡æœ‰è¯¥QQå·ï¼Œè¯·å…ˆç”³è¯·" << endl;
+		cout << "æŒ‰ä»»æ„é”®è¿”å›ä¸»èœå•" << endl;
 		_getch();
 		Menu();
 	}
-	cout << "ÇëÊäÈë¸ÃQQµÄÃÜÂë" << endl;
+	cout << "è¯·è¾“å…¥è¯¥QQçš„å¯†ç " << endl;
 	cin >> PassWord;
 	for (int i = 0 ; i < size(QQ) ; i++)
 	{
 		if (QQ[i]->ReturnQQID() == ID && QQ[i]->ReturnQQPassWord() == PassWord)
 		{
-			cout << "µÇÂ½³É¹¦" << endl;
-			cout << "°´ÈÎÒâ¼ü¿ªÊ¼Ê¹ÓÃQQ" << endl;
+			cout << "ç™»é™†æˆåŠŸ" << endl;
+			cout << "æŒ‰ä»»æ„é”®å¼€å§‹ä½¿ç”¨QQ" << endl;
 			_getch();
 			QQMenu();
 			break;
 		}
 		else if (QQ[i]->ReturnQQID() == ID && QQ[i]->ReturnQQPassWord() != PassWord)
 		{
-			cout << "ÃÜÂëÊäÈë´íÎó" << endl;
-			cout << "ÇëÖØĞÂÊäÈëÃÜÂë" << endl;
+			cout << "å¯†ç è¾“å…¥é”™è¯¯" << endl;
+			cout << "è¯·é‡æ–°è¾“å…¥å¯†ç " << endl;
 			cin >> PassWord;
 			if (QQ[i]->ReturnQQPassWord() == PassWord)
 			{
-				cout << "µÇÂ½³É¹¦" << endl;
-				cout << "°´ÈÎÒâ¼ü¿ªÊ¼Ê¹ÓÃQQ" << endl;
+				cout << "ç™»é™†æˆåŠŸ" << endl;
+				cout << "æŒ‰ä»»æ„é”®å¼€å§‹ä½¿ç”¨QQ" << endl;
 				getch();
 				QQMenu();
 				break;
 			}
 			else
 			{
-				cout << "ÃÜÂëÊäÈë´íÎó" << endl;
-				cout << "ÇëÖØĞÂÊäÈëÃÜÂë" << endl;
+				cout << "å¯†ç è¾“å…¥é”™è¯¯" << endl;
+				cout << "è¯·é‡æ–°è¾“å…¥å¯†ç " << endl;
 				cin >> PassWord;
 			}
 			break;
 		}
 		/*else
 		{
-			cout << "Ã»ÓĞ¸ÃQQºÅ£¬ÇëÏÈÉêÇë" << endl;
-			cout << "°´ÈÎÒâ¼ü·µ»ØÖ÷²Ëµ¥" << endl;
+			cout << "æ²¡æœ‰è¯¥QQå·ï¼Œè¯·å…ˆç”³è¯·" << endl;
+			cout << "æŒ‰ä»»æ„é”®è¿”å›ä¸»èœå•" << endl;
 			_getch();
 			Menu();
 			break;
@@ -338,20 +323,23 @@ void QQMenu()
 	system("CLS");
 	SetColor(6);
 	int select;
-	cout << "»¶Ó­Ê¹ÓÃQQ" << endl;
-	cout << "ÄãµÄQQºÅÎª:" << QQid << endl;
-	cout << "ÇëÑ¡ÔñÊ¹ÓÃµÄ¹¦ÄÜ" << endl;
-	cout << "1.½øÈëÁÄÌìÊÒÁÄÌì" << endl;
-	cout << "2.Ìí¼ÓQQºÃÓÑ" << endl;
-	cout << "3,²é¿´QQºÃÓÑ" << endl;
-	cout << "4.´´½¨QQÈº" << endl;
-	cout << "5.¼ÓÈëQQÈº" << endl;
-	cout << "6.²é¿´×Ô¼ºËùÓĞQQÈº" << endl;
-	cout << "7.¹ÜÀíQQÈº" << endl;
-	cout << "8.É¾³ıQQºÃÓÑ" << endl;
-	cout << "9.Ğ¡ÓÎÏ·" << endl;
-	cout << "10.²é¿´ºÃÓÑÉêÇë" << endl;
-	cout << "0.·µ»ØÖ÷²Ëµ¥" << endl;
+	vector<QQFriends_CHC*> FL;
+	vector<QQParties_CHC*> PL;
+	int Myqq;
+	cout << "æ¬¢è¿ä½¿ç”¨QQ" << endl;
+	cout << "ä½ çš„QQå·ä¸º:" << QQid << endl;
+	cout << "è¯·é€‰æ‹©ä½¿ç”¨çš„åŠŸèƒ½" << endl;
+	cout << "1.è¿›å…¥èŠå¤©å®¤èŠå¤©" << endl;
+	cout << "2.æ·»åŠ QQå¥½å‹" << endl;
+	cout << "3,æŸ¥çœ‹QQå¥½å‹" << endl;
+	cout << "4.åˆ›å»ºQQç¾¤" << endl;
+	cout << "5.åŠ å…¥QQç¾¤" << endl;
+	cout << "6.æŸ¥çœ‹è‡ªå·±æ‰€æœ‰QQç¾¤" << endl;
+	cout << "7.ç®¡ç†QQç¾¤" << endl;
+	cout << "8.åˆ é™¤QQå¥½å‹" << endl;
+	cout << "9.å°æ¸¸æˆ" << endl;
+	cout << "10.æŸ¥çœ‹å¥½å‹ç”³è¯·" << endl;
+	cout << "0.è¿”å›ä¸»èœå•" << endl;
 	cin >> select;
 	switch (select)
 	{
@@ -398,11 +386,35 @@ void QQMenu()
 		break;
 
 	case 0:
+		
+		for (int i = 0; i < size(QQ); i++)
+		{
+			if (QQ[i]->ReturnQQID() == ::QQid)
+			{
+				Myqq = i;
+			}
+		}
+
+		for (int i = 0; i < size(QQ[Myqq]->ReturnFriendList()); i++)
+		{
+			delete QQ[Myqq]->ReturnFriendList()[i];
+		}
+		QQ[Myqq]->ReturnFriendList().resize(0);
+		QQ[Myqq]->ReturnFriendList().clear();
+		QQ[Myqq]->ReturnFriendList().shrink_to_fit();
+		for (int i = 0; i < size(QQ[Myqq]->ReturnPartyList()); i++)
+		{
+			delete  QQ[Myqq]->ReturnPartyList()[i];
+		}
+		QQ[Myqq]->ReturnPartyList().resize(0);
+		QQ[Myqq]->ReturnPartyList().clear();
+		QQ[Myqq]->ReturnPartyList().shrink_to_fit();
+		/*delete QQ[Myqq];*/
 		Menu();
 		break;
 
 	default:
-		cout << "ÊäÈë´íÎó,°´ÈÎÒâ¼ü·µ»ØQQÖ÷Ò³" << endl;
+		cout << "è¾“å…¥é”™è¯¯,æŒ‰ä»»æ„é”®è¿”å›QQä¸»é¡µ" << endl;
 		_getch();
 		QQMenu();
 		break;
@@ -418,7 +430,7 @@ void AddFriend()
 	string id;
 	string name;
 	bool flag = false;
-	cout << "ÇëÊäÈëÌí¼ÓºÃÓÑµÄQQºÅ" << endl;
+	cout << "è¯·è¾“å…¥æ·»åŠ å¥½å‹çš„QQå·" << endl;
 	cin >> id;
 	for (int i = 0; i < size(QQ); i++)
 	{
@@ -426,14 +438,15 @@ void AddFriend()
 		{
 			flag = true;
 			name = QQ[i]->ReturnQQName();
-			cout << "Ìí¼ÓºÃÓÑ³É¹¦" << endl;
+			cout << "å¥½å‹ç”³è¯·æˆåŠŸï¼Œè¯·ç­‰å¾…å¯¹æ–¹ç¡®è®¤" << endl;
 		}
 	}
+
 	if(flag == false)
 		{
-			cout << "¸ÃQQ»¹Ã»ÓĞ×¢²á£¬°´ÈÎÒâ¼üÖØĞÂÊäÈëQQºÅ" << endl;
-			cout << "1.ÖØĞÂÊäÈëQQºÅÌí¼ÓºÃÓÑ" << endl;
-			cout << "2.·µ»ØQQÖ÷Ò³" << endl;
+			cout << "è¯¥QQè¿˜æ²¡æœ‰æ³¨å†Œï¼ŒæŒ‰ä»»æ„é”®é‡æ–°è¾“å…¥QQå·" << endl;
+			cout << "1.é‡æ–°è¾“å…¥QQå·æ·»åŠ å¥½å‹" << endl;
+			cout << "2.è¿”å›QQä¸»é¡µ" << endl;
 			int select;
 			cin >> select;
 			switch (select)
@@ -447,7 +460,7 @@ void AddFriend()
 				break;
 
 			default:
-				cout << "ÊäÈë´íÎó,°´ÈÎÒâ¼ü·µ»ØQQÖ÷Ò³" << endl;
+				cout << "è¾“å…¥é”™è¯¯,æŒ‰ä»»æ„é”®è¿”å›QQä¸»é¡µ" << endl;
 				_getch();
 				QQMenu();
 				break;
@@ -455,7 +468,7 @@ void AddFriend()
 			
 		}
 	
-	string mark = "^";
+	string mark = "&";
 	string ID = mark + id;
 	if (flag)
 	{
@@ -467,12 +480,12 @@ void AddFriend()
 			}
 		}
 		QQ[Myqq]->ReturnFriendList().emplace_back(new QQFriends_CHC(name , ID));
-		QQ[Myqq]->FriendsNumber++;
+		QQ[Myqq]->ChangeFriendsNumber(QQ[Myqq]->ReturnFriendsNumber() + 1);
 	}
 	SaveFriends();
 
 
-	//ÏòºÃÓÑQQÎÄ¼şÖĞÌí¼Ó±¾QQ
+	//å‘å¥½å‹QQæ–‡ä»¶ä¸­æ·»åŠ æœ¬QQ
 	fstream file;
 	file.open(id+".txt",ios::app);
 	file << "^" <<QQ[Myqq]->ReturnQQID() << endl;
@@ -480,7 +493,8 @@ void AddFriend()
 	file << " " << endl;
 	file.close();
 
-	cout << "°´ÈÎÒâ¼ü·µ»ØQQÖ÷Ò³" << endl;
+	cout << "æŒ‰ä»»æ„é”®è¿”å›QQä¸»é¡µ" << endl;
+	_getch();
 	_getch();
 	QQMenu();
 }
@@ -489,7 +503,7 @@ void DeleteFriend()
 {
 	system("CLS");
 
-	//ÏÔÊ¾ËùÓĞºÃÓÑ
+	//æ˜¾ç¤ºæ‰€æœ‰å¥½å‹
 	int Myqq;
 	for (int i = 0; i < size(QQ); i++)
 	{
@@ -498,19 +512,19 @@ void DeleteFriend()
 			Myqq = i;
 		}
 	}
-	cout << "ÄãÓĞ" << QQ[Myqq]->ReturnFriendsNumber() << "¸öºÃÓÑ" << endl;
+	cout << "ä½ æœ‰" << QQ[Myqq]->ReturnFriendsNumber() << "ä¸ªå¥½å‹" << endl;
 	for (int i = 0; i < QQ[Myqq]->ReturnFriendsNumber(); i++)
 	{
-		cout << "µÚ" << i + 1 << "Î»ºÃÓÑ" << endl;
-		cout << "ĞÕÃû:" << QQ[Myqq]->ReturnFriendList()[i]->ReturnFriendName() << endl;
+		cout << "ç¬¬" << i + 1 << "ä½å¥½å‹" << endl;
+		cout << "å§“å:" << QQ[Myqq]->ReturnFriendList()[i]->ReturnFriendName() << endl;
 		cout << "QQ:" << QQ[Myqq]->ReturnFriendList()[i]->ReturnID() << endl;
 		cout << endl;
 	}
 
 
-	//É¾³ı±¾QQÖĞµÄºÃÓÑ
+	//åˆ é™¤æœ¬QQä¸­çš„å¥½å‹
 	string qq;
-	cout << "ÇëÊäÈëÏëÉ¾³ıºÃÓÑµÄQQºÅ" << endl;
+	cout << "è¯·è¾“å…¥æƒ³åˆ é™¤å¥½å‹çš„QQå·" << endl;
 	cin >> qq;
 	for (int i = 0; i < size(QQ); i++)
 	{
@@ -531,9 +545,9 @@ void DeleteFriend()
 	}
 	if (flag == false)
 	{
-		cout << "ÄãÃ»ÓĞ´ËºÃÓÑ" << endl;
-		cout << "1.ÖØĞÂÊäÈëQQºÅ" << endl;
-		cout << "2.·µ»ØQQÖ÷Ò³" << endl;
+		cout << "ä½ æ²¡æœ‰æ­¤å¥½å‹" << endl;
+		cout << "1.é‡æ–°è¾“å…¥QQå·" << endl;
+		cout << "2.è¿”å›QQä¸»é¡µ" << endl;
 		int select;
 		cin >> select;
 		switch (select)
@@ -554,13 +568,13 @@ void DeleteFriend()
 		if (QQ[Myqq]->ReturnFriendList()[i]->ReturnID() == qq)
 		{
 			QQ[Myqq]->ReturnFriendList().erase(QQ[Myqq]->ReturnFriendList().begin() + i);
-			QQ[Myqq]->ReturnFriendList().resize(num - 1);//ÖØĞÂÉèÖÃºÃÓÑÈİÆ÷´óĞ¡
+			QQ[Myqq]->ReturnFriendList().resize(num - 1);//é‡æ–°è®¾ç½®å¥½å‹å®¹å™¨å¤§å°
 			QQ[Myqq]->ChangeFriendsNumber(num - 1);
 		}
 	}
 	
 	/*SaveFriends();*/
-	//É¾³ı±¾QQÖĞµÄºÃÓÑQQ
+	//åˆ é™¤æœ¬QQä¸­çš„å¥½å‹QQ
 	fstream myqqfile;
 	string temp1;
 	string content1;
@@ -577,10 +591,10 @@ void DeleteFriend()
 		content1.push_back('\n');
 		word++;
 	}
-	int m = content1.find(qq);//ÕÒµ½ºÃÓÑQQÎÄ¼şÖĞ±¾QQµÄÎ»ÖÃ
+	int m = content1.find(qq);//æ‰¾åˆ°å¥½å‹QQæ–‡ä»¶ä¸­æœ¬QQçš„ä½ç½®
 	for (int i = m; i < (m + word); i++)
 	{
-		content1.erase(content1.begin() + m);//É¾³ı
+		content1.erase(content1.begin() + m);//åˆ é™¤
 	}
 	myqqfile.close();
 	myqqfile.open(::QQid + ".txt", ios::trunc | ios::out);
@@ -589,7 +603,7 @@ void DeleteFriend()
 
 
 
-	//É¾³ıºÃÓÑQQÎÄ¼şÖĞµÄ±¾QQ
+	//åˆ é™¤å¥½å‹QQæ–‡ä»¶ä¸­çš„æœ¬QQ
 	fstream outfile;
 	outfile.open(qq + ".txt");
 	string temp;
@@ -602,7 +616,7 @@ void DeleteFriend()
 		{
 			content.push_back(temp[i]);
 			words++;
-			//if (temp[i] < 0 || temp[i] > 127)//ÖĞÎÄ×Ö·ûÕ¼Á½¸ö×Ö½Ú
+			//if (temp[i] < 0 || temp[i] > 127)//ä¸­æ–‡å­—ç¬¦å ä¸¤ä¸ªå­—èŠ‚
 			//{
 			//	words++;
 			//}
@@ -611,10 +625,10 @@ void DeleteFriend()
 		words++;
 	}
 
-	m =content.find(::QQid);//ÕÒµ½ºÃÓÑQQÎÄ¼şÖĞ±¾QQµÄÎ»ÖÃ
+	m =content.find(::QQid);//æ‰¾åˆ°å¥½å‹QQæ–‡ä»¶ä¸­æœ¬QQçš„ä½ç½®
 	for (int i = m; i < (m + words); i++)
 	{
-		content.erase(content.begin()+m);//É¾³ı
+		content.erase(content.begin()+m);//åˆ é™¤
 	}
 	outfile.close();
 
@@ -622,8 +636,8 @@ void DeleteFriend()
 	outfile << content;
 	outfile.close();
 
-	cout << "É¾³ıºÃÓÑ³É¹¦" << endl;
-	cout << "°´ÈÎÒâ¼ü·µ»ØQQÖ÷Ò³" << endl;
+	cout << "åˆ é™¤å¥½å‹æˆåŠŸ" << endl;
+	cout << "æŒ‰ä»»æ„é”®è¿”å›QQä¸»é¡µ" << endl;
 	_getch();
 	_getch();
 	QQMenu();
@@ -643,31 +657,31 @@ void ShowFriends()
 			Myqq = i;
 		}
 	}
-	friendsnum = QQ[Myqq]->ReturnFriendsNumber();
-	for (int i = 0; i < QQ[Myqq]->ReturnFriendsNumber(); i++)
+	friendsnum = size(QQ[Myqq]->ReturnFriendList());
+	for (int i = 0; i < size(QQ[Myqq]->ReturnFriendList()); i++)
 	{
-		if (QQ[Myqq]->ReturnFriendList()[i]->ReturnID()[0] == '^')//ÅĞ¶ÏÌí¼ÓºÃÓÑ±ê¼Ç
+		if ((QQ[Myqq]->ReturnFriendList()[i]->ReturnID()[0]) == '&' || (QQ[Myqq]->ReturnFriendList()[i]->ReturnID()[0]) == '^' )//åˆ¤æ–­æ·»åŠ å¥½å‹æ ‡è®°
 		{
 			friendsnum--;
 		}
 	}
 
-	cout << "ÄãÓĞ" << friendsnum << "¸öºÃÓÑ" << endl;
+	cout << "ä½ æœ‰" << friendsnum << "ä¸ªå¥½å‹" << endl;
 	int friends = 0;
-	for (int i = 0; i < QQ[Myqq]->ReturnFriendsNumber(); i++)
+	for (int i = 0; i < size(QQ[Myqq]->ReturnFriendList()); i++)
 	{
-		if (QQ[Myqq]->ReturnFriendList()[i]->ReturnID()[0] == '^')
+		if ((QQ[Myqq]->ReturnFriendList()[i]->ReturnID()[0]) == '&' ||(QQ[Myqq]->ReturnFriendList()[i]->ReturnID()[0]) == '^' )
 		{
 			continue;
 		}
-		cout << "µÚ" << friends + 1 << "Î»ºÃÓÑ" << endl;
-		cout << "ĞÕÃû:" << QQ[Myqq]->ReturnFriendList()[i]->ReturnFriendName() << endl;
+		cout << "ç¬¬" << friends + 1 << "ä½å¥½å‹" << endl;
+		cout << "å§“å:" << QQ[Myqq]->ReturnFriendList()[i]->ReturnFriendName() << endl;
 		cout << "QQ:" << QQ[Myqq]->ReturnFriendList()[i]->ReturnID() << endl;
 		cout << endl;
 		friends++;
 	}
 
-	cout << "°´ÈÎÒâ¼ü·µ»ØQQÖ÷Ò³" << endl;
+	cout << "æŒ‰ä»»æ„é”®è¿”å›QQä¸»é¡µ" << endl;
 	_getch();
 	QQMenu();
 }
@@ -699,7 +713,7 @@ void GetFriends()
 			Myqq = i;
 		}
 	}
-	QQ[Myqq]->FriendsNumber = line;
+	QQ[Myqq]->ChangeFriendsNumber(line);
 	file.open(filename, ios::app);
 	for (int i = 0; i < line; i++)
 	{
@@ -716,32 +730,48 @@ void AgreeFriend()
 	system("CLS");
 	fstream myqqfile;
 	myqqfile.open(::QQid + ".txt");
-
+	int Myqq, friendqq;
 	string qq;
 	string temp;
+	string fdqq;
+
+	string name, id;
+
 	char c;
 	int line = 0;
-	while (myqqfile.get(c))//»ñÈ¡ÉêÇëÈËQQ
+	bool flag = false;
+	while (myqqfile.get(c))//è·å–ç”³è¯·äººQQ
 	{
 		if (c == '^')
 		{
 			line++;
+			flag = true;
 			continue;
 		}
-		if (line == 1) //»ñÈ¡ÉêÇëÈëÈºµÄÈËQQºÅ
+		
+		if (line == 1) //è·å–ç”³è¯·åŠ å¥½å‹çš„äººQQå·
 		{
-			if (c == '\n');
+			if (c == '\n')
 			{
 				break;
 			}
 			temp.push_back(c);
 		}
 	}
+	if (flag == false)
+	{
+		cout << "æ²¡æœ‰å¥½å‹ç”³è¯·" << endl;
+		cout << "æŒ‰ä»»æ„é”®è¿”å›QQä¸»é¡µ" << endl;
+		_getch();
+		QQMenu();
+	}
 	myqqfile.close();
+	fdqq = temp;
+
 	//temp.pop_back();
-	cout << "ÄãÊÇ·ñÍ¬Òâ" << temp << "µÄºÃÓÑÉêÇë?" << endl;
-	cout << "1.Í¬Òâ" << endl;
-	cout << "2.¾Ü¾ø" << endl;
+	cout << "ä½ æ˜¯å¦åŒæ„" << temp << "çš„å¥½å‹ç”³è¯·?" << endl;
+	cout << "1.åŒæ„" << endl;
+	cout << "2.æ‹’ç»" << endl;
 	int select;
 	cin >> select;
 
@@ -766,17 +796,18 @@ void AgreeFriend()
 			getline(myqqfile, msg);
 			for (int i = 0; i < size(msg); i++)
 			{
-				content.push_back(msg[i]);//¶ÁÈ¡ÎÄ¼şÄÚÈİ
+				content.push_back(msg[i]);//è¯»å–æ–‡ä»¶å†…å®¹
 			}
 
 
 			content.push_back('\n');
 
 		}
+		content.pop_back();
+		content.shrink_to_fit();
 
 
-
-		for (int i = 0; i < size(content); i++)//½«Î´¼ÓÈë±ê¼ÇÉ¾³ı
+		for (int i = 0; i < size(content); i++)//å°†æœªåŠ å…¥æ ‡è®°åˆ é™¤
 		{
 			if (content[i] == '^')
 			{
@@ -787,11 +818,11 @@ void AgreeFriend()
 
 		myqqfile.close();
 
-		myqqfile.open(::QQid + ".txt", ios::out | ios::trunc); //Çå¿ÕÔ­ÓĞÎÄ¼şÄÚÈİ
+		myqqfile.open(::QQid + ".txt", ios::out | ios::trunc); //æ¸…ç©ºåŸæœ‰æ–‡ä»¶å†…å®¹
 
 		myqqfile << content;
 
-		cout << "È·ÈÏÉêÇë³É¹¦" << endl;
+		cout << "ç¡®è®¤ç”³è¯·æˆåŠŸ" << endl;
 
 		myqqfile.close();
 
@@ -800,7 +831,7 @@ void AgreeFriend()
 
 		friendqqfile.open(temp + ".txt");
 		
-		while (!friendqqfile.eof())//»ñÈ¡ºÃÓÑÎÄ¼şÄÚÈİ
+		while (!friendqqfile.eof())//è·å–å¥½å‹æ–‡ä»¶å†…å®¹
 		{
 			getline(friendqqfile, msgfriend);
 			for (int i = 0; i < size(msgfriend); i++)
@@ -809,23 +840,44 @@ void AgreeFriend()
 			}
 			contentfriend.push_back('\n');
 		}
+		contentfriend.pop_back();
+		contentfriend.shrink_to_fit();
 
-		for (int i = 0; i < size(contentfriend); i++)//É¾³ıºÃÓÑÎÄ¼şÖĞµÄ±ê¼Ç
+		for (int i = 0; i < size(contentfriend); i++)//åˆ é™¤å¥½å‹æ–‡ä»¶ä¸­çš„æ ‡è®°
 		{
-			if (contentfriend[i] == '^')
+			if (contentfriend[i] == '&')
 			{
 				contentfriend.erase(contentfriend.begin() + i);
 			}
 		}
 		friendqqfile.close();
 
-		friendqqfile.open(temp + ".txt", ios::out | ios::trunc);//Çå¿ÕºÃÓÑÎÄ¼şÄÚÈİ
-		friendqqfile << contentfriend;//ÖØĞÂĞ´ÈëÉ¾³ı±ê¼ÇºóµÄºÃÓÑÎÄ¼şÄÚÈİ
+		friendqqfile.open(temp + ".txt", ios::out | ios::trunc);//æ¸…ç©ºå¥½å‹æ–‡ä»¶å†…å®¹
+		friendqqfile << contentfriend;//é‡æ–°å†™å…¥åˆ é™¤æ ‡è®°åçš„å¥½å‹æ–‡ä»¶å†…å®¹
 		friendqqfile.close();
 
+		for (int i = 0; i < size(QQ); i++)
+		{
+			if (QQ[i]->ReturnQQID() == ::QQid)
+			{
+				Myqq = i;
+			}
+		}
+		for (int i = 0; i < size(QQ); i++)
+		{
+			if (QQ[i]->ReturnQQID() == fdqq)
+			{
+				friendqq = i;
+			}
+		}
+		name = QQ[friendqq]->ReturnQQName();
+		id = QQ[friendqq]->ReturnQQID();
+		QQ[Myqq]->ReturnFriendList().emplace_back(new QQFriends_CHC(name, id));
+		QQ[Myqq]->ChangeFriendsNumber(QQ[Myqq]->ReturnFriendsNumber() + 1);
 
-		cout << "È·ÈÏÉêÇë³É¹¦" << endl;
-		cout << "°´ÈÎÒâ¼ü·µ»ØQQÖ÷Ò³" << endl;
+
+		cout << "ç¡®è®¤ç”³è¯·æˆåŠŸ" << endl;
+		cout << "æŒ‰ä»»æ„é”®è¿”å›QQä¸»é¡µ" << endl;
 		_getch();
 		QQMenu();
 
@@ -834,7 +886,7 @@ void AgreeFriend()
 
 	default:
 
-		cout << "ÄãÒÑ¾Ü¾ø¸ÃÇëÇó" << endl;
+		cout << "ä½ å·²æ‹’ç»è¯¥è¯·æ±‚" << endl;
 
 		myqqfile.open(::QQid + ".txt");
 
@@ -844,13 +896,14 @@ void AgreeFriend()
 			getline(myqqfile, msg);
 			for (int i = 0; i < size(msg); i++)
 			{
-				content.push_back(msg[i]);//¶ÁÈ¡ÎÄ¼şÄÚÈİ
+				content.push_back(msg[i]);//è¯»å–æ–‡ä»¶å†…å®¹
 			}
-
 
 			content.push_back('\n');
 
 		}
+		content.pop_back();
+		content.shrink_to_fit();
 
 		for (int i = 0; i < size(content); i++)
 		{
@@ -861,7 +914,7 @@ void AgreeFriend()
 
 				while (1)
 				{
-					content.erase(content.begin() + n); //É¾³ıÉêÇëÈËQQ
+					content.erase(content.begin() + n); //åˆ é™¤ç”³è¯·äººQQ
 
 
 					if (content[n] == '\n')
@@ -875,7 +928,7 @@ void AgreeFriend()
 			}
 		}
 		myqqfile.close();
-		myqqfile.open(::QQid + ".txt", ios::out | ios::trunc); //Çå¿ÕÔ­ÓĞÎÄ¼şÄÚÈİ
+		myqqfile.open(::QQid + ".txt", ios::out | ios::trunc); //æ¸…ç©ºåŸæœ‰æ–‡ä»¶å†…å®¹
 		myqqfile << content;
 		myqqfile.close();
 
@@ -883,7 +936,7 @@ void AgreeFriend()
 
 
 
-		//É¾³ıºÃÓÑÎÄ¼şÖĞµÄQQ
+		//åˆ é™¤å¥½å‹æ–‡ä»¶ä¸­çš„QQ
 		friendqqfile.open(temp + ".txt");
 		while (!friendqqfile.eof())
 		{
@@ -891,23 +944,25 @@ void AgreeFriend()
 
 			for (int i = 0; i < size(msgfriend); i++)
 			{
-				contentfriend.push_back(msgfriend[i]);//¶ÁÈ¡ÎÄ¼şÄÚÈİ
+				contentfriend.push_back(msgfriend[i]);//è¯»å–æ–‡ä»¶å†…å®¹
 			}
 
 			contentfriend.push_back('\n');
 		}
+		contentfriend.pop_back();
+		contentfriend.shrink_to_fit();
 		friendqqfile.close();
 		
-		for (int i = 0; i < size(contentfriend); i++) //É¾³ıºÃÓÑÎÄ¼şÖĞµÄ±¾QQ
+		for (int i = 0; i < size(contentfriend); i++) //åˆ é™¤å¥½å‹æ–‡ä»¶ä¸­çš„æœ¬QQ
 		{
-			if (contentfriend[i] == '^')
+			if (contentfriend[i] == '&')
 			{
 
 				n = i;
 
 				while (1)
 				{
-					contentfriend.erase(contentfriend.begin() + n); //É¾³ıÉêÇëÈËQQ
+					contentfriend.erase(contentfriend.begin() + n); //åˆ é™¤ç”³è¯·äººQQ
 
 					if (contentfriend[n] == '\n')
 					{
@@ -919,10 +974,15 @@ void AgreeFriend()
 				break;
 			}
 		}
-		friendqqfile.open(temp + ".txt", ios::out, ios::trunc);//Çå¿ÕÔ­ÓĞÄÚÈİ
+		friendqqfile.open(temp + ".txt", ios::out, ios::trunc);//æ¸…ç©ºåŸæœ‰å†…å®¹
 		friendqqfile << contentfriend;
 		friendqqfile.close();
-		cout << "°´ÈÎÒâ¼ü·µ»ØQQÖ÷Ò³" << endl;
+
+		
+		
+
+
+		cout << "æŒ‰ä»»æ„é”®è¿”å›QQä¸»é¡µ" << endl;
 		_getch();
 		QQMenu();
 		break;
@@ -934,11 +994,11 @@ void CreatQQparty()
 {
 	int Myqq;
 	system("CLS");
-	cout << "ÇëÊäÈëÄãÏë´´½¨µÄÈººÅ" << endl;
+	cout << "è¯·è¾“å…¥ä½ æƒ³åˆ›å»ºçš„ç¾¤å·" << endl;
 	string ID;
 	cin >> ID;
 	::QQparty = ID;
-	cout << "ÇëÊäÈëÈºÃû³Æ" << endl;
+	cout << "è¯·è¾“å…¥ç¾¤åç§°" << endl;
 	string name;
 	cin >> name;
 	for (int i = 0; i < size(QQ); i++)
@@ -949,11 +1009,11 @@ void CreatQQparty()
 		}
 	}
 	QQ[Myqq]->ReturnPartyList().emplace_back(new QQParties_CHC(ID, name, ::QQid));
-	QQ[Myqq]->PartyNumbers++;
+	QQ[Myqq]->ChangePartyNumbers(QQ[Myqq]->ReturnPartyNumbers() + 1);
 	SaveQQParty();
 
 
-	//Ã¿¸öQQ¶¼ÓĞ×Ô¼ºµÄÈºÁĞ±í
+	//æ¯ä¸ªQQéƒ½æœ‰è‡ªå·±çš„ç¾¤åˆ—è¡¨
 	fstream FILE;
 	string qq;
 	qq = ::QQid;
@@ -962,7 +1022,7 @@ void CreatQQparty()
 	FILE.open(FILEName, ios::app);
 	FILE << ID << endl;
 
-	cout << "°´ÈÎÒâ¼ü·µ»ØQQÖ÷Ò³" << endl;
+	cout << "æŒ‰ä»»æ„é”®è¿”å›QQä¸»é¡µ" << endl;
 	_getch();
 	QQMenu();
 }
@@ -978,7 +1038,7 @@ void CreatQQparty()
 //			Myqq = i;
 //		}
 //	}
-//	cout << "ÇëÊäÈëÄãÏë¼ÓÈëµÄÈº" << endl;
+//	cout << "è¯·è¾“å…¥ä½ æƒ³åŠ å…¥çš„ç¾¤" << endl;
 //	string partyid;
 //	::PartyMember = partyid;
 //	cin >> partyid;
@@ -990,9 +1050,9 @@ void CreatQQparty()
 //	if (!check)
 //	{
 //		int select;
-//		cout << "¸ÃQQÈº»¹Ã»ÓĞ´´½¨£¬ÇëÖØĞÂÊäÈë»ò·µ»ØQQÖ÷Ò³" << endl;
-//		cout << "1.ÖØĞÂÊäÈëQQÈººÅ" << endl;
-//		cout << "2.·µ»ØQQÖ÷Ò³" << endl;
+//		cout << "è¯¥QQç¾¤è¿˜æ²¡æœ‰åˆ›å»ºï¼Œè¯·é‡æ–°è¾“å…¥æˆ–è¿”å›QQä¸»é¡µ" << endl;
+//		cout << "1.é‡æ–°è¾“å…¥QQç¾¤å·" << endl;
+//		cout << "2.è¿”å›QQä¸»é¡µ" << endl;
 //		cin >> select;
 //		switch (select)
 //		{
@@ -1005,7 +1065,7 @@ void CreatQQparty()
 //			break;
 //
 //		default:
-//			cout << "ÊäÈë´íÎó,°´ÈÎÒâ¼ü·µ»ØQQÖ÷Ò³" << endl;
+//			cout << "è¾“å…¥é”™è¯¯,æŒ‰ä»»æ„é”®è¿”å›QQä¸»é¡µ" << endl;
 //			_getch();
 //			QQMenu();
 //			break;
@@ -1022,12 +1082,12 @@ void CreatQQparty()
 //
 //	AddPartyMember();
 //
-//	cout << "°´ÈÎÒâ¼ü·µ»ØQQÖ÷Ò³" << endl;
+//	cout << "æŒ‰ä»»æ„é”®è¿”å›QQä¸»é¡µ" << endl;
 //	_getch();
 //	QQMenu();
 //}
 
-void SaveQQParty() //Ã¿´´½¨Ò»¸öÈº±ã½«¸ÃÈº±£´æ³ÉÒ»¸ö.txtÎÄ¼ş
+void SaveQQParty() //æ¯åˆ›å»ºä¸€ä¸ªç¾¤ä¾¿å°†è¯¥ç¾¤ä¿å­˜æˆä¸€ä¸ª.txtæ–‡ä»¶
 {
 	system("CLS");
 	int i = 0, Myqq, n;
@@ -1050,12 +1110,12 @@ void SaveQQParty() //Ã¿´´½¨Ò»¸öÈº±ã½«¸ÃÈº±£´æ³ÉÒ»¸ö.txtÎÄ¼ş
 	file << QQ[Myqq]->ReturnPartyList()[n - 1]->ReturnPartyID() << endl;
 	file << QQ[Myqq]->ReturnPartyList()[n - 1]->ReturnPartyName() << endl;
 	file << QQ[Myqq]->ReturnPartyList()[n - 1]->ReturnCreatUserID() << endl;
-	file << "¡ï" << endl;
+	file << "â˜…" << endl;
 	file.close();
 
 }
 
-void GetQQParty() //´ÓÎÄ¼ş¶ÁÈ¡¸ÃQQµÄÈº£¬²¢±£´æµ½ÈİÆ÷ÖĞ
+void GetQQParty() //ä»æ–‡ä»¶è¯»å–è¯¥QQçš„ç¾¤ï¼Œå¹¶ä¿å­˜åˆ°å®¹å™¨ä¸­
 {
 	int Myqq, line = 0;
 	char c;
@@ -1131,16 +1191,16 @@ void ShowQQParty()
 			Myqq = i;
 		}
 	}
-	cout << "Äã¹²ÓĞ" << QQ[Myqq]->ReturnPartyNumbers() << "¸öÈº" << endl;
+	cout << "ä½ å…±æœ‰" << QQ[Myqq]->ReturnPartyNumbers() << "ä¸ªç¾¤" << endl;
 	for (int i = 0; i < QQ[Myqq]->ReturnPartyNumbers(); i++)
 	{
-		cout << "µÚ" << QQ[Myqq]->ReturnPartyNumbers() << "¸öÈº" << endl;
-		cout << "ÈººÅ:" << QQ[Myqq]->ReturnPartyList()[i]->ReturnPartyID() << endl;
-		cout << "ÈºÃû³Æ:" << QQ[Myqq]->ReturnPartyList()[i]->ReturnPartyName() << endl;
-		cout << "ÈºÖ÷:" << QQ[Myqq]->ReturnPartyList()[i]->ReturnCreatUserID() << endl;
+		cout << "ç¬¬" << QQ[Myqq]->ReturnPartyNumbers() << "ä¸ªç¾¤" << endl;
+		cout << "ç¾¤å·:" << QQ[Myqq]->ReturnPartyList()[i]->ReturnPartyID() << endl;
+		cout << "ç¾¤åç§°:" << QQ[Myqq]->ReturnPartyList()[i]->ReturnPartyName() << endl;
+		cout << "ç¾¤ä¸»:" << QQ[Myqq]->ReturnPartyList()[i]->ReturnCreatUserID() << endl;
 		cout << endl;
 	}
-	cout << "°´ÈÎÒâ¼ü·µ»ØQQÖ÷Ò³" << endl;
+	cout << "æŒ‰ä»»æ„é”®è¿”å›QQä¸»é¡µ" << endl;
 	_getch();
 	QQMenu();
 }
@@ -1148,7 +1208,7 @@ void ShowQQParty()
 void AddPartyMember()
 {
 	system("CLS");
-	cout << "ÇëÊäÈëÄãÏë¼ÓÈëµÄÈº" << endl;
+	cout << "è¯·è¾“å…¥ä½ æƒ³åŠ å…¥çš„ç¾¤" << endl;
 	string partyid;
 	cin >> partyid;
 	::PartyMember = partyid;
@@ -1168,17 +1228,18 @@ void AddPartyMember()
 		}
 	}*/
 	ofile.close();
-	cout << "ÉêÇëÈëÈº³É¹¦,ÇëµÈ´ıÈºÖ÷Í¬Òâ" << endl;
-	cout << "°´ÈÎÒâ¼ü·µ»ØQQÖ÷Ò³" << endl;
+	cout << "ç”³è¯·å…¥ç¾¤æˆåŠŸ,è¯·ç­‰å¾…ç¾¤ä¸»åŒæ„" << endl;
+	cout << "æŒ‰ä»»æ„é”®è¿”å›QQä¸»é¡µ" << endl;
 	_getch();
 	QQMenu();
 }
 
-void AgreeMember()//ÈºÖ÷²é¿´ÉêÇë
+void AgreeMember()//ç¾¤ä¸»æŸ¥çœ‹ç”³è¯·
 {
-	cout << "ÇëÊäÈëÒª¹ÜÀíµÄÈººÅ" << endl;
+	cout << "è¯·è¾“å…¥è¦ç®¡ç†çš„ç¾¤å·" << endl;
 	char c;
 	int line = 0;
+	bool flag = false;
 	string id;
 	string txt = ".txt";
 	cin >> id;
@@ -1187,9 +1248,9 @@ void AgreeMember()//ÈºÖ÷²é¿´ÉêÇë
 	infile.open(filename,ios::in);
 	if (!infile)
 	{
-		cout << "Ã»ÓĞ´ËÈº,ÇëÖØĞÂÊäÈë»ò·µ»ØQQÖ÷Ò³" << endl;
-		cout << "1.ÖØĞÂÊäÈë" << endl;
-		cout << "2.·µ»ØQQÖ÷Ò³" << endl;
+		cout << "æ²¡æœ‰æ­¤ç¾¤,è¯·é‡æ–°è¾“å…¥æˆ–è¿”å›QQä¸»é¡µ" << endl;
+		cout << "1.é‡æ–°è¾“å…¥" << endl;
+		cout << "2.è¿”å›QQä¸»é¡µ" << endl;
 		int select;
 		cin >> select;
 		switch (select)
@@ -1215,18 +1276,18 @@ void AgreeMember()//ÈºÖ÷²é¿´ÉêÇë
 			line++;
 			continue;
 		}
-		if (line == 2) //»ñÈ¡ÈºÖ÷QQºÅ
+		if (line == 2) //è·å–ç¾¤ä¸»QQå·
 		{
 			temp.push_back(c);
 		}
 		
 	}
-	/*temp.pop_back(); *///É¾³ıÄ©Î²\n
+	/*temp.pop_back(); *///åˆ é™¤æœ«å°¾\n
 
 	if (temp != ::QQid)
 	{
-		cout << "Äã²»ÊÇ¸ÃÈºµÄÈºÖ÷,ÎŞ·¨¹ÜÀí¸ÃÈº" << endl;
-		cout << "°´ÈÎÒâ¼ü·µ»ØQQÖ÷Ò³" << endl;
+		cout << "ä½ ä¸æ˜¯è¯¥ç¾¤çš„ç¾¤ä¸»,æ— æ³•ç®¡ç†è¯¥ç¾¤" << endl;
+		cout << "æŒ‰ä»»æ„é”®è¿”å›QQä¸»é¡µ" << endl;
 		_getch();
 		_getch();
 		QQMenu();
@@ -1239,18 +1300,19 @@ void AgreeMember()//ÈºÖ÷²é¿´ÉêÇë
 	line = 0;
 	outfile.open(filename);
 	
-
+	
 	while (outfile.get(c))
 	{
 		if (c == '^')
 		{
 			line++;
+			flag = true;
 			continue;
 		}
-		if (line == 1) //»ñÈ¡ÉêÇëÈëÈºµÄÈËQQºÅ
+		if (line == 1) //è·å–ç”³è¯·å…¥ç¾¤çš„äººQQå·
 		{
 			temp.push_back(c);
-			//temp.clear();//Çå³ı¡ö
+			//temp.clear();//æ¸…é™¤â– 
 			line++;
 		}
 		else if (line == 2)
@@ -1259,12 +1321,20 @@ void AgreeMember()//ÈºÖ÷²é¿´ÉêÇë
 		}
 
 	}
+
+	if (flag == false)
+	{
+		cout << "æ²¡æœ‰åŠ ç¾¤ç”³è¯·" << endl;
+		cout << "æŒ‰ä»»æ„é”®è¿”å›QQä¸»é¡µ" << endl;
+		_getch();
+		QQMenu();
+	}
 		//}
 		outfile.close();
 		temp.pop_back();
-		cout << "ÄãÊÇ·ñÍ¬Òâ" << temp << "ÈëÈº?" << endl;
-		cout << "1.Í¬Òâ" << endl;
-		cout << "2.¾Ü¾ø" << endl;
+		cout << "ä½ æ˜¯å¦åŒæ„" << temp << "å…¥ç¾¤?" << endl;
+		cout << "1.åŒæ„" << endl;
+		cout << "2.æ‹’ç»" << endl;
 		int select;
 		cin >> select;
 
@@ -1294,7 +1364,7 @@ void AgreeMember()//ÈºÖ÷²é¿´ÉêÇë
 				outfile.getline(ch,1000);
 				for (int i = 0; i < strlen(ch); i++)
 				{
-					msg.push_back(ch[i]);//¶ÁÈ¡ÎÄ¼şÄÚÈİ
+					msg.push_back(ch[i]);//è¯»å–æ–‡ä»¶å†…å®¹
 				}
 				
 				
@@ -1304,7 +1374,7 @@ void AgreeMember()//ÈºÖ÷²é¿´ÉêÇë
 
 			
 
-			for (int i = 0; i < size(msg); i++)//½«Î´¼ÓÈë±ê¼ÇÉ¾³ı
+			for (int i = 0; i < size(msg); i++)//å°†æœªåŠ å…¥æ ‡è®°åˆ é™¤
 			{
 				if (msg[i] == '^')
 				{
@@ -1319,11 +1389,11 @@ void AgreeMember()//ÈºÖ÷²é¿´ÉêÇë
 
 			outfile.close();
 
-			outfile.open(filename, ios::out, ios::trunc); //Çå¿ÕÔ­ÓĞÎÄ¼şÄÚÈİ
+			outfile.open(filename, ios::out, ios::trunc); //æ¸…ç©ºåŸæœ‰æ–‡ä»¶å†…å®¹
 			
 			outfile << msg;
 
-			cout << "È·ÈÏÉêÇë³É¹¦" << endl;
+			cout << "ç¡®è®¤ç”³è¯·æˆåŠŸ" << endl;
 
 			outfile.close();
 
@@ -1336,7 +1406,7 @@ void AgreeMember()//ÈºÖ÷²é¿´ÉêÇë
 
 		default:
 
-			cout << "ÄãÒÑ¾Ü¾ø¸ÃÇëÇó" << endl;
+			cout << "ä½ å·²æ‹’ç»è¯¥è¯·æ±‚" << endl;
 			outfile.open(filename);
 
 			while (!outfile.eof())
@@ -1347,7 +1417,7 @@ void AgreeMember()//ÈºÖ÷²é¿´ÉêÇë
 				outfile.getline(ch, 1000);
 				for (int i = 0; i < strlen(ch); i++)
 				{
-					msg.push_back(ch[i]);//¶ÁÈ¡ÎÄ¼şÄÚÈİ
+					msg.push_back(ch[i]);//è¯»å–æ–‡ä»¶å†…å®¹
 				}
 
 				msg.push_back('\n');
@@ -1369,7 +1439,7 @@ void AgreeMember()//ÈºÖ÷²é¿´ÉêÇë
 
 					while (1)
 					{
-						msg.erase(msg.begin() + n); //É¾³ıÉêÇëÈËQQ
+						msg.erase(msg.begin() + n); //åˆ é™¤ç”³è¯·äººQQ
 
 
 						if (msg[n] == '\n')
@@ -1385,13 +1455,13 @@ void AgreeMember()//ÈºÖ÷²é¿´ÉêÇë
 				}
 			}
 
-			outfile.open(filename, ios::out, ios::trunc);//Çå¿ÕÔ­ÓĞÄÚÈİ
+			outfile.open(filename, ios::out, ios::trunc);//æ¸…ç©ºåŸæœ‰å†…å®¹
 
 			outfile << msg;
 
 			outfile.close();
 
-			cout << "°´ÈÎÒâ¼ü·µ»ØQQÖ÷Ò³" << endl;
+			cout << "æŒ‰ä»»æ„é”®è¿”å›QQä¸»é¡µ" << endl;
 			_getch();
 			QQMenu();
 
@@ -1401,52 +1471,52 @@ void AgreeMember()//ÈºÖ÷²é¿´ÉêÇë
 	
 }
 
-void Client()//ÁÄÌì·şÎñÆ÷
+void Client()//èŠå¤©æœåŠ¡å™¨
 {
 	system("CLS");
-	// ´´½¨Ì×½Ú×Ö
-	cout << "°´#¼ü·µ»ØQQÖ÷Ò³" << endl;
+	// åˆ›å»ºå¥—èŠ‚å­—
+	cout << "æŒ‰#é”®è¿”å›QQä¸»é¡µ" << endl;
 	SOCKET s = ::socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if (s == INVALID_SOCKET)
 	{
-		printf(" ´´½¨Ê§°Ü socket() \n");
+		printf(" åˆ›å»ºå¤±è´¥ socket() \n");
 		exit(0);
 	}
 
-	// Ò²¿ÉÒÔÔÚÕâÀïµ÷ÓÃbindº¯Êı°ó¶¨Ò»¸ö±¾µØµØÖ·
-	// ·ñÔòÏµÍ³½«»á×Ô¶¯°²ÅÅ
+	// ä¹Ÿå¯ä»¥åœ¨è¿™é‡Œè°ƒç”¨bindå‡½æ•°ç»‘å®šä¸€ä¸ªæœ¬åœ°åœ°å€
+	// å¦åˆ™ç³»ç»Ÿå°†ä¼šè‡ªåŠ¨å®‰æ’
 
-	// ÌîĞ´Ô¶³ÌµØÖ·ĞÅÏ¢
+	// å¡«å†™è¿œç¨‹åœ°å€ä¿¡æ¯
 	sockaddr_in servAddr;
 	servAddr.sin_family = AF_INET;
 	servAddr.sin_port = htons(4567);
-	// ×¢Òâ£¬ÕâÀïÒªÌîĞ´·şÎñÆ÷³ÌĞò£¨TCPServer³ÌĞò£©ËùÔÚ»úÆ÷µÄIPµØÖ·
-	// Èç¹ûÄãµÄ¼ÆËã»úÃ»ÓĞÁªÍø£¬Ö±½ÓÊ¹ÓÃ127.0.0.1¼´¿É
+	// æ³¨æ„ï¼Œè¿™é‡Œè¦å¡«å†™æœåŠ¡å™¨ç¨‹åºï¼ˆTCPServerç¨‹åºï¼‰æ‰€åœ¨æœºå™¨çš„IPåœ°å€
+	// å¦‚æœä½ çš„è®¡ç®—æœºæ²¡æœ‰è”ç½‘ï¼Œç›´æ¥ä½¿ç”¨127.0.0.1å³å¯
 	servAddr.sin_addr.S_un.S_addr = inet_addr("127.0.0.1");
 
 	if (::connect(s, (sockaddr*)&servAddr, sizeof(servAddr)) == -1)
 	{
-		printf(" Á¬½ÓÁÄÌì·şÎñÆ÷Ê§°Üconnect() \n");
-		cout << "°´ÈÎÒâ¼ü·µ»ØQQÖ÷Ò³" << endl;
+		printf(" è¿æ¥èŠå¤©æœåŠ¡å™¨å¤±è´¥connect() \n");
+		cout << "æŒ‰ä»»æ„é”®è¿”å›QQä¸»é¡µ" << endl;
 		_getch();
 		QQMenu();
 	}
 
 	char buff[256];
 	char szText[256];
-	cout << "µÇÂ½·şÎñÆ÷³É¹¦" << endl;
+	cout << "ç™»é™†æœåŠ¡å™¨æˆåŠŸ" << endl;
 	while (TRUE)
 	{
-		//´Ó·şÎñÆ÷¶Ë½ÓÊÕÊı¾İ
+		//ä»æœåŠ¡å™¨ç«¯æ¥æ”¶æ•°æ®
 		int nRecv = ::recv(s, buff, 256, 0);
 		if (nRecv > 0)
 		{
 			buff[nRecv] = '\0';
-			printf("À´×Ô¶Ô·½µÄÏûÏ¢£º%s\n", buff);
+			printf("æ¥è‡ªå¯¹æ–¹çš„æ¶ˆæ¯ï¼š%s\n", buff);
 		}
 
-		// Ïò·şÎñÆ÷¶Ë·¢ËÍÊı¾İ
-		cout << "Çë·¢ËÍÏûÏ¢:" << endl;
+		// å‘æœåŠ¡å™¨ç«¯å‘é€æ•°æ®
+		cout << "è¯·å‘é€æ¶ˆæ¯:" << endl;
 		cin >> szText;
 		if (szText[0] == '#')
 		{
@@ -1455,18 +1525,18 @@ void Client()//ÁÄÌì·şÎñÆ÷
 		szText[255] = '\0';
 		::send(s, szText, strlen(szText), 0);
 
-		cout << "ÇëµÈ´ı¶Ô·½»Ø¸´" << endl;
+		cout << "è¯·ç­‰å¾…å¯¹æ–¹å›å¤" << endl;
 	}
 
-	// ¹Ø±ÕÌ×½Ú×Ö
+	// å…³é—­å¥—èŠ‚å­—
 	::closesocket(s);
 }
 
 void PlayGame()
 {
-	Controller c;//ÉùÃ÷Ò»¸öControllerÀà
+	Controller c;//å£°æ˜ä¸€ä¸ªControllerç±»
 
-	c.Game();//Õû¸öÓÎÏ·Ñ­»·
+	c.Game();//æ•´ä¸ªæ¸¸æˆå¾ªç¯
 
 	_getch();
 

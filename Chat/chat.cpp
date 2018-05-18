@@ -48,6 +48,19 @@ QQ_CHC::QQ_CHC(string qqid, int qage, string qqpw, string qqname, string qqpv, s
 	PartyNumbers = 0;
 }
 
+QQ_CHC::~QQ_CHC()
+{
+	for (int i = 0; i < size(FriendList); i++)
+	{
+		delete FriendList[i];
+	}
+
+	for (int i = 0; i < size(PartyList); i++)
+	{
+		delete PartyList[i];
+	}
+}
+
 QQFriends_CHC::QQFriends_CHC(string name, string id)
 {
 	FriendName = name;

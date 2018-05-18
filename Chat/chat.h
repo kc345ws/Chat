@@ -19,23 +19,13 @@ public:
 
 	QQ_CHC(string qqid, int qage, string qqpw, string qqname,string qqpv, string ag);
 
-	//friend void LoginQQ();
+	~QQ_CHC();
 
-	//friend void GetQQ();
+	//friend void AddFriend();
 
-	//friend void SaveQQ();
+	//friend void GetFriends();
 
-	//friend void ShowQQ();
-
-	//friend void ShowFriends();
-
-	//friend void SaveFriends();
-
-	friend void AddFriend();
-
-	friend void GetFriends();
-
-	friend void CreatQQparty();
+	//friend void CreatQQparty();
 
 	string ReturnQQID()
 	{

@@ -9,6 +9,7 @@ using namespace std;
 int main()
 {
 	SetConsoleTitle("Chat-2017级吉林大学软件工程9班陈鸿超制作");
+	GetQQ();
 	Menu();
 	return 0;
 }
