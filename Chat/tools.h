@@ -44,5 +44,7 @@ void AddPartyMember();
 
 void AgreeMember();
 
+void AgreeFriend();
+
 
 #endif

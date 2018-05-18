@@ -60,7 +60,7 @@ void SaveFriends()
 
 	if (n > 0)
 	{
-		file << QQ[Myqq]->ReturnFriendList()[n - 1]->ReturnID() << endl;
+		file << "^" <<QQ[Myqq]->ReturnFriendList()[n - 1]->ReturnID() << endl;
 		file << QQ[Myqq]->ReturnFriendList()[n - 1]->ReturnFriendName() << endl;
 		file << " " << endl;
 		file.close();
@@ -350,6 +350,7 @@ void QQMenu()
 	cout << "7.管理QQ群" << endl;
 	cout << "8.删除QQ好友" << endl;
 	cout << "9.小游戏" << endl;
+	cout << "10.查看好友申请" << endl;
 	cout << "0.返回主菜单" << endl;
 	cin >> select;
 	switch (select)
@@ -390,6 +391,10 @@ void QQMenu()
 
 	case 9:
 		PlayGame();
+		break;
+
+	case 10:
+		AgreeFriend();
 		break;
 
 	case 0:
@@ -450,6 +455,8 @@ void AddFriend()
 			
 		}
 	
+	string mark = "^";
+	string ID = mark + id;
 	if (flag)
 	{
 		for (int i = 0; i < size(QQ); i++)
@@ -459,14 +466,16 @@ void AddFriend()
 				Myqq = i;
 			}
 		}
-		QQ[Myqq]->ReturnFriendList().emplace_back(new QQFriends_CHC(name , id));
+		QQ[Myqq]->ReturnFriendList().emplace_back(new QQFriends_CHC(name , ID));
 		QQ[Myqq]->FriendsNumber++;
 	}
 	SaveFriends();
 
+
+	//向好友QQ文件中添加本QQ
 	fstream file;
 	file.open(id+".txt",ios::app);
-	file << QQ[Myqq]->ReturnQQID() << endl;
+	file << "^" <<QQ[Myqq]->ReturnQQID() << endl;
 	file << QQ[Myqq]->ReturnQQName() << endl;
 	file << " " << endl;
 	file.close();
@@ -624,6 +633,8 @@ void ShowFriends()
 {
 	system("CLS");
 	//GetFriends();
+
+	int friendsnum;
 	int Myqq;
 	for (int i = 0; i < size(QQ); i++)
 	{
@@ -632,13 +643,28 @@ void ShowFriends()
 			Myqq = i;
 		}
 	}
-	cout << "你有" << QQ[Myqq]->ReturnFriendsNumber() << "个好友" << endl;
+	friendsnum = QQ[Myqq]->ReturnFriendsNumber();
 	for (int i = 0; i < QQ[Myqq]->ReturnFriendsNumber(); i++)
 	{
-		cout << "第" << i + 1 << "位好友" << endl;
+		if (QQ[Myqq]->ReturnFriendList()[i]->ReturnID()[0] == '^')//判断添加好友标记
+		{
+			friendsnum--;
+		}
+	}
+
+	cout << "你有" << friendsnum << "个好友" << endl;
+	int friends = 0;
+	for (int i = 0; i < QQ[Myqq]->ReturnFriendsNumber(); i++)
+	{
+		if (QQ[Myqq]->ReturnFriendList()[i]->ReturnID()[0] == '^')
+		{
+			continue;
+		}
+		cout << "第" << friends + 1 << "位好友" << endl;
 		cout << "姓名:" << QQ[Myqq]->ReturnFriendList()[i]->ReturnFriendName() << endl;
 		cout << "QQ:" << QQ[Myqq]->ReturnFriendList()[i]->ReturnID() << endl;
 		cout << endl;
+		friends++;
 	}
 
 	cout << "按任意键返回QQ主页" << endl;
@@ -683,6 +709,225 @@ void GetFriends()
 	}
 
 	file.close();
+}
+
+void AgreeFriend()
+{
+	system("CLS");
+	fstream myqqfile;
+	myqqfile.open(::QQid + ".txt");
+
+	string qq;
+	string temp;
+	char c;
+	int line = 0;
+	while (myqqfile.get(c))//获取申请人QQ
+	{
+		if (c == '^')
+		{
+			line++;
+			continue;
+		}
+		if (line == 1) //获取申请入群的人QQ号
+		{
+			if (c == '\n');
+			{
+				break;
+			}
+			temp.push_back(c);
+		}
+	}
+	myqqfile.close();
+	//temp.pop_back();
+	cout << "你是否同意" << temp << "的好友申请?" << endl;
+	cout << "1.同意" << endl;
+	cout << "2.拒绝" << endl;
+	int select;
+	cin >> select;
+
+	string content;
+	string msg;
+	fstream friendqqfile;
+	int n = 0;
+	int linefriend = 0;
+	string contentfriend;
+	string msgfriend;
+
+	switch (select)
+	{
+	case 1:
+		myqqfile.open(::QQid + ".txt");
+
+		while (!myqqfile.eof())
+		{
+
+			//char ch[1000];
+
+			getline(myqqfile, msg);
+			for (int i = 0; i < size(msg); i++)
+			{
+				content.push_back(msg[i]);//读取文件内容
+			}
+
+
+			content.push_back('\n');
+
+		}
+
+
+
+		for (int i = 0; i < size(content); i++)//将未加入标记删除
+		{
+			if (content[i] == '^')
+			{
+
+				content.erase(content.begin() + i);
+			}
+		}
+
+		myqqfile.close();
+
+		myqqfile.open(::QQid + ".txt", ios::out | ios::trunc); //清空原有文件内容
+
+		myqqfile << content;
+
+		cout << "确认申请成功" << endl;
+
+		myqqfile.close();
+
+
+
+
+		friendqqfile.open(temp + ".txt");
+		
+		while (!friendqqfile.eof())//获取好友文件内容
+		{
+			getline(friendqqfile, msgfriend);
+			for (int i = 0; i < size(msgfriend); i++)
+			{
+				contentfriend.push_back(msgfriend[i]);
+			}
+			contentfriend.push_back('\n');
+		}
+
+		for (int i = 0; i < size(contentfriend); i++)//删除好友文件中的标记
+		{
+			if (contentfriend[i] == '^')
+			{
+				contentfriend.erase(contentfriend.begin() + i);
+			}
+		}
+		friendqqfile.close();
+
+		friendqqfile.open(temp + ".txt", ios::out | ios::trunc);//清空好友文件内容
+		friendqqfile << contentfriend;//重新写入删除标记后的好友文件内容
+		friendqqfile.close();
+
+
+		cout << "确认申请成功" << endl;
+		cout << "按任意键返回QQ主页" << endl;
+		_getch();
+		QQMenu();
+
+		break;
+
+
+	default:
+
+		cout << "你已拒绝该请求" << endl;
+
+		myqqfile.open(::QQid + ".txt");
+
+		while (!myqqfile.eof())
+		{
+
+			getline(myqqfile, msg);
+			for (int i = 0; i < size(msg); i++)
+			{
+				content.push_back(msg[i]);//读取文件内容
+			}
+
+
+			content.push_back('\n');
+
+		}
+
+		for (int i = 0; i < size(content); i++)
+		{
+			if (content[i] == '^')
+			{
+
+				n = i;
+
+				while (1)
+				{
+					content.erase(content.begin() + n); //删除申请人QQ
+
+
+					if (content[n] == '\n')
+					{
+						content.erase(content.begin() + n);
+						break;
+					}
+
+				}
+				break;
+			}
+		}
+		myqqfile.close();
+		myqqfile.open(::QQid + ".txt", ios::out | ios::trunc); //清空原有文件内容
+		myqqfile << content;
+		myqqfile.close();
+
+
+
+
+
+		//删除好友文件中的QQ
+		friendqqfile.open(temp + ".txt");
+		while (!friendqqfile.eof())
+		{
+			getline(friendqqfile, msgfriend);
+
+			for (int i = 0; i < size(msgfriend); i++)
+			{
+				contentfriend.push_back(msgfriend[i]);//读取文件内容
+			}
+
+			contentfriend.push_back('\n');
+		}
+		friendqqfile.close();
+		
+		for (int i = 0; i < size(contentfriend); i++) //删除好友文件中的本QQ
+		{
+			if (contentfriend[i] == '^')
+			{
+
+				n = i;
+
+				while (1)
+				{
+					contentfriend.erase(contentfriend.begin() + n); //删除申请人QQ
+
+					if (contentfriend[n] == '\n')
+					{
+						contentfriend.erase(contentfriend.begin() + n);
+						break;
+					}
+
+				}
+				break;
+			}
+		}
+		friendqqfile.open(temp + ".txt", ios::out, ios::trunc);//清空原有内容
+		friendqqfile << contentfriend;
+		friendqqfile.close();
+		cout << "按任意键返回QQ主页" << endl;
+		_getch();
+		QQMenu();
+		break;
+	}
+
 }
 
 void CreatQQparty()
@@ -943,8 +1188,8 @@ void AgreeMember()//群主查看申请
 	if (!infile)
 	{
 		cout << "没有此群,请重新输入或返回QQ主页" << endl;
-		cout << "重新输入" << endl;
-		cout << "返回QQ主页" << endl;
+		cout << "1.重新输入" << endl;
+		cout << "2.返回QQ主页" << endl;
 		int select;
 		cin >> select;
 		switch (select)
