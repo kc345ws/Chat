@@ -30,12 +30,12 @@ void SaveQQ()
 	{
 
 	}
-		file << QQ[i-1]->ReturnQQID() << endl;
-		file << QQ[i-1]->ReturnQage() << endl;
-		file << QQ[i-1]->ReturnQQPassWord() << endl;
-		file << QQ[i-1]->ReturnQQName() << endl;
-		file << QQ[i-1]->ReturnQQProvince() << endl;
-		file << QQ[i-1]->ReturnQQAutograph() << endl;
+		file << QQ[i-1]->ReturnID() << endl;
+		file << QQ[i-1]->ReturnAge() << endl;
+		file << QQ[i-1]->ReturnPassWord() << endl;
+		file << QQ[i-1]->ReturnName() << endl;
+		file << QQ[i-1]->ReturnArea() << endl;
+		file << QQ[i-1]->ReturnAutograph() << endl;
 		file << " "<<endl;
 	file.close();
 }
@@ -46,11 +46,11 @@ void SaveFriends()
 	ofstream file;
 	string qq = ::QQid;
 	string txt = ".txt";
-	string filename = qq + txt;
+	string filename = "QQ\\" + qq + "\\" + qq + "Friendlist.txt";
 	file.open(filename, ios::app);
 	for (i = 0; i < size(QQ); i++)
 	{
-		if (QQ[i]->ReturnQQID() == ::QQid)
+		if (QQ[i]->ReturnID() == ::QQid)
 		{
 			Myqq = i;
 		}
@@ -139,12 +139,12 @@ void ShowQQ()
 	}
 	for (int i = 0; i < line; i++)
 	{
-		cout << "QQ号:"<<qq[i]->ReturnQQID() << endl;
-		cout << "Q龄:"<<qq[i]->ReturnQage() << endl;
-		cout << "QQ密码:"<<qq[i]->ReturnQQPassWord() << endl;
-		cout << "QQ名称:"<<qq[i]->ReturnQQName() << endl;
-		cout << "所在地区:"<<qq[i]->ReturnQQProvince() << endl;
-		cout << "个性签名:"<<qq[i]->ReturnQQAutograph() << endl;
+		cout << "QQ号:"<<qq[i]->ReturnID() << endl;
+		cout << "Q龄:"<<qq[i]->ReturnAge() << endl;
+		cout << "QQ密码:"<<qq[i]->ReturnPassWord() << endl;
+		cout << "QQ名称:"<<qq[i]->ReturnName() << endl;
+		cout << "所在地区:"<<qq[i]->ReturnArea() << endl;
+		cout << "个性签名:"<<qq[i]->ReturnAutograph() << endl;
 		cout << endl;
 
 	}
@@ -171,7 +171,7 @@ void ShowQQ()
 
 	//for (int i = 0; i < size(QQ); i++)
 	//{
-	//	cout << QQ[i]->QQID << endl;
+	//	cout << QQ[i]->ID << endl;
 	//}
 	file.close();
 }
@@ -259,7 +259,7 @@ void LoginQQ()
 
 	for (int i = 0; i < size(QQ); i++)
 	{
-		if (QQ[i]->ReturnQQID() == ID)
+		if (QQ[i]->ReturnID() == ID)
 		{
 			flag = true;
 			GetFriends();//获取好友
@@ -277,7 +277,7 @@ void LoginQQ()
 	cin >> PassWord;
 	for (int i = 0 ; i < size(QQ) ; i++)
 	{
-		if (QQ[i]->ReturnQQID() == ID && QQ[i]->ReturnQQPassWord() == PassWord)
+		if (QQ[i]->ReturnID() == ID && QQ[i]->ReturnPassWord() == PassWord)
 		{
 			cout << "登陆成功" << endl;
 			cout << "按任意键开始使用QQ" << endl;
@@ -285,12 +285,12 @@ void LoginQQ()
 			QQMenu();
 			break;
 		}
-		else if (QQ[i]->ReturnQQID() == ID && QQ[i]->ReturnQQPassWord() != PassWord)
+		else if (QQ[i]->ReturnID() == ID && QQ[i]->ReturnPassWord() != PassWord)
 		{
 			cout << "密码输入错误" << endl;
 			cout << "请重新输入密码" << endl;
 			cin >> PassWord;
-			if (QQ[i]->ReturnQQPassWord() == PassWord)
+			if (QQ[i]->ReturnPassWord() == PassWord)
 			{
 				cout << "登陆成功" << endl;
 				cout << "按任意键开始使用QQ" << endl;
@@ -306,14 +306,7 @@ void LoginQQ()
 			}
 			break;
 		}
-		/*else
-		{
-			cout << "没有该QQ号，请先申请" << endl;
-			cout << "按任意键返回主菜单" << endl;
-			_getch();
-			Menu();
-			break;
-		}*/
+
 			
 	}
 }
@@ -389,7 +382,7 @@ void QQMenu()
 		
 		for (int i = 0; i < size(QQ); i++)
 		{
-			if (QQ[i]->ReturnQQID() == ::QQid)
+			if (QQ[i]->ReturnID() == ::QQid)
 			{
 				Myqq = i;
 			}
@@ -434,10 +427,10 @@ void AddFriend()
 	cin >> id;
 	for (int i = 0; i < size(QQ); i++)
 	{
-		if (QQ[i]->ReturnQQID() == id)
+		if (QQ[i]->ReturnID() == id)
 		{
 			flag = true;
-			name = QQ[i]->ReturnQQName();
+			name = QQ[i]->ReturnName();
 			cout << "好友申请成功，请等待对方确认" << endl;
 		}
 	}
@@ -474,22 +467,23 @@ void AddFriend()
 	{
 		for (int i = 0; i < size(QQ); i++)
 		{
-			if (QQ[i]->ReturnQQID() == ::QQid)
+			if (QQ[i]->ReturnID() == ::QQid)
 			{
 				Myqq = i;
 			}
 		}
 		QQ[Myqq]->ReturnFriendList().emplace_back(new QQFriends_CHC(name , ID));
-		QQ[Myqq]->ChangeFriendsNumber(QQ[Myqq]->ReturnFriendsNumber() + 1);
+		QQ[Myqq]->ChangeFriendsNumber(QQ[Myqq]->ReturnFriendNumber() + 1);
 	}
 	SaveFriends();
 
 
 	//向好友QQ文件中添加本QQ
 	fstream file;
-	file.open(id+".txt",ios::app);
-	file << "^" <<QQ[Myqq]->ReturnQQID() << endl;
-	file << QQ[Myqq]->ReturnQQName() << endl;
+	string friendfilename = "QQ\\" + id + "\\" + id + "Friendlist.txt";
+	file.open(friendfilename,ios::app);
+	file << "^" <<QQ[Myqq]->ReturnID() << endl;
+	file << QQ[Myqq]->ReturnName() << endl;
 	file << " " << endl;
 	file.close();
 
@@ -507,13 +501,13 @@ void DeleteFriend()
 	int Myqq;
 	for (int i = 0; i < size(QQ); i++)
 	{
-		if (QQ[i]->ReturnQQID() == ::QQid)
+		if (QQ[i]->ReturnID() == ::QQid)
 		{
 			Myqq = i;
 		}
 	}
-	cout << "你有" << QQ[Myqq]->ReturnFriendsNumber() << "个好友" << endl;
-	for (int i = 0; i < QQ[Myqq]->ReturnFriendsNumber(); i++)
+	cout << "你有" << QQ[Myqq]->ReturnFriendNumber() << "个好友" << endl;
+	for (int i = 0; i < QQ[Myqq]->ReturnFriendNumber(); i++)
 	{
 		cout << "第" << i + 1 << "位好友" << endl;
 		cout << "姓名:" << QQ[Myqq]->ReturnFriendList()[i]->ReturnFriendName() << endl;
@@ -528,7 +522,7 @@ void DeleteFriend()
 	cin >> qq;
 	for (int i = 0; i < size(QQ); i++)
 	{
-		if (QQ[i]->ReturnQQID() == ::QQid)
+		if (QQ[i]->ReturnID() == ::QQid)
 		{
 			Myqq = i;
 			break;
@@ -562,8 +556,8 @@ void DeleteFriend()
 		}
 		
 	}
-	int num = QQ[Myqq]->ReturnFriendsNumber();
-	for (int i = 0; i < (QQ[Myqq]->ReturnFriendsNumber()); i++)
+	int num = QQ[Myqq]->ReturnFriendNumber();
+	for (int i = 0; i < (QQ[Myqq]->ReturnFriendNumber()); i++)
 	{
 		if (QQ[Myqq]->ReturnFriendList()[i]->ReturnID() == qq)
 		{
@@ -579,7 +573,9 @@ void DeleteFriend()
 	string temp1;
 	string content1;
 	int word = 0;
-	myqqfile.open(::QQid + ".txt");
+	string myqqfilename = "QQ\\" + ::QQid + "\\" + ::QQid + "Friendlist.txt";
+	string friendqqfilename = "QQ\\" + qq + "\\" + qq + "Friendlist.txt";
+	myqqfile.open(myqqfilename);
 	while (!myqqfile.eof())
 	{
 		getline(myqqfile, temp1);
@@ -597,7 +593,7 @@ void DeleteFriend()
 		content1.erase(content1.begin() + m);//删除
 	}
 	myqqfile.close();
-	myqqfile.open(::QQid + ".txt", ios::trunc | ios::out);
+	myqqfile.open(myqqfilename, ios::trunc | ios::out);
 	myqqfile << content1;
 	myqqfile.close();
 
@@ -605,7 +601,7 @@ void DeleteFriend()
 
 	//删除好友QQ文件中的本QQ
 	fstream outfile;
-	outfile.open(qq + ".txt");
+	outfile.open(friendqqfilename);
 	string temp;
 	string content;
 	int words = 0;
@@ -632,7 +628,7 @@ void DeleteFriend()
 	}
 	outfile.close();
 
-	outfile.open(qq + ".txt",ios::trunc|ios::out);
+	outfile.open(friendqqfilename,ios::trunc|ios::out);
 	outfile << content;
 	outfile.close();
 
@@ -652,7 +648,7 @@ void ShowFriends()
 	int Myqq;
 	for (int i = 0; i < size(QQ); i++)
 	{
-		if (QQ[i]->ReturnQQID() == ::QQid)
+		if (QQ[i]->ReturnID() == ::QQid)
 		{
 			Myqq = i;
 		}
@@ -691,7 +687,7 @@ void GetFriends()
 	ifstream file;
 	string qq = ::QQid;
 	string txt = ".txt";
-	string filename = qq + txt;
+	string filename = "QQ\\" + qq + "\\" + qq + "Friendlist.txt";
 	string id;
 	string name;
 	char c;
@@ -708,7 +704,7 @@ void GetFriends()
 	file.close();
 	for (int i = 0; i < size(QQ); i++)
 	{
-		if (QQ[i]->ReturnQQID() == ::QQid)
+		if (QQ[i]->ReturnID() == ::QQid)
 		{
 			Myqq = i;
 		}
@@ -729,7 +725,11 @@ void AgreeFriend()
 {
 	system("CLS");
 	fstream myqqfile;
-	myqqfile.open(::QQid + ".txt");
+	string myqqfilename = "QQ\\" + ::QQid + "\\" + ::QQid + "Friendlist.txt";
+	string friendqqfilename;
+
+
+	myqqfile.open(myqqfilename);
 	int Myqq, friendqq;
 	string qq;
 	string temp;
@@ -767,6 +767,8 @@ void AgreeFriend()
 	}
 	myqqfile.close();
 	fdqq = temp;
+	/*string myqqfilename = "QQ\\" + ::QQid + "\\" + ::QQid + "Friendlist.txt";*/
+	friendqqfilename = "QQ\\" + fdqq + "\\" + fdqq + "Friendlist.txt";
 
 	//temp.pop_back();
 	cout << "你是否同意" << temp << "的好友申请?" << endl;
@@ -786,7 +788,7 @@ void AgreeFriend()
 	switch (select)
 	{
 	case 1:
-		myqqfile.open(::QQid + ".txt");
+		myqqfile.open(myqqfilename);
 
 		while (!myqqfile.eof())
 		{
@@ -818,7 +820,7 @@ void AgreeFriend()
 
 		myqqfile.close();
 
-		myqqfile.open(::QQid + ".txt", ios::out | ios::trunc); //清空原有文件内容
+		myqqfile.open(myqqfilename, ios::out | ios::trunc); //清空原有文件内容
 
 		myqqfile << content;
 
@@ -829,7 +831,7 @@ void AgreeFriend()
 
 
 
-		friendqqfile.open(temp + ".txt");
+		friendqqfile.open(friendqqfilename);
 		
 		while (!friendqqfile.eof())//获取好友文件内容
 		{
@@ -852,30 +854,30 @@ void AgreeFriend()
 		}
 		friendqqfile.close();
 
-		friendqqfile.open(temp + ".txt", ios::out | ios::trunc);//清空好友文件内容
+		friendqqfile.open(friendqqfilename, ios::out | ios::trunc);//清空好友文件内容
 		friendqqfile << contentfriend;//重新写入删除标记后的好友文件内容
 		friendqqfile.close();
 
 		for (int i = 0; i < size(QQ); i++)
 		{
-			if (QQ[i]->ReturnQQID() == ::QQid)
+			if (QQ[i]->ReturnID() == ::QQid)
 			{
 				Myqq = i;
 			}
 		}
 		for (int i = 0; i < size(QQ); i++)
 		{
-			if (QQ[i]->ReturnQQID() == fdqq)
+			if (QQ[i]->ReturnID() == fdqq)
 			{
 				friendqq = i;
 			}
 		}
-		name = QQ[friendqq]->ReturnQQName();
-		id = QQ[friendqq]->ReturnQQID();
+		name = QQ[friendqq]->ReturnName();
+		id = QQ[friendqq]->ReturnID();
 		QQ[Myqq]->ReturnFriendList().emplace_back(new QQFriends_CHC(name, id));
-		QQ[Myqq]->ChangeFriendsNumber(QQ[Myqq]->ReturnFriendsNumber() + 1);
+		QQ[Myqq]->ChangeFriendsNumber(QQ[Myqq]->ReturnFriendNumber() + 1);
 
-
+		friendqqfile.close();
 		cout << "确认申请成功" << endl;
 		cout << "按任意键返回QQ主页" << endl;
 		_getch();
@@ -888,7 +890,7 @@ void AgreeFriend()
 
 		cout << "你已拒绝该请求" << endl;
 
-		myqqfile.open(::QQid + ".txt");
+		myqqfile.open(myqqfilename);
 
 		while (!myqqfile.eof())
 		{
@@ -928,7 +930,8 @@ void AgreeFriend()
 			}
 		}
 		myqqfile.close();
-		myqqfile.open(::QQid + ".txt", ios::out | ios::trunc); //清空原有文件内容
+
+		myqqfile.open(myqqfilename, ios::out | ios::trunc); //清空原有文件内容
 		myqqfile << content;
 		myqqfile.close();
 
@@ -937,7 +940,7 @@ void AgreeFriend()
 
 
 		//删除好友文件中的QQ
-		friendqqfile.open(temp + ".txt");
+		friendqqfile.open(friendqqfilename);
 		while (!friendqqfile.eof())
 		{
 			getline(friendqqfile, msgfriend);
@@ -974,7 +977,7 @@ void AgreeFriend()
 				break;
 			}
 		}
-		friendqqfile.open(temp + ".txt", ios::out, ios::trunc);//清空原有内容
+		friendqqfile.open(friendqqfilename, ios::out, ios::trunc);//清空原有内容
 		friendqqfile << contentfriend;
 		friendqqfile.close();
 
@@ -1003,13 +1006,13 @@ void CreatQQparty()
 	cin >> name;
 	for (int i = 0; i < size(QQ); i++)
 	{
-		if (QQ[i]->ReturnQQID() == ::QQid)
+		if (QQ[i]->ReturnID() == ::QQid)
 		{
 			Myqq = i;
 		}
 	}
 	QQ[Myqq]->ReturnPartyList().emplace_back(new QQParties_CHC(ID, name, ::QQid));
-	QQ[Myqq]->ChangePartyNumbers(QQ[Myqq]->ReturnPartyNumbers() + 1);
+	QQ[Myqq]->ChangePartyNumbers(QQ[Myqq]->ReturnPartyNumber() + 1);
 	SaveQQParty();
 
 
@@ -1018,7 +1021,8 @@ void CreatQQparty()
 	string qq;
 	qq = ::QQid;
 	string txt1 = "PartyList.txt";
-	string FILEName = qq + txt1;
+	/*"QQ\\" + ::QQid + "\\" + ::QQid + ".txt";*/
+	string FILEName = "QQ\\" + ::QQid + "\\" + ::QQid + "PartyList.txt";
 	FILE.open(FILEName, ios::app);
 	FILE << ID << endl;
 
@@ -1033,7 +1037,7 @@ void CreatQQparty()
 //	int Myqq;
 //	for (int i = 0; i < size(QQ); i++)
 //	{
-//		if (QQ[i]->ReturnQQID() == ::QQid)
+//		if (QQ[i]->ReturnID() == ::QQid)
 //		{
 //			Myqq = i;
 //		}
@@ -1075,8 +1079,8 @@ void CreatQQparty()
 //	}
 //	check.close();
 //	file.open(filename, ios::app);
-//	file << QQ[Myqq]->ReturnQQID() << endl;
-//	file << QQ[Myqq]->ReturnQQName() << endl;
+//	file << QQ[Myqq]->ReturnID() << endl;
+//	file << QQ[Myqq]->ReturnName() << endl;
 //	file << endl;
 //	file.close();
 //
@@ -1086,6 +1090,11 @@ void CreatQQparty()
 //	_getch();
 //	QQMenu();
 //}
+void ShowCommonFriends()
+{
+
+}
+
 
 void SaveQQParty() //每创建一个群便将该群保存成一个.txt文件
 {
@@ -1094,12 +1103,14 @@ void SaveQQParty() //每创建一个群便将该群保存成一个.txt文件
 	string ID;
 	ID = QQparty;
 	string txt = ".txt";
-	string PartyID = ID + txt;
+	string DirectoryName = "QQ\\Parties\\" + ID;
+	CreateDirectory(DirectoryName.c_str(), NULL);
+	string PartyID = "QQ\\Parties\\" + ID + "\\" + ID + ".txt";
 	fstream file;
 	file.open(PartyID, ios::app);
 	for (i = 0; i < size(QQ); i++)
 	{
-		if (QQ[i]->ReturnQQID() == ::QQid)
+		if (QQ[i]->ReturnID() == ::QQid)
 		{
 			Myqq = i;
 		}
@@ -1132,8 +1143,9 @@ void GetQQParty() //从文件读取该QQ的群，并保存到容器中
 	vector<string>party;
 
 	string temp;
-
-	string filename = qq + txt1;
+	/*string myqqfilename = "QQ\\" + ::QQid + "\\" + ::QQid + "Friendlist.txt";*/
+	string filename = "QQ\\" + qq + "\\" + qq + "PartyList.txt";
+	string partyfilename;
 
 	listfile.open(filename);
 
@@ -1156,7 +1168,7 @@ void GetQQParty() //从文件读取该QQ的群，并保存到容器中
 
 	for (int i = 0; i < size(QQ); i++)
 	{
-		if (QQ[i]->ReturnQQID() == ::QQid)
+		if (QQ[i]->ReturnID() == ::QQid)
 		{
 			Myqq = i;
 		}
@@ -1166,8 +1178,9 @@ void GetQQParty() //从文件读取该QQ的群，并保存到容器中
 	for (int i = 0; i < size(party); i++)
 	{
 		temp = party[i];
-		filename = temp + txt;
-		partyfile.open(filename);
+		/*filename = temp + txt;*/
+		partyfilename = "QQ\\Parties\\" + temp + "\\" + temp + ".txt";
+		partyfile.open(partyfilename);
 		string id;
 		string name;
 		string userid;
@@ -1186,15 +1199,15 @@ void ShowQQParty()
 	int Myqq;
 	for (int i = 0; i < size(QQ); i++)
 	{
-		if (QQ[i]->ReturnQQID() == ::QQid)
+		if (QQ[i]->ReturnID() == ::QQid)
 		{
 			Myqq = i;
 		}
 	}
-	cout << "你共有" << QQ[Myqq]->ReturnPartyNumbers() << "个群" << endl;
-	for (int i = 0; i < QQ[Myqq]->ReturnPartyNumbers(); i++)
+	cout << "你共有" << QQ[Myqq]->ReturnPartyNumber() << "个群" << endl;
+	for (int i = 0; i < QQ[Myqq]->ReturnPartyNumber(); i++)
 	{
-		cout << "第" << QQ[Myqq]->ReturnPartyNumbers() << "个群" << endl;
+		cout << "第" << QQ[Myqq]->ReturnPartyNumber() << "个群" << endl;
 		cout << "群号:" << QQ[Myqq]->ReturnPartyList()[i]->ReturnPartyID() << endl;
 		cout << "群名称:" << QQ[Myqq]->ReturnPartyList()[i]->ReturnPartyName() << endl;
 		cout << "群主:" << QQ[Myqq]->ReturnPartyList()[i]->ReturnCreatUserID() << endl;
@@ -1216,13 +1229,14 @@ void AddPartyMember()
 	int Myqq;
 	id = ::PartyMember;
 	string txt = ".txt";
-	string filename = id + txt;
+	
+	string filename = "QQ\\Parties\\" + partyid + "\\" + partyid + ".txt";
 	ofstream ofile;
 	ofile.open(filename,ios::app);
 	ofile << "^" <<::QQid  << endl;
 	/*for (int i = 0; i < size(QQ); i++)
 	{
-		if (QQ[i]->ReturnQQID() == ::QQid)
+		if (QQ[i]->ReturnID() == ::QQid)
 		{
 			Myqq = i;
 		}
@@ -1243,7 +1257,7 @@ void AgreeMember()//群主查看申请
 	string id;
 	string txt = ".txt";
 	cin >> id;
-	string filename = id + txt;
+	string filename = "QQ\\Parties\\" + id + "\\" + id + ".txt";
 	ifstream infile;
 	infile.open(filename,ios::in);
 	if (!infile)
@@ -1340,7 +1354,7 @@ void AgreeMember()//群主查看申请
 
 		string member = temp;
 		string PartyList = "PartyList.txt";
-		string filename1 = member + PartyList;
+		string filename1 = "QQ\\" + member + "\\" + member + "PartyList.txt";
 		string msg;
 		vector<char> content;
 		int n = 0;

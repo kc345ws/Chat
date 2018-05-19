@@ -46,5 +46,6 @@ void AgreeMember();
 
 void AgreeFriend();
 
+void ShowCommonFriends();
 
 #endif

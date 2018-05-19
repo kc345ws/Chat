@@ -16,36 +16,39 @@ QQ_CHC::QQ_CHC()
 	int p = rand()*rand();
 	char temp[128];
 	itoa(p , temp , 10);
-	QQID = string(temp);
-	/*QQID = rand()*rand();*/
-	cout << "你的QQ号为:" << QQID <<endl;
+	ID = string(temp);
+	/*ID = rand()*rand();*/
+	cout << "你的QQ号为:" << ID <<endl;
 	cout << "请输入你的密码" << endl;
-	cin >> QQPassWord;
+	cin >> PassWord;
 	ApplyDate.ShowDate();
-	Qage = 0;
+	Age = 0;
 	cout << "请输入你的QQ名字:" << endl;
-	cin >> QQName;
+	cin >> Name;
 	cout << "请输入你所在的省份" << endl;
-	cin >> QQProvince;
+	cin >> Area;
 	cout << "输入你的个性签名" << endl;
-	cin >> QQAutograph;
+	cin >> Autograph;
 	cout << "QQ号申请成功" << endl;
-	cout << "你的QQ号为:" << QQID << endl;
-	cout << "你的QQ密码为:" << QQPassWord << endl;
+	cout << "你的QQ号为:" << ID << endl;
+	cout << "你的QQ密码为:" << PassWord << endl;
 	cout << "请妥善保存帐号和密码" << endl;
+
+	string QQ = "QQ\\" + ID;
+	CreateDirectory(QQ.c_str(), NULL);//每个QQ创建一个文件夹
 
 }
 
 QQ_CHC::QQ_CHC(string qqid, int qage, string qqpw, string qqname, string qqpv, string ag)
 {
-	QQID = qqid;
-	Qage = qage;
-	QQPassWord = qqpw;
-	QQName = qqname;
-	QQProvince = qqpv;
-	QQAutograph = ag;
-	FriendsNumber = 0;
-	PartyNumbers = 0;
+	ID = qqid;
+	Age = qage;
+	PassWord = qqpw;
+	Name = qqname;
+	Area = qqpv;
+	Autograph = ag;
+	FriendNumber = 0;
+	PartyNumber = 0;
 }
 
 QQ_CHC::~QQ_CHC()

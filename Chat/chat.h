@@ -9,8 +9,59 @@ using namespace std;
 class Date;
 class QQFriends_CHC;
 class QQParties_CHC;
+class Tencent_CHC;
 
-class QQ_CHC
+class Tencent_CHC //帐号基类
+{
+
+public:
+
+	int ReturnAge(){return Age;}
+
+	int ReturnFriendNumber(){return FriendNumber;}
+
+	int ReturnPartyNumber() { return PartyNumber; }
+
+	string ReturnID() { return ID; }
+
+	string  ReturnPassWord(){return PassWord;}
+
+	string  ReturnName(){return Name;}
+
+	string  ReturnArea(){return Area;}
+
+	string  ReturnAutograph(){return Autograph;}
+
+	void ChangePartyNumbers(int num){PartyNumber = num;}
+
+	void ChangeFriendsNumber(int num){FriendNumber = num;}
+
+protected:
+
+	int Age; //注册天数
+
+	int FriendNumber; //好友数量
+
+	int PartyNumber; //群数量
+
+	string ID;  //帐号
+	
+	string Name;  //用户姓名
+
+	string PassWord; //用户密码
+
+	string Area;//用户所在地区
+
+	string Autograph;//用户个性签名
+
+	Date ApplyDate;//用户注册日期
+
+private:
+
+};
+
+
+class QQ_CHC : public Tencent_CHC
 {
 
 public:
@@ -21,91 +72,80 @@ public:
 
 	~QQ_CHC();
 
-	//friend void AddFriend();
+	vector<QQFriends_CHC*>& ReturnFriendList(){return FriendList;}
 
-	//friend void GetFriends();
+	vector<QQParties_CHC*>& ReturnPartyList(){return PartyList;}
 
-	//friend void CreatQQparty();
 
-	string ReturnQQID()
+	//string ReturnID()
+	//{
+	//	return ID;
+	//}
+
+	//int ReturnAge()
+	//{
+	//	return Age;
+	//}
+
+	//int ReturnFriendNumber()
+	//{
+	//	return FriendNumber;
+	//}
+
+	//string  ReturnPassWord()
+	//{
+	//	return PassWord;
+	//}
+
+	//string  ReturnName()
+	//{
+	//	return Name;
+	//}
+
+	//string  ReturnArea()
+	//{
+	//	return Area;
+	//}
+
+	//string  ReturnAutograph()
+	//{
+	//	return Autograph;
+	//}
+
+	/*int ReturnPartyNumber()
 	{
-		return QQID;
-	}
-
-	int ReturnQage()
-	{
-		return Qage;
-	}
-
-	int ReturnFriendsNumber()
-	{
-		return FriendsNumber;
-	}
-
-	string  ReturnQQPassWord()
-	{
-		return QQPassWord;
-	}
-
-	string  ReturnQQName()
-	{
-		return QQName;
-	}
-
-	string  ReturnQQProvince()
-	{
-		return QQProvince;
-	}
-
-	string  ReturnQQAutograph()
-	{
-		return QQAutograph;
-	}
-
-	vector<QQFriends_CHC*>& ReturnFriendList()
-	{
-		return FriendList;
-	}
-
-	vector<QQParties_CHC*>& ReturnPartyList()
-	{
-		return PartyList;
-	}
-
-	int ReturnPartyNumbers()
-	{
-		return PartyNumbers;
+		return PartyNumber;
 	}
 
 	void ChangePartyNumbers(int num)
 	{
-		PartyNumbers = num;
+		PartyNumber = num;
 	}
 
 	void ChangeFriendsNumber(int num)
 	{
-		FriendsNumber = num;
-	}
+		FriendNumber = num;
+	}*/
 
 private:
 
-	int Qage;
+	//int Age;
 
-	int FriendsNumber;
+	//int FriendNumber;
 
-	int PartyNumbers;
+	//int PartyNumber;
 
-	string QQID;
+	//string ID;
 
-	string QQPassWord;//
+	//string PassWord;//
 
-	string QQName;
+	//string Name;
 
-	string QQProvince;
+	//string Area;
 
-	string QQAutograph;
+	//string Autograph;
 
-	Date ApplyDate;
+	//Date ApplyDate;
 
 	vector<QQFriends_CHC*> FriendList;
 
@@ -113,7 +153,7 @@ private:
 
 };
 
-class QQFriends_CHC
+class QQFriends_CHC : public Tencent_CHC
 {
 
 public:
@@ -122,21 +162,9 @@ public:
 
 	QQFriends_CHC(string name ,string id);
 
-	//friend void ShowFriends();
+	string ReturnFriendName(){return FriendName;}
 
-	//friend void SaveQQ();
-
-	//friend void SaveFriends();
-
-	string ReturnFriendName()
-	{
-		return FriendName;
-	}
-
-	string ReturnID()
-	{
-		return ID;
-	}
+	string ReturnID(){return ID;}
 
 
 private:
@@ -145,9 +173,8 @@ private:
 
 	string ID;
 
-protected:
-
 };
+
 
 class QQParties_CHC
 {
@@ -156,27 +183,11 @@ public:
 
 	friend class QQ_CHC;
 
-	/*friend void ShowQQParty();*/
-	//struct Party
-	//{
-	//	string PartyNmae;//群名称
+	string ReturnPartyID(){return PartyID;}
 
-	//	int PartyID;//群号
-	//};
-	string ReturnPartyID()
-	{
-		return PartyID;
-	}
+	string ReturnPartyName(){return PartyName;}
 
-	string ReturnPartyName()
-	{
-		return PartyName;
-	}
-
-	string ReturnCreatUserID()
-	{
-		return CreatUserID;
-	}
+	string ReturnCreatUserID(){return CreatUserID;}
 
 	QQParties_CHC(string id , string name ,string userid);
 
@@ -189,4 +200,5 @@ private:
 	string CreatUserID;
 
 };
+
 #endif
