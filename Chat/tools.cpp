@@ -9,6 +9,7 @@
 #include"GreedySnake.h"
 #include<list>
 #include <cstring>
+#include<stdlib.h>
 CInitSock initSock; // 初始化Winsock库
 using namespace std;
 vector<QQ_CHC*>QQ;
@@ -108,6 +109,7 @@ void GetQQ()
 
 void ShowQQ()
 {
+	system("CLS");
 	vector<QQ_CHC*>qq;
 	int  qage;
 	string qqid;
@@ -174,69 +176,425 @@ void ShowQQ()
 	//	cout << QQ[i]->ID << endl;
 	//}
 	file.close();
+
+	cout << "按任意键返回" << endl;
+	_getch();
+	_getch();
+	QQSelectMenu();
 }
 
 void Menu()
 {
 	system("CLS");
-	SetColor(6);
-	int select;
+	int select , key = 1;
+	bool flag = false;
 
+	/*SetColor(3);
+	SetCursorPosition(13, 10);*/
 	cout << "请选择登陆/注册的帐号" << endl;
+	/*SetCursorPosition(13, 11);
+	SetBackColor();*/
 	cout << "1.QQ" << endl;
+	/*SetColor(3);
+	SetCursorPosition(13, 12);*/
 	cout << "2.微博" << endl;
+	//SetCursorPosition(13, 13);
 	cout << "3.微信" << endl;
+	//SetCursorPosition(0, 31);
 
 	cin >> select;
-
 	switch (select)
 	{
 	case 1:
-		{
+	{
 		cout << "请选择所需功能" << endl;
 		cout << "1.登陆QQ" << endl;
 		cout << "2.注册QQ" << endl;
 		cout << "3.查看已申请QQ号" << endl;
-			int ch;
-			cin >> ch;
-			switch (ch)
-			{
-			case 1:
+		int ch;
+		cin >> ch;
+		switch (ch)
+		{
+		case 1:
 
-				LoginQQ();
-				break;
+			LoginQQ();
+			break;
 
-			case 2:
+		case 2:
 
-				ApplyQQ();
-				break;
+			ApplyQQ();
+			break;
 
-			case 3:
-				ShowQQ();
-				break;
+		case 3:
+			ShowQQ();
+			break;
 
-			default:
-				{
-				cout << "输入错误" << endl;
-				cout << "按任意键返回主菜单" << endl;
-				getch();
-				Menu();
-				}
-			}
+		default:
+		{
+			cout << "输入错误" << endl;
 			cout << "按任意键返回主菜单" << endl;
 			getch();
 			Menu();
-			break;
 		}
+		}
+		cout << "按任意键返回主菜单" << endl;
+		getch();
+		Menu();
+		break;
+	}
 	default:
-		{
+	{
 		cout << "输入错误" << endl;
 		cout << "按任意键返回主菜单" << endl;
 		_getch();
 		Menu();
 		break;
+	}
+	}
+	///*key = 1;*/
+	//fflush(stdin);
+	//setbuf(stdin, NULL);
+	//rewind(stdin);
+	///*getch();*/
+	//cin.sync();
+	///*getch();*/
+	//
+	//getch();
+	//getch();
+	//while (select = _getch())
+	//{
+	//	int m = key;
+	//	if (select == 224)
+	//	{
+	//		select = _getch();
+	//	}
+	//	switch (select)
+	//	{
+	//	case 72:
+
+	//		if (key > 0)
+	//		{
+	//		switch (key)
+	//			{
+	//			case 2:
+
+	//				SetCursorPosition(13, 11);
+	//				SetBackColor();
+	//				cout << "1.QQ" << endl;
+	//				SetCursorPosition(13, 12);
+	//				SetColor(3);
+	//				cout << "2.微博" << endl;
+	//				--key;
+	//				SetCursorPosition(0, 31);
+	//				break;
+
+	//			case 3:
+
+	//				SetCursorPosition(13, 12);
+	//				SetBackColor();
+	//				cout << "2.微博" << endl;
+	//				SetCursorPosition(13, 13);
+	//				SetColor(3);
+	//				cout << "3.微信" << endl;
+	//				--key;
+	//				SetCursorPosition(0, 31);
+	//				break;
+
+	//			}
+	//		}
+	//		break;
+
+	//	case 80:
+	//		
+	//		if (key < 4)
+	//		{
+	//		switch (key)
+	//			{
+	//			case 1:
+
+	//				SetCursorPosition(13, 12);
+	//				SetBackColor();
+	//				cout << "2.微博" << endl;
+	//				SetCursorPosition(13, 11);
+	//				SetColor(3);
+	//				cout << "1.QQ" << endl;
+	//				++key;
+	//				SetCursorPosition(0, 31);
+	//				break;
+
+	//			case 2:
+
+	//				SetCursorPosition(13, 13);
+	//				SetBackColor();
+	//				cout << "3.微信" << endl;
+	//				SetCursorPosition(13, 12);
+	//				SetColor(3);
+	//				cout << "2.微博" << endl;
+	//				++key;
+	//				SetCursorPosition(0, 31);
+	//				break;
+	//			}
+	//		}
+	//		break;
+
+	//	case 13:
+
+	//		flag = true;
+	//		break;
+
+
+	//	default:
+	//		Menu();
+	//		/*continue;*/
+	//		break;
+
+	//		SetCursorPosition(0, 31);
+
+	//	}//外层switch
+
+
+
+
+	//	if (flag)//二级菜单
+	//	{
+	//		system("CLS");
+	//		if (key == 1)
+	//		{
+	//			QQSelectMenu();
+	//		}
+	//		else if (key == 2)
+	//		{
+
+	//		}
+	//		else if (key == 3)
+	//		{
+
+	//		}
+
+	//		break;
+
+	//	}
+
+		/*cin >> select;*/
+
+		/*while (select = _getch())
+		{
+
+
+			switch (select)
+			{
+				case 72:
+				{
+					if (key > 1)
+					{
+						switch (key)
+						{
+							case 2:
+						cout << "请选择所需功能" << endl;
+						cout << "1.登陆QQ" << endl;
+						cout << "2.注册QQ" << endl;
+						cout << "3.查看已申请QQ号" << endl;
+						int ch;
+						cin >> ch;
+						}
+
+					}
+				}
+
+			}
+
+		}*/
+		/*switch (key)
+		{
+		case 1:
+
+			LoginQQ();
+			break;
+
+		case 2:
+
+			ApplyQQ();
+			break;
+
+		case 3:
+			ShowQQ();
+			break;
+
+		default:
+		{
+			cout << "输入错误" << endl;
+			cout << "按任意键返回主菜单" << endl;
+			getch();
+			Menu();
+		}
+		}
+		cout << "按任意键返回主菜单" << endl;
+		getch();
+		Menu();
+		break;*/
+		//default:
+		//{
+		//	cout << "输入错误" << endl;
+		//	cout << "按任意键返回主菜单" << endl;
+		//	_getch();
+		//	Menu();
+		//	break;
+		//}//外层default括号
+		//
+		//}//switch括号
+
+	
+}
+
+void QQSelectMenu()
+{
+	/*getch();*/
+	system("CLS");
+	cin.clear();
+	cin.sync();
+	getch();
+	int key = 1, select;
+	bool flag = false;
+	SetColor(3);
+	SetCursorPosition(13, 10);
+	cout << "请选择所需功能" << endl;
+	SetCursorPosition(13, 11);
+	SetBackColor();
+	cout << "1.登陆QQ" << endl;
+	SetColor(3);
+	SetCursorPosition(13, 12);
+	cout << "2.注册QQ" << endl;
+	SetCursorPosition(13, 13);
+	cout << "3.查看已申请QQ号" << endl;
+	/*cin.sync();*/
+	SetCursorPosition(0, 31);
+	/*getch();*/
+	//key = 1;
+	/*cin.sync();*/
+	/*getch();
+	getch();*/
+
+	/*getch();*/
+	/*getch();*/
+	getch();
+	key = 1;
+	getch();
+	while (select = _getch())
+	{
+
+		if (select = 224)
+		{
+			select = _getch();
+		}
+		switch (select)
+		{
+			case 72:
+
+				if (key > 0)
+				{
+
+				switch (key)
+
+				{
+
+				case 2:
+				SetCursorPosition(13, 11);
+				SetBackColor();
+				cout << "1.登陆QQ" << endl;
+				SetCursorPosition(13, 12);
+				SetColor(3);
+				cout << "2.注册QQ" << endl;
+				--key;
+				SetCursorPosition(0, 31);
+				break;
+
+				case 3:
+				SetCursorPosition(13, 12);
+				SetBackColor();
+				cout << "2.注册QQ" << endl;
+				SetCursorPosition(13, 13);
+				SetColor(3);
+				cout << "3.查看已注册QQ号" << endl;
+				--key;
+				SetCursorPosition(0, 31);
+				break;
+
+				}
+
+				}
+
+			break;
+
+			case 80:
+
+			
+				if (key < 4)
+				{
+
+				switch (key)
+				{
+
+				case 1:
+
+				SetCursorPosition(13, 12);
+				SetBackColor();
+				cout << "2.注册QQ" << endl;
+				SetCursorPosition(13, 11);
+				SetColor(3);
+				cout << "1.登录QQ" << endl;
+				++key;
+				SetCursorPosition(0, 31);
+				break;
+
+				case 2:
+				SetCursorPosition(13, 13);
+				SetBackColor();
+				cout << "3.查看已注册QQ号" << endl;
+				SetCursorPosition(13, 12);
+				SetColor(3);
+				cout << "2.注册QQ" << endl;
+				++key;
+				SetCursorPosition(0, 31);
+				break;
+				}
+
+				}
+			break;
+
+			case 13:
+			flag = true;
+			break;
+
+
+			default:
+				QQSelectMenu();
+				break;
+
+			SetCursorPosition(0, 31);
+
+		}
+
+
+		if (flag)
+		{
+			if (key == 1)
+			{
+				LoginQQ();
+			}
+
+			else if (key == 2)
+			{
+				ApplyQQ();
+			}
+
+			else if (key == 3)
+			{
+				ShowQQ();
+			}
 		}
 	}
+
+	
 }
 
 void ApplyQQ() 
@@ -244,10 +602,16 @@ void ApplyQQ()
 	system("CLS");
 	QQ.emplace_back(new QQ_CHC());
 	SaveQQ();
+
+	cout << "按任意键返回" << endl;
+	_getch();
+	_getch();
+	QQSelectMenu();
 }
 
 void LoginQQ()
 {
+	system("CLS");
 	string ID;
 	bool flag = false;
 	string PassWord;
@@ -269,9 +633,9 @@ void LoginQQ()
 	if (flag != true)
 	{
 		cout << "没有该QQ号，请先申请" << endl;
-		cout << "按任意键返回主菜单" << endl;
+		cout << "按任意键返回" << endl;
 		_getch();
-		Menu();
+		QQSelectMenu();
 	}
 	cout << "请输入该QQ的密码" << endl;
 	cin >> PassWord;
@@ -332,6 +696,7 @@ void QQMenu()
 	cout << "8.删除QQ好友" << endl;
 	cout << "9.小游戏" << endl;
 	cout << "10.查看好友申请" << endl;
+	cout << "11.添加群管理员" << endl;
 	cout << "0.返回主菜单" << endl;
 	cin >> select;
 	switch (select)
@@ -376,6 +741,10 @@ void QQMenu()
 
 	case 10:
 		AgreeFriend();
+		break;
+
+	case 11:
+		AddPartyAdmin();
 		break;
 
 	case 0:
@@ -993,6 +1362,8 @@ void AgreeFriend()
 
 }
 
+
+
 void CreatQQparty()
 {
 	int Myqq;
@@ -1090,8 +1461,154 @@ void CreatQQparty()
 //	_getch();
 //	QQMenu();
 //}
-void ShowCommonFriends()
+
+
+void AddPartyAdmin()
 {
+	cout << "请输入要管理的群号" << endl;
+	int Myqq;
+	char c;
+	int line = 0;
+	bool flag = false;
+	string id;
+	string txt = ".txt";
+	cin >> id;
+	string filename = "QQ\\Parties\\" + id + "\\" + id + ".txt";
+	ifstream infile;
+	string temp;
+	//string id;
+	vector<string>PartyMember;
+	line = 0;
+	infile.open(filename, ios::in);
+	if (!infile)
+	{
+		cout << "没有此群,请重新输入或返回QQ主页" << endl;
+		cout << "1.重新输入" << endl;
+		cout << "2.返回QQ主页" << endl;
+		int select;
+		cin >> select;
+		switch (select)
+		{
+		case 1:
+			AgreeMember();
+			break;
+
+		case 2:
+			QQMenu();
+			break;
+		}
+	}
+	infile.close();
+	fstream outfile;
+	outfile.open(filename);
+	temp.clear();
+	while (outfile.get(c))
+	{
+		if (c == '\n')
+		{
+			line++;
+			continue;
+		}
+		if (line == 2) //获取群主QQ号
+		{
+			temp.push_back(c);
+		}
+
+	}
+	/*temp.pop_back(); *///删除末尾\n
+
+	if (temp != ::QQid)
+	{
+		cout << "你不是该群的群主,无法管理该群" << endl;
+		cout << "按任意键返回QQ主页" << endl;
+		_getch();
+		_getch();
+		QQMenu();
+	}
+	outfile.close();
+
+	//获取群成员
+	for (int i = 0; i < size(QQ); i++)
+	{
+		if (QQ[i]->ReturnID() == ::QQid)
+		{
+			Myqq = i;
+		}
+	}
+
+	outfile.open(filename, ios::app);
+	while (!outfile.eof())
+	{
+		getline(outfile, temp);
+
+		if (temp == "★")
+		{
+			line++;
+			continue;
+		}
+		if (line == 1)
+		{
+			PartyMember.push_back(temp);
+		}
+	}
+	line = 0;
+	outfile.close();
+
+	
+
+
+	fstream adminfile;
+	string adminfilename;
+	adminfilename = "QQ\\Parties\\" + id + "\\" + id + "admin.txt";
+	adminfile.open(adminfilename, ios::app);
+	cout << "请输入你想添加的管理员QQ" << endl;
+	string adminid;
+	cin >> adminid;
+	int adminqq;
+	flag = false;
+
+	for (int i = 0; i < size(PartyMember); i++)
+	{
+		if (PartyMember[i] == adminid)
+		{
+			flag = true;
+		}
+	}
+
+	if (flag = false)
+	{
+		cout << "本群没有此成语请重新输入" << endl;
+		AddPartyAdmin();
+	}
+
+
+	adminfile << adminid << endl;
+	adminfile.close();
+
+
+	fstream adminqqfile;
+	string adminqqfilename;
+	adminqqfilename = "QQ\\" + adminid + "\\" + adminid + "PartyList.txt";
+	adminqqfile.open(adminqqfilename, ios::app);
+	adminqqfile << id << endl;
+	adminqqfile.close();
+
+
+
+	for (int i = 0; i < size(QQ); i++)
+	{
+		if (QQ[i]->ReturnID() == adminid)
+		{
+			adminqq = i;
+		}
+	}
+	fstream partyfile;
+	string partyfilename;
+	partyfilename = "QQ\\Parties" + id + "\\" + id + ".txt";
+	partyfile.open(partyfilename, ios::app);
+	partyfile << QQ[adminqq]->ReturnID() << endl;
+	/*partyfile << QQ[adminqq]->ReturnName() << endl;*/
+	partyfile.close();
 
 }
 
@@ -1555,4 +2072,6 @@ void PlayGame()
 	_getch();
 
 }
+
+
 

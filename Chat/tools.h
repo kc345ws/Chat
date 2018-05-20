@@ -48,4 +48,8 @@ void AgreeFriend();
 
 void ShowCommonFriends();
 
+void QQSelectMenu();
+
+void AddPartyAdmin();
+
 #endif

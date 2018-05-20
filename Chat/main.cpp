@@ -10,6 +10,7 @@ using namespace std;
 int main()
 {
 	SetConsoleTitle("Chat-2017级吉林大学软件工程9班陈鸿超制作");
+	SetWindowSize(41, 32);
 	string QQ = "QQ";
 	string WeiChat = "WeiChat";
 	string WeiBo = "WeiBo";

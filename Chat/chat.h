@@ -16,25 +16,25 @@ class Tencent_CHC //ÕÊºÅ»ùÀà
 
 public:
 
-	int ReturnAge(){return Age;}
+	virtual int ReturnAge(){return Age;}
 
-	int ReturnFriendNumber(){return FriendNumber;}
+	virtual int ReturnFriendNumber(){return FriendNumber;}
 
-	int ReturnPartyNumber() { return PartyNumber; }
+	virtual int ReturnPartyNumber() { return PartyNumber; }
 
-	string ReturnID() { return ID; }
+	virtual string ReturnID() { return ID; }
 
-	string  ReturnPassWord(){return PassWord;}
+	virtual string  ReturnPassWord(){return PassWord;}
 
-	string  ReturnName(){return Name;}
+	virtual string  ReturnName(){return Name;}
 
-	string  ReturnArea(){return Area;}
+	virtual string  ReturnArea(){return Area;}
 
-	string  ReturnAutograph(){return Autograph;}
+	virtual string  ReturnAutograph(){return Autograph;}
 
-	void ChangePartyNumbers(int num){PartyNumber = num;}
+	virtual void ChangePartyNumbers(int num){PartyNumber = num;}
 
-	void ChangeFriendsNumber(int num){FriendNumber = num;}
+	virtual void ChangeFriendsNumber(int num){FriendNumber = num;}
 
 protected:
 
@@ -191,6 +191,8 @@ public:
 
 	QQParties_CHC(string id , string name ,string userid);
 
+	vector<string> &ReturnPartyMembers() { return PartyMembrs; }
+
 private:
 	
 	string PartyID;
@@ -198,6 +200,8 @@ private:
 	string PartyName;
 
 	string CreatUserID;
+
+	vector<string> PartyMembrs;
 
 };
 
