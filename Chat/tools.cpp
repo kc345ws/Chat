@@ -678,7 +678,7 @@ void LoginQQ()
 void QQMenu()
 {
 	system("CLS");
-	SetColor(6);
+	/*SetColor(6);*/
 	int select;
 	vector<QQFriends_CHC*> FL;
 	vector<QQParties_CHC*> PL;
@@ -1463,8 +1463,9 @@ void CreatQQparty()
 //}
 
 
-void AddPartyAdmin()
+void AddPartyAdmin()//添加群管理员
 {
+
 	cout << "请输入要管理的群号" << endl;
 	int Myqq;
 	char c;
@@ -1490,10 +1491,10 @@ void AddPartyAdmin()
 		switch (select)
 		{
 		case 1:
-			AgreeMember();
+			AddPartyAdmin();
 			break;
 
-		case 2:
+		default:
 			QQMenu();
 			break;
 		}
@@ -1536,25 +1537,41 @@ void AddPartyAdmin()
 		}
 	}
 
-	outfile.open(filename, ios::app);
+	outfile.open(filename);
+
+	line = 0;
+	temp.clear();
 	while (!outfile.eof())
 	{
 		getline(outfile, temp);
-
+		
 		if (temp == "★")
 		{
 			line++;
 			continue;
 		}
+		/*if (line == 4)
+		{
+			continue;
+		}*/
 		if (line == 1)
 		{
 			PartyMember.push_back(temp);
 		}
 	}
+	PartyMember.pop_back();
 	line = 0;
 	outfile.close();
 
-	
+
+	if (size(PartyMember) == 0)
+	{
+		cout << "此群没有成员请重新输入" << endl;
+		cout << "按任意键返回QQ主页" << endl;
+		_getch();
+		_getch();
+		QQMenu();
+	}
 
 
 	fstream adminfile;
@@ -1565,8 +1582,10 @@ void AddPartyAdmin()
 	string adminid;
 	cin >> adminid;
 	int adminqq;
+
 	flag = false;
 
+	
 	for (int i = 0; i < size(PartyMember); i++)
 	{
 		if (PartyMember[i] == adminid)
@@ -1575,7 +1594,7 @@ void AddPartyAdmin()
 		}
 	}
 
-	if (flag = false)
+	if (flag == false)
 	{
 		cout << "本群没有此成语请重新输入" << endl;
 		AddPartyAdmin();
@@ -1602,6 +1621,8 @@ void AddPartyAdmin()
 			adminqq = i;
 		}
 	}
+
+
 	fstream partyfile;
 	string partyfilename;
 	partyfilename = "QQ\\Parties" + id + "\\" + id + ".txt";
@@ -1610,6 +1631,10 @@ void AddPartyAdmin()
 	/*partyfile << QQ[adminqq]->ReturnName() << endl;*/
 	partyfile.close();
 
+	cout << "添加成功，按任意键返回QQ主页" << endl;
+	_getch();
+	_getch();
+	QQMenu();
 }
 
 
@@ -1767,6 +1792,7 @@ void AddPartyMember()
 
 void AgreeMember()//群主查看申请
 {
+
 	cout << "请输入要管理的群号" << endl;
 	char c;
 	int line = 0;
@@ -1931,6 +1957,10 @@ void AgreeMember()//群主查看申请
 			outfile.open(filename1,ios::app);
 
 			outfile << id << endl;
+
+			cout << "按任意键返回QQ主页" << endl;
+			_getch();
+			QQMenu();
 
 			break;
 
