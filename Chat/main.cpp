@@ -6,6 +6,8 @@
 #include<Windows.h>
 #include<string>
 using namespace std;
+//extern QQTools_CHC QQtools;
+extern QQTools_CHC QQtools;
 
 int main()
 {
@@ -19,7 +21,9 @@ int main()
 	CreateDirectory(WeiChat.c_str(), NULL);
 	CreateDirectory(WeiBo.c_str(), NULL);
 	CreateDirectory(Parties.c_str(), NULL);
-	GetQQ();
-	Menu();
+	/*GetQQ();
+	Menu();*/
+	QQtools.GetQQ();
+	QQtools.Menu();
 	return 0;
 }

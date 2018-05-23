@@ -12,6 +12,7 @@
 
 #include <cstdlib>
 
+QQTools_CHC QQtools;
 
 void Controller::Start()//开始界面
 
@@ -903,7 +904,9 @@ void Controller::Game()//游戏一级循环
 		else if (tmp == 2) //返回值为2时退出游戏
 
 		{
-			QQMenu();
+			/*QQTools_CHC QQtools;
+*/
+			QQtools.QQMenu();
 
 			break;
 

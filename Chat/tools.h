@@ -2,54 +2,81 @@
 #ifndef TOOLS_H
 #define TOOLS_H
 #include<iostream>
+#include"GreedySnake.h"
+#include"chat.h"
+#include<vector>
+#include<string>
 using namespace std;
+//class QQTools_CHC;
 
-void Menu();
+class QQTools_CHC
+{
+public:
 
-void ApplyQQ();
+	void Menu();
 
-void LoginQQ();
+	void ApplyQQ();
 
-void Client();
+	void LoginQQ();
 
-void QQMenu();
+	void Client();
 
-void SaveQQ();
+	void QQMenu();
 
-void GetQQ();
+	void SaveQQ();
 
-void ShowQQ();
+	void GetQQ();
 
-void AddFriend();
+	void ShowQQ();
 
-void DeleteFriend();
+	void AddFriend();
 
-void ShowFriends();
+	void DeleteFriend();
 
-void GetFriends();
+	void ShowFriends();
 
-//void AddQQParty();
+	void GetFriends();
 
-void CreatQQparty();
+	//void AddQQParty();
 
-void SaveQQParty();
+	void CreatQQparty();
 
-void ShowQQParty();
+	void SaveQQParty();
 
-void GetQQParty();
+	void ShowQQParty();
 
-void PlayGame();
+	void GetQQParty();
 
-void AddPartyMember();
+	void PlayGame();
 
-void AgreeMember();
+	void AddPartyMember();
 
-void AgreeFriend();
+	void AgreeMember();
 
-void ShowCommonFriends();
+	void AgreeFriend();
 
-void QQSelectMenu();
+	/*void ShowCommonFriends();*/
 
-void AddPartyAdmin();
+	/*void QQSelectMenu();*/
+
+	void AddPartyAdmin();
+
+	void SaveFriends();
+
+	void QuitParty();
+
+private:
+
+	vector<QQ_CHC*>QQ;
+
+	string QQid; //登陆的QQ号
+
+	string QQparty;//创建的群号;
+
+	string PartyMember; //申请加群的QQ号
+
+};
+
+extern QQTools_CHC QQtools;
 
 #endif
