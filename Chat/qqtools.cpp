@@ -1991,19 +1991,19 @@ void QQTools_CHC::AgreeMember()//群主查看申请
 			flag = true;
 			continue;
 		}
-		if (line == 1) //获取申请入群的人QQ号
-		{
-			temp.push_back(c);
-			//temp.clear();//清除■
-			line++;
-		}
-		else if (line == 2)
+		//if (line == 1) //获取申请入群的人QQ号
+		//{
+		//	temp.push_back(c);
+		//	//temp.clear();//清除■
+		//	line++;
+		//}
+		if (line == 1)
 		{
 			temp.push_back(c);
 		}
 
 	}
-
+	
 	if (flag == false)
 	{
 		cout << "没有加群申请" << endl;
@@ -2063,8 +2063,10 @@ void QQTools_CHC::AgreeMember()//群主查看申请
 					/*			content[i];*/
 								//content.erase(content.begin() + i);
 					msg.erase(msg.begin() + i);
+					break;
 				}
 			}
+			msg.pop_back();
 			/*size(temp);*/
 			/*cout << msg;*/
 			
@@ -2140,6 +2142,7 @@ void QQTools_CHC::AgreeMember()//群主查看申请
 					break;
 				}
 			}
+			msg.pop_back();
 
 			outfile.open(filename, ios::out, ios::trunc);//清空原有内容
 
@@ -2243,9 +2246,22 @@ void QQTools_CHC::DeletePartyMember()//未测试
 			break;
 		}
 	}
-	if (temp != QQid || Adminflag == false)
-	{
 
+	if (PartyOwner == QQid)
+	{
+		cout << "群主你好，欢迎来到群成员管理" << endl;
+		/*cout << "你不是该群的群主或管理员,无法管理该群" << endl;
+		cout << "按任意键返回QQ主页" << endl;
+		_getch();
+		_getch();
+		QQMenu();*/
+	}
+	else if (Adminflag == true)
+	{
+		cout << "管理员你好，欢迎来到群成员管理" << endl;
+	}
+	else
+	{
 		cout << "你不是该群的群主或管理员,无法管理该群" << endl;
 		cout << "按任意键返回QQ主页" << endl;
 		_getch();
@@ -2297,12 +2313,19 @@ void QQTools_CHC::DeletePartyMember()//未测试
 
 	//检查输入QQ是否是群主或是自己
 	bool checkflag = false;//检查是否有此成员
-	if (DeleteMemberQQ == PartyOwner|| DeleteMemberQQ == QQid)
-	{
-		cout << "无法踢出群主或自己，请重新输入" << endl;
-		cin >> DeleteMemberQQ;
+	/*if (DeleteMemberQQ == PartyOwner|| DeleteMemberQQ == QQid)
+	{*/
+		/*cout << "无法踢出群主或自己，请重新输入" << endl;
+		cin >> DeleteMemberQQ;*/
 		while (1)
 		{
+			if (DeleteMemberQQ == PartyOwner || DeleteMemberQQ == QQid)
+			{
+				cout << "无法踢出群主或自己，请重新输入" << endl;
+				cin >> DeleteMemberQQ;
+				continue;
+			}
+
 			for (int i = 0; i < size(PartyMember); i++)//检查是否有此成员
 			{
 				if (DeleteMemberQQ == PartyMember[i])
@@ -2346,7 +2369,7 @@ void QQTools_CHC::DeletePartyMember()//未测试
 			}
 
 		}
-	}
+	/*}*/
 	
 
 
@@ -2371,12 +2394,14 @@ void QQTools_CHC::DeletePartyMember()//未测试
 			memeberpartylistcontent.erase(memeberpartylistcontent.begin() + i);
 		}
 	}
+	memeberpartylistcontent.shrink_to_fit();
 
-	memberpartylistfile.open(memberpartylistfilename,ios::trunc);
+	memberpartylistfile.open(memberpartylistfilename,ios::trunc | ios::out);
 	for (int i = 0; i < size(memeberpartylistcontent); i++)
 	{
 		memberpartylistfile << memeberpartylistcontent[i] << endl;
 	}
+	memberpartylistfile.close();
 
 	
 
@@ -2400,10 +2425,13 @@ void QQTools_CHC::DeletePartyMember()//未测试
 		if (PartyMemberListContent[i] == DeleteMemberQQ)
 		{
 			PartyMemberListContent.erase(PartyMemberListContent.begin() + i);
+			break;
 		}
 	}
+	PartyMemberListContent.shrink_to_fit();
 
-	PartyMemberListFile.open(PartyMEmberListFileName, ios::trunc);
+	PartyMemberListFile.close();
+	PartyMemberListFile.open(PartyMEmberListFileName, ios::trunc | ios::out);
 	for (int i = 0; i < size(PartyMemberListContent); i++)
 	{
 
