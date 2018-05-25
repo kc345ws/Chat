@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include<iostream>
-#include"chat.h"
-#include"tools.h"
+#include"qq.h"
+#include"qqtools.h"
 #include"GreedySnake.h"
 #include<Windows.h>
 #include<string>

@@ -1,9 +1,9 @@
 #pragma once
-#ifndef TOOLS_H
-#define TOOLS_H
+#ifndef QQTOOLS_H
+#define QQTOOLS_H
 #include<iostream>
 #include"GreedySnake.h"
-#include"chat.h"
+#include"qq.h"
 #include<vector>
 #include<string>
 using namespace std;
@@ -54,6 +54,8 @@ public:
 	void AgreeMember();
 
 	void AgreeFriend();
+
+	void DeletePartyMember();
 
 	/*void ShowCommonFriends();*/
 

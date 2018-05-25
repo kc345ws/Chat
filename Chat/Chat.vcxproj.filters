@@ -18,12 +18,6 @@
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="chat.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="tools.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="Date.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -33,14 +27,14 @@
     <ClCompile Include="GreedySnake.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="qqtools.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="qq.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="chat.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="tools.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Date.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -54,6 +48,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="GreedySnake.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="qqtools.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="qq.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

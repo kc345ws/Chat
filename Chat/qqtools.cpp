@@ -1,6 +1,6 @@
 ﻿#include<iostream>
-#include"tools.h"
-#include"chat.h"
+#include"qqtools.h"
+#include"qq.h"
 #include<conio.h>
 #include "stdafx.h"
 #include "Initsock.h"
@@ -499,6 +499,7 @@ void QQTools_CHC::QQMenu()
 	cout << "3.游戏功能" << endl;
 	cout << "4.聊天功能" << endl;
 	cout << "5.开通服务" << endl;
+	cout << "0.返回主菜单" << endl;
 	//cout << "1.进入聊天室聊天" << endl;
 	//cout << "2.添加QQ好友" << endl;
 	//cout << "3,查看QQ好友" << endl;
@@ -554,6 +555,7 @@ void QQTools_CHC::QQMenu()
 		cout << "4.查看已加入的QQ群" << endl;
 		cout << "5.查看入群申请" << endl;
 		cout << "6.添加QQ群管理员" << endl;
+		cout << "7.踢出群成员" << endl;
 		cout << "0.返回主菜单" << endl;
 		cin >> select;
 		switch (select)
@@ -562,11 +564,6 @@ void QQTools_CHC::QQMenu()
 			AddPartyMember();
 			break;
 		case 2:
-			/*cout << "退出QQ群没有开发完成" << endl;
-			cout << "按任意键返回QQ主菜单" << endl;
-			_getch();
-			_getch();
-			QQMenu();*/
 			QuitParty();
 			break;
 		case 3:
@@ -580,6 +577,9 @@ void QQTools_CHC::QQMenu()
 			break;
 		case 6:
 			AddPartyAdmin();
+			break;
+		case 7:
+			DeletePartyMember();
 			break;
 		default:
 			QQMenu();
@@ -654,8 +654,6 @@ void QQTools_CHC::QQMenu()
 		break;
 
 	default:
-		cout << "输入错误,按任意键返回QQ主页" << endl;
-		_getch();
 		QQMenu();
 		break;
 
@@ -1240,8 +1238,6 @@ void QQTools_CHC::AgreeFriend()
 
 }
 
-
-
 void QQTools_CHC::CreatQQparty()//创建QQ群
 {
 	system("CLS");
@@ -1454,7 +1450,6 @@ void QQTools_CHC::QuitParty()
 	}
 	partycontent.pop_back();//删除末尾\n
 	partyvec.pop_back();
-	partyvec.pop_back();
 	partyfile.close();
 	partyvec.shrink_to_fit();
 
@@ -1551,8 +1546,6 @@ void QQTools_CHC::QuitParty()
 	
 
 }
-
-
 
 void QQTools_CHC::AddPartyAdmin()//添加群管理员
 {
@@ -1728,7 +1721,6 @@ void QQTools_CHC::AddPartyAdmin()//添加群管理员
 	QQMenu();
 }
 
-
 void QQTools_CHC::SaveQQParty() //每创建一个群便将该群保存成一个.txt文件
 {
 	system("CLS");
@@ -1878,6 +1870,7 @@ void QQTools_CHC::AddPartyMember()
 	cout << "申请入群成功,请等待群主同意" << endl;
 	cout << "按任意键返回QQ主页" << endl;
 	_getch();
+	_getch();
 	QQMenu();
 }
 
@@ -1930,11 +1923,52 @@ void QQTools_CHC::AgreeMember()//群主查看申请
 		}
 		
 	}
+	string OwnerQQ = temp;
+
 	/*temp.pop_back(); *///删除末尾\n
 
-	if (temp != QQid)
+
+	//获取群管理员QQ
+	fstream adminfile;
+	string adminfilename;
+	string admintemp;
+	vector<string> AdminQQ;
+	adminfilename = "QQ\\Parties\\" + id + "\\" + id + "admin.txt";
+	adminfile.open(adminfilename);
+
+	while (!adminfile.eof())
 	{
-		cout << "你不是该群的群主,无法管理该群" << endl;
+
+		getline(adminfile, temp);
+
+		AdminQQ.push_back(temp);
+
+	}
+	AdminQQ.pop_back();
+
+
+	bool Adminflag = false;
+	for (int i = 0; i < size(AdminQQ); i++)
+	{
+		if (AdminQQ[i] == QQid)
+		{
+			Adminflag = true;
+			break;
+		}
+	}
+
+	if (OwnerQQ == QQid)
+	{
+		cout << "群主你好，欢迎查看入群申请" << endl;
+		
+	}
+	else if (Adminflag == true)
+	{
+		cout << "管理员你好，欢迎查看入群申请" << endl;
+	}
+	else
+	{
+		cout << "你不是该群的群主或管理员,无法管理该群" << endl;
 		cout << "按任意键返回QQ主页" << endl;
 		_getch();
 		_getch();
@@ -2121,6 +2155,296 @@ void QQTools_CHC::AgreeMember()//群主查看申请
 		}
 
 	
+}
+
+void QQTools_CHC::DeletePartyMember()//未测试
+{
+	system("CLS");
+	cout << "请输入要管理的群号" << endl;
+	char c;
+	int line = 0;
+	bool flag = false;
+	string id;
+	string txt = ".txt";
+	string PartyOwner;
+	cin >> id;
+	string filename = "QQ\\Parties\\" + id + "\\" + id + ".txt";
+	ifstream infile;
+	infile.open(filename, ios::in);
+	if (!infile)
+	{
+		cout << "没有此群,请重新输入或返回QQ主页" << endl;
+		cout << "1.重新输入" << endl;
+		cout << "2.返回QQ主页" << endl;
+		int select;
+		cin >> select;
+		switch (select)
+		{
+		case 1:
+			AgreeMember();
+			break;
+
+		case 2:
+			QQMenu();
+			break;
+		}
+	}
+	infile.close();
+
+
+
+	//获取群主QQ
+	fstream outfile;
+	outfile.open(filename);
+	string temp;
+	while (outfile.get(c))
+	{
+		if (c == '\n')
+		{
+			line++;
+			continue;
+		}
+		if (line == 2) //获取群主QQ号
+		{
+			temp.push_back(c);
+		}
+
+	}
+	/*temp.pop_back(); *///删除末尾\n
+	PartyOwner = temp;//群主QQ
+
+
+	//获取群管理员QQ
+	fstream adminfile;
+	string adminfilename;
+	string admintemp;
+	vector<string> AdminQQ;
+	adminfilename = "QQ\\Parties\\" + id + "\\" + id + "admin.txt";
+	adminfile.open(adminfilename);
+	while (!adminfile.eof())
+	{
+
+		getline(adminfile, temp);
+
+		AdminQQ.push_back(temp);
+
+	}
+	AdminQQ.pop_back();
+
+
+
+	//判断是否是管理员或群主
+	bool Adminflag = false;
+	for (int i = 0; i < size(AdminQQ); i++)
+	{
+		if (AdminQQ[i] == QQid)
+		{
+			Adminflag = true;
+			break;
+		}
+	}
+	if (temp != QQid || Adminflag == false)
+	{
+
+		cout << "你不是该群的群主或管理员,无法管理该群" << endl;
+		cout << "按任意键返回QQ主页" << endl;
+		_getch();
+		_getch();
+		QQMenu();
+	}
+	outfile.close();
+	temp.clear();
+
+
+
+
+	//获取群成员
+	fstream Partyfile;
+	string Partyfilename = "QQ\\Parties\\" + id + "\\" + id + ".txt";
+	string PartyMembertemp;
+	vector<string> PartyMember;
+	Partyfile.open(Partyfilename);
+	while (!Partyfile.eof())
+	{
+		getline(Partyfile, PartyMembertemp);
+
+		PartyMember.push_back(PartyMembertemp);
+	}
+	PartyMember.pop_back();
+
+
+
+
+
+	bool Ownerflag = false;
+	Adminflag = false;
+	if (QQid == PartyOwner)
+	{
+		cout << "你为此群群主可以踢出除你外的任何人" << endl;
+		Ownerflag = true;
+	}
+	else
+	{
+		cout << "你为此群管理员，可以踢出除群主和管理员以外的人" << endl;
+		Adminflag = true;
+	}
+
+
+	cout << "请输入要踢出的成员QQ号" << endl;
+	string DeleteMemberQQ;
+	cin >> DeleteMemberQQ;
+
+
+	//检查输入QQ是否是群主或是自己
+	bool checkflag = false;//检查是否有此成员
+	if (DeleteMemberQQ == PartyOwner|| DeleteMemberQQ == QQid)
+	{
+		cout << "无法踢出群主或自己，请重新输入" << endl;
+		cin >> DeleteMemberQQ;
+		while (1)
+		{
+			for (int i = 0; i < size(PartyMember); i++)//检查是否有此成员
+			{
+				if (DeleteMemberQQ == PartyMember[i])
+				{
+					checkflag = true;
+					break;
+				}
+			}
+
+			if (checkflag == false)
+			{
+				cout << "没有此成员请重新输入" << endl;
+				cin >> DeleteMemberQQ;
+				continue;
+			}
+
+			if (Adminflag == true)//如果本账号是管理员则检查踢出成员是否是管理员
+			{
+				for (int i = 0; i < size(AdminQQ); i++)
+				{
+					if (AdminQQ[i] == DeleteMemberQQ)
+					{
+						cout << "管理员不能踢出其他管理员,请重新输入" << endl;
+						cin >> DeleteMemberQQ;
+						continue;
+					}
+				}
+			}
+
+
+			//检查是否是群主或自己
+			if (DeleteMemberQQ != PartyOwner && DeleteMemberQQ!=QQid)
+			{
+				break;
+			}
+			else
+			{
+				cout << "无法踢出群主或自己，请重新输入" << endl;
+				cin >> DeleteMemberQQ;
+				continue;
+			}
+
+		}
+	}
+	
+
+
+	//从该成员群列表中删除此群
+	fstream memberpartylistfile;
+	string memberpartylistfilename = "QQ\\" + DeleteMemberQQ + "\\" + DeleteMemberQQ + "PartyList.txt";
+	string memberpartylisttemp;
+	vector<string> memeberpartylistcontent;
+	memberpartylistfile.open(memberpartylistfilename);
+	while (!memberpartylistfile.eof())
+	{
+		getline(memberpartylistfile, memberpartylisttemp);
+		memeberpartylistcontent.push_back(memberpartylisttemp);
+	}
+	memeberpartylistcontent.pop_back();
+	memberpartylistfile.close();
+
+	for (int i = 0; i < size(memeberpartylistcontent); i++)
+	{
+		if (memeberpartylistcontent[i] == id)
+		{
+			memeberpartylistcontent.erase(memeberpartylistcontent.begin() + i);
+		}
+	}
+
+	memberpartylistfile.open(memberpartylistfilename,ios::trunc);
+	for (int i = 0; i < size(memeberpartylistcontent); i++)
+	{
+		memberpartylistfile << memeberpartylistcontent[i] << endl;
+	}
+
+	
+
+	//从本群成员列表中删除此成员
+	fstream PartyMemberListFile;
+	string PartyMEmberListFileName = "QQ\\Parties\\" + id + "\\" + id + ".txt";
+	string PartyMEmberListTemp;
+	vector<string> PartyMemberListContent;
+	PartyMemberListFile.open(PartyMEmberListFileName);
+	while (!PartyMemberListFile.eof())
+	{
+		getline(PartyMemberListFile, PartyMEmberListTemp);
+
+		PartyMemberListContent.push_back(PartyMEmberListTemp);
+	}
+	PartyMemberListContent.pop_back();
+	PartyMemberListFile.close();
+
+	for (int i = 0; i < size(PartyMemberListContent); i++)
+	{
+		if (PartyMemberListContent[i] == DeleteMemberQQ)
+		{
+			PartyMemberListContent.erase(PartyMemberListContent.begin() + i);
+		}
+	}
+
+	PartyMemberListFile.open(PartyMEmberListFileName, ios::trunc);
+	for (int i = 0; i < size(PartyMemberListContent); i++)
+	{
+
+		PartyMemberListFile << PartyMemberListContent[i] << endl;
+		
+	}
+	PartyMemberListFile.close();
+
+
+
+	//如果该成员是管理员则从管理员列表中删除该QQ
+	for (int i = 0; i < size(AdminQQ); i++)
+	{
+		if (DeleteMemberQQ == AdminQQ[i])
+		{
+			AdminQQ.erase(AdminQQ.begin() + i);
+			adminfile.open(adminfilename, ios::trunc);
+			for (int i = 0; i < size(AdminQQ); i++)
+			{
+				adminfile << AdminQQ[i];
+			}
+			adminfile.close();
+
+			cout << "踢出" << DeleteMemberQQ << "成功" << endl;
+			cout << "按任意键返回QQ主菜单" << endl;
+			_getch();
+			_getch();
+			QQMenu();
+
+		}
+
+		else
+		{
+			cout << "踢出" << DeleteMemberQQ << "成功" <<endl;
+			cout << "按任意键返回QQ主菜单" << endl;
+			_getch();
+			_getch();
+			QQMenu();
+		}
+	}
+
 }
 
 void QQTools_CHC::Client()//聊天服务器
