@@ -36,6 +36,14 @@ public:
 
 	virtual void ChangeFriendsNumber(int num){FriendNumber = num;}
 
+	virtual void ChangePassWord(string pw) { PassWord = pw; }
+
+	virtual void ChangeName(string newname) { Name = newname; }
+
+	virtual void ChangeAutoGraph(string newautograph) { Autograph = newautograph; }
+
+	virtual void ChangeArea(string newarea) { Area = newarea; }
+
 protected:
 
 	int Age; //×¢²áÌìÊý

@@ -498,7 +498,8 @@ void QQTools_CHC::QQMenu()
 	cout << "2.群功能" << endl;
 	cout << "3.游戏功能" << endl;
 	cout << "4.聊天功能" << endl;
-	cout << "5.开通服务" << endl;
+	cout << "5.个人资料" << endl;
+	cout << "6.开通服务" << endl;
 	cout << "0.返回主菜单" << endl;
 	//cout << "1.进入聊天室聊天" << endl;
 	//cout << "2.添加QQ好友" << endl;
@@ -619,6 +620,33 @@ void QQTools_CHC::QQMenu()
 		}
 
 	case 5:
+		cout << "请选择所需的资料功能" << endl;
+		cout << "1.查看个人资料" << endl;
+		cout << "2.修改密码" << endl;
+		cout << "3.修改名称" << endl;
+		cout << "4.修改签名" << endl;
+		cout << "5.修改所在地" << endl;
+		cin >> select;
+		switch (select)
+		{
+		case 1:
+			ShowMyInformation();
+			break;
+		case 2:
+			ChangePassWord();
+			break;
+		case 3:
+			ChangeName();
+			break;
+		case 4:
+			ChangeAutoGraph();
+			break;
+		case 5:
+			ChangeArea();
+			break;
+		}
+		break;
+	case 6:
 		cout << "还没有开发完成" << endl;
 		cout << "按任意键返回QQ主菜单" << endl;
 		_getch();
@@ -2543,6 +2571,172 @@ void QQTools_CHC::PlayGame()
 	c.Game();//整个游戏循环
 
 	_getch();
+
+}
+
+void QQTools_CHC::ShowMyInformation()
+{
+	system("CLS");
+	int Myqq;
+	for (int i = 0; i < size(QQ); i++)
+	{
+		if (QQ[i]->ReturnID() == QQid)
+		{
+			Myqq = i;
+		}
+	}
+	cout << "以下为你的个人信息:" << endl;
+	cout << "帐号:" <<QQ[Myqq]->ReturnID() << endl;
+	cout << "密码:" << QQ[Myqq]->ReturnPassWord() << endl;
+	cout << "姓名:" << QQ[Myqq]->ReturnName() << endl;
+	cout << "地区:" << QQ[Myqq]->ReturnArea() << endl;
+	cout << "个性签名:" << QQ[Myqq]->ReturnAutograph()<< endl;
+	cout << endl;
+	cout << "按任意键返回QQ主菜单" << endl;
+	_getch();
+	_getch();
+	QQMenu();
+}
+
+void QQTools_CHC::ChangePassWord()
+{
+	system("CLS");
+	cout << "输入你的新密码" << endl;
+	string pw;
+	string pwagin;
+	cin >> pw;
+	cout << "再次确认你的新密码" << endl;
+	cin >> pwagin;
+	while (1)
+	{
+		if (pw != pwagin)
+		{
+			cout << "两次密码不符，请重新输入" << endl;
+			cin >> pw;
+			cout << "再次确认你的新密码" << endl;
+			cin >> pwagin;
+			continue;
+		}
+		else
+		{
+			break;
+		}
+	}
+
+	int Myqq;
+
+	for (int i = 0; i < size(QQ); i++)
+	{
+		if (QQ[i]->ReturnID() == QQid)
+		{
+			Myqq = i;
+		}
+	}
+
+	QQ[Myqq]->ChangePassWord(pw);
+	SaveChange();
+
+	cout << "修改密码成功" << endl;
+	cout << "按任意键返回QQ主菜单" << endl;
+	_getch();
+	_getch();
+	QQMenu();
+}
+
+void QQTools_CHC::ChangeName()
+{
+	system("CLS");
+	string newname;
+	cout << "输入你的新名字" << endl;
+	cin >> newname;
+
+	int Myqq;
+
+	for (int i = 0; i < size(QQ); i++)
+	{
+		if (QQ[i]->ReturnID() == QQid)
+		{
+			Myqq = i;
+		}
+	}
+
+	QQ[Myqq]->ChangeName(newname);
+	SaveChange();
+
+	cout << "修改名称成功" << endl;
+	cout << "按任意键返回QQ主菜单" << endl;
+	_getch();
+	_getch();
+	QQMenu();
+}
+
+void QQTools_CHC::ChangeAutoGraph()
+{
+	system("CLS");
+	string autograph;
+	cout << "输入你的新签名" << endl;
+	cin >> autograph;
+	
+	int Myqq;
+	for (int i = 0; i < size(QQ); i++)
+	{
+		if (QQ[i]->ReturnID() == QQid)
+		{
+			Myqq = i;
+		}
+	}
+
+	QQ[Myqq]->ChangeAutoGraph(autograph);
+	cout << "修改个新签名成功" << endl;
+	SaveChange();
+
+	cout << "按任意键返回QQ主菜单" << endl;
+	_getch();
+	_getch();
+	QQMenu();
+}
+
+void QQTools_CHC::ChangeArea()
+{
+	system("CLS");
+	string Area;
+	cout << "输入你的地区" << endl;
+	cin >> Area;
+
+	int Myqq;
+	for (int i = 0; i < size(QQ); i++)
+	{
+		if (QQ[i]->ReturnID() == QQid)
+		{
+			Myqq = i;
+		}
+	}
+	QQ[Myqq]->ChangeArea(Area);
+	SaveChange();
+
+	cout << "按任意键返回QQ主菜单" << endl;
+	_getch();
+	_getch();
+	QQMenu();
+}
+
+void QQTools_CHC::SaveChange()
+{
+	fstream qqfile;
+	string qqfilename = "QQ.txt";
+	qqfile.open(qqfilename, ios::trunc | ios::out);
+	for (int i = 0; i < size(QQ); i++)
+	{
+		qqfile << QQ[i]->ReturnID() << endl;
+		qqfile << QQ[i]->ReturnAge() << endl;
+		qqfile << QQ[i]->ReturnPassWord() << endl;
+		qqfile << QQ[i]->ReturnName() << endl;
+		qqfile << QQ[i]->ReturnArea() << endl;
+		qqfile << QQ[i]->ReturnAutograph() << endl;
+		qqfile << " " << endl;
+	}
+	qqfile.close();
+
 
 }
 

@@ -67,6 +67,18 @@ public:
 
 	void QuitParty();
 
+	void ShowMyInformation();
+
+	void ChangePassWord();
+
+	void SaveChange();
+
+	void ChangeName();
+
+	void ChangeAutoGraph();
+
+	void ChangeArea();
+
 private:
 
 	vector<QQ_CHC*>QQ;
