@@ -64,11 +64,18 @@ QQ_CHC::~QQ_CHC()
 	}
 }
 
+QQFriends_CHC::QQFriends_CHC(string name, string id , string newremarks)
+{
+	FriendName = name;
+	ID = id;
+	Remarks = newremarks;
+}
+
 QQFriends_CHC::QQFriends_CHC(string name, string id)
 {
 	FriendName = name;
 	ID = id;
-	Remarks = "ÎÞ±¸×¢";
+	Remarks = "Î´±¸×¢";
 }
 
 QQParties_CHC::QQParties_CHC(string id, string name, string userid)

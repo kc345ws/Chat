@@ -161,14 +161,16 @@ private:
 
 };
 
-class QQFriends_CHC : public Tencent_CHC
+class QQFriends_CHC
 {
 
 public:
 
 	friend class QQ_CHC;
 
-	QQFriends_CHC(string name ,string id);
+	QQFriends_CHC(string name, string id, string newremarks);
+
+	QQFriends_CHC(string name, string id);
 
 	string ReturnFriendName(){return FriendName;}
 

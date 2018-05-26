@@ -526,6 +526,7 @@ void QQTools_CHC::QQMenu()
 		cout << "3.删除好友" << endl;
 		cout << "4.查看好友申请" << endl;
 		cout << "5.查看好友资料" << endl;
+		cout << "6.修改好友备注" << endl;
 		cout << "0.返回QQ主菜单" << endl;
 		cin >> select;
 		switch (select)
@@ -544,6 +545,9 @@ void QQTools_CHC::QQMenu()
 			break;
 		case 5:
 			ShowFriendInformation();
+			break;
+		case 6:
+			ChangeFriendRemarks();
 			break;
 		default:
 			QQMenu();
@@ -998,7 +1002,7 @@ void QQTools_CHC::GetFriends()
 		file >> id;
 		file >> name;
 		file >> remarks;
-		QQ[Myqq]->ReturnFriendList().emplace_back(new QQFriends_CHC(name, id));
+		QQ[Myqq]->ReturnFriendList().emplace_back(new QQFriends_CHC(name, id , remarks));
 	}
 
 	file.close();
@@ -2842,6 +2846,27 @@ void QQTools_CHC::SaveChange()
 	qqfile.close();
 
 
+	fstream qqfriendlistfile;
+	string qqfriendlistfilename = "QQ\\" + QQid + "\\" + QQid + "Friendlist.txt";
+	qqfriendlistfile.open(qqfriendlistfilename, ios::out | ios::trunc);
+
+	int Myqq;
+	for (int i = 0; i < size(QQ); i++)
+	{
+		if (QQ[i]->ReturnID() == QQid)
+		{
+			Myqq = i;
+		}
+	}
+
+	for (int i = 0; i < size(QQ[Myqq]->ReturnFriendList()); i++)
+	{
+		qqfriendlistfile << QQ[Myqq]->ReturnFriendList()[i]->ReturnID() << endl;
+		qqfriendlistfile << QQ[Myqq]->ReturnFriendList()[i]->ReturnFriendName() << endl;
+		qqfriendlistfile << QQ[Myqq]->ReturnFriendList()[i]->ReturnRemarks() << endl;
+		qqfriendlistfile << " " << endl;
+	}
+	qqfriendlistfile.close();
 }
 
 void QQTools_CHC::ShowFriendNoReturn()
@@ -2942,11 +2967,22 @@ void QQTools_CHC::ShowFriendInformation()
 		}
 	}
 
+	int friendremarks;
+	for (int i = 0; i < size(QQ[Myqq]->ReturnFriendList()); i++)
+	{
+		if (QQ[Myqq]->ReturnFriendList()[i]->ReturnID() == FriendQQ)
+		{
+			friendremarks = i;
+		}
+	}
+
 	cout << "以下为此好友信息" << endl;
 	cout << "帐号:" << QQ[friendid]->ReturnID() << endl;
 	cout << "姓名:" << QQ[friendid]->ReturnName() << endl;
+	cout << "备注:" << QQ[Myqq]->ReturnFriendList()[friendremarks]->ReturnRemarks() << endl;
 	cout << "个性签名:" << QQ[friendid]->ReturnAutograph() << endl;
 	cout << "所在地区:" << QQ[friendid]->ReturnArea() << endl;
+
 	cout << endl;
 
 	cout << "按任意键返回QQ主菜单" << endl;
@@ -3025,6 +3061,7 @@ void QQTools_CHC::ChangeFriendRemarks()
 	}
 
 	QQ[Myqq]->ReturnFriendList()[friendid]->ChangeRemarks(NewRemarks);
+	SaveChange();
 
 	cout << "修改备注成功" << endl;
 	cout << "按任意键返回QQ主菜单" << endl;
