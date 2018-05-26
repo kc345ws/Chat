@@ -68,6 +68,7 @@ QQFriends_CHC::QQFriends_CHC(string name, string id)
 {
 	FriendName = name;
 	ID = id;
+	Remarks = "ÎÞ±¸×¢";
 }
 
 QQParties_CHC::QQParties_CHC(string id, string name, string userid)

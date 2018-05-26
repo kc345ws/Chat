@@ -79,6 +79,12 @@ public:
 
 	void ChangeArea();
 
+	void ShowFriendInformation();
+
+	void ShowFriendNoReturn();
+
+	void ChangeFriendRemarks();
+
 private:
 
 	vector<QQ_CHC*>QQ;

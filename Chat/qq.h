@@ -174,12 +174,17 @@ public:
 
 	string ReturnID(){return ID;}
 
+	string ReturnRemarks() {return Remarks;}
+
+	void ChangeRemarks(string newremarks) { Remarks = newremarks; }
 
 private:
 	
 	string FriendName;
 
 	string ID;
+
+	string Remarks;
 
 };
 
