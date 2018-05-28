@@ -208,15 +208,19 @@ public:
 
 	vector<string> &ReturnPartyMembers() { return PartyMembrs; }
 
+	vector<string> &ReturnAdminsID() { return AdminsList; }
+
 private:
 	
-	string PartyID;
+	string PartyID;//群号
 
-	string PartyName;
+	string PartyName;//群名称
 
-	string CreatUserID;
+	string CreatUserID;//群主
 
-	vector<string> PartyMembrs;
+	vector<string> PartyMembrs;//群成员列表
+
+	vector<string> AdminsList;//管理员列表
 
 };
 

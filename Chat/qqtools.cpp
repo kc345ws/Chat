@@ -435,8 +435,6 @@ void QQTools_CHC::LoginQQ()
 		if (QQ[i]->ReturnID() == ID)
 		{
 			flag = true;
-			GetFriends();//获取好友
-			GetQQParty();//获取群
 		}
 	}
 	if (flag != true)
@@ -452,6 +450,8 @@ void QQTools_CHC::LoginQQ()
 	{
 		if (QQ[i]->ReturnID() == ID && QQ[i]->ReturnPassWord() == PassWord)
 		{
+			GetFriends();//获取好友
+			GetQQParty();//获取群
 			cout << "登陆成功" << endl;
 			cout << "按任意键开始使用QQ" << endl;
 			_getch();
@@ -467,7 +467,8 @@ void QQTools_CHC::LoginQQ()
 			{
 				cout << "登陆成功" << endl;
 				cout << "按任意键开始使用QQ" << endl;
-				getch();
+				_getch();
+				_getch();
 				QQMenu();
 				break;
 			}
@@ -566,6 +567,7 @@ void QQTools_CHC::QQMenu()
 		cout << "5.查看入群申请" << endl;
 		cout << "6.添加QQ群管理员" << endl;
 		cout << "7.踢出群成员" << endl;
+		cout << "8.查看群成员信息" << endl;
 		cout << "0.返回主菜单" << endl;
 		cin >> select;
 		switch (select)
@@ -590,6 +592,9 @@ void QQTools_CHC::QQMenu()
 			break;
 		case 7:
 			DeletePartyMember();
+			break;
+		case 8:
+			ShowPartyInformation();
 			break;
 		default:
 			QQMenu();
@@ -1952,6 +1957,115 @@ void QQTools_CHC::GetQQParty() //从文件读取该QQ的群，并保存到容器
 		QQ[Myqq]->ReturnPartyList().emplace_back(new QQParties_CHC(id , name , userid));
 	}
 
+
+
+	//获取群成员
+	fstream QQPartyMemberFile;
+	string QQPartyMemberFileName;
+	string QQPartyMemberFileTemp;
+	string OwnerQQ;
+	vector<string>QQPartyMemberFileContent;
+
+	int ThisPartyID;
+	string QQPartyID;
+	for (int i = 0; i < size(QQ); i++)
+	{
+		if (QQ[i]->ReturnID() == QQid)
+		{
+			Myqq = i;
+		}
+	}
+	
+	for (int i = 0; i < size(party); i++)
+	{
+		QQPartyMemberFileName = "QQ\\Parties\\" + party[i] + "\\" + party[i] + ".txt";
+		QQPartyMemberFile.open(QQPartyMemberFileName);
+
+		while (!QQPartyMemberFile.eof())
+		{
+			getline(QQPartyMemberFile, QQPartyMemberFileTemp);
+
+			QQPartyMemberFileContent.push_back(QQPartyMemberFileTemp);
+		}
+		QQPartyID = QQPartyMemberFileContent[0];
+		OwnerQQ = QQPartyMemberFileContent[2];
+		QQPartyMemberFileContent.erase(QQPartyMemberFileContent.begin());
+		QQPartyMemberFileContent.erase(QQPartyMemberFileContent.begin());
+		QQPartyMemberFileContent.erase(QQPartyMemberFileContent.begin());
+		QQPartyMemberFileContent.erase(QQPartyMemberFileContent.begin());
+		if (QQPartyMemberFileContent.size() != 0)
+		{
+			QQPartyMemberFileContent.pop_back();
+		}
+
+		for (int i = 0; i < size(QQ[Myqq]->ReturnPartyList()); i++)
+		{
+			if (QQ[Myqq]->ReturnPartyList()[i]->ReturnPartyID() == QQPartyID)
+			{
+				ThisPartyID = i;
+				break;
+			}
+		}
+		
+		QQ[Myqq]->ReturnPartyList()[ThisPartyID]->ReturnPartyMembers().push_back(OwnerQQ);
+		for (int i = 0; i < QQPartyMemberFileContent.size(); i++)
+		{
+			QQ[Myqq]->ReturnPartyList()[ThisPartyID]->ReturnPartyMembers().push_back(QQPartyMemberFileContent[i]);
+		}
+
+
+		//BUG修复
+		QQPartyMemberFileContent.clear();
+		QQPartyMemberFileContent.shrink_to_fit();
+		QQPartyMemberFile.close();
+	}
+
+
+
+
+	//获取群管理员QQ
+	fstream adminfile;
+	string adminfilename;
+	string admintemp;
+	string ThidPartyID;
+
+	//int ThisAdmin;
+	/*vector<string> AdminQQ;*/
+	for (int i = 0; i < size(QQ[Myqq]->ReturnPartyList()); i++)
+	{
+		ThidPartyID = QQ[Myqq]->ReturnPartyList()[i]->ReturnPartyID();
+
+		adminfilename = "QQ\\Parties\\" + ThidPartyID + "\\" + ThidPartyID + "admin.txt";
+		adminfile.open(adminfilename);
+
+		while (!adminfile.eof())
+		{
+
+			getline(adminfile, admintemp);
+
+			QQ[Myqq]->ReturnPartyList()[i]->ReturnAdminsID().push_back(admintemp);
+
+		}
+		if (QQ[Myqq]->ReturnPartyList()[i]->ReturnAdminsID().size() != 0)
+		{
+			QQ[Myqq]->ReturnPartyList()[i]->ReturnAdminsID().pop_back();
+		}
+
+		adminfile.close();
+
+	}
+	/*adminfilename = "QQ\\Parties\\" + id + "\\" + id + "admin.txt";*/
+	/*adminfile.open(adminfilename);*/
+	/*while (!adminfile.eof())
+	{
+
+		getline(adminfile, temp);
+
+		AdminQQ.push_back(temp);
+
+	}*/
+	/*AdminQQ.pop_back();*/
+
 }
 
 void QQTools_CHC::ShowQQParty()
@@ -1975,6 +2089,7 @@ void QQTools_CHC::ShowQQParty()
 		cout << endl;
 	}
 	cout << "按任意键返回QQ主页" << endl;
+	_getch();
 	_getch();
 	QQMenu();
 }
@@ -2012,7 +2127,8 @@ void QQTools_CHC::AddPartyMember()
 
 void QQTools_CHC::AgreeMember()//群主查看申请
 {
-
+	system("CLS");
+	ShowQQPartyNoReturn();
 	cout << "请输入要管理的群号" << endl;
 	char c;
 	int line = 0;
@@ -2299,6 +2415,7 @@ void QQTools_CHC::AgreeMember()//群主查看申请
 void QQTools_CHC::DeletePartyMember()//未测试
 {
 	system("CLS");
+	ShowQQPartyNoReturn();
 	cout << "请输入要管理的群号" << endl;
 	char c;
 	int line = 0;
@@ -3069,6 +3186,203 @@ void QQTools_CHC::ChangeFriendRemarks()
 	_getch();
 	QQMenu();
 
+
+}
+
+void QQTools_CHC::ShowQQPartyNoReturn()
+{
+	int Myqq;
+	for (int i = 0; i < size(QQ); i++)
+	{
+		if (QQ[i]->ReturnID() == QQid)
+		{
+			Myqq = i;
+		}
+	}
+	cout << "你共有" << QQ[Myqq]->ReturnPartyNumber() << "个群" << endl;
+	for (int i = 0; i < QQ[Myqq]->ReturnPartyNumber(); i++)
+	{
+		cout << "第" << QQ[Myqq]->ReturnPartyNumber() << "个群" << endl;
+		cout << "群号:" << QQ[Myqq]->ReturnPartyList()[i]->ReturnPartyID() << endl;
+		cout << "群名称:" << QQ[Myqq]->ReturnPartyList()[i]->ReturnPartyName() << endl;
+		cout << "群主:" << QQ[Myqq]->ReturnPartyList()[i]->ReturnCreatUserID() << endl;
+		cout << endl;
+	}
+
+}
+
+//void QQTools_CHC::ShowPartyMemberS()
+//{
+//	ShowQQPartyNoReturn();
+//	cout << "请输入你要查看成员的QQ群,或输入#返回QQ主菜单" << endl;
+//	string  QQPartyID;
+//	cin >> QQPartyID;
+//
+//	
+//
+//	system("CLS");
+//
+//	
+//	if (QQPartyID == "#")
+//	{
+//		QQMenu();
+//	}
+//	bool CheckFlag = false;
+//	while (1)
+//	{
+//		for (int i = 0; i < size(QQ[Myqq]->ReturnPartyList()); i++)
+//		{
+//			if (QQ[Myqq]->ReturnPartyList()[i]->ReturnPartyID() == QQPartyID)
+//			{
+//				CheckFlag = true;
+//				break;
+//			}
+//			else
+//			{
+//				cout << "你没有加入此群，请重新输入或输入#返回QQ主菜单" << endl;
+//				cin >> QQPartyID;
+//				continue;
+//			}
+//		}
+//	}
+//
+//
+//
+//
+//
+//
+//	cout << "按任意键返回QQ主菜单" << endl;
+//	_getch();
+//	_getch();
+//	QQMenu();
+//}
+
+void QQTools_CHC::ShowPartyInformation()
+{
+	system("CLS");
+	ShowQQPartyNoReturn();
+
+	cout << "请输入你要查询成员信息的QQ群,或输入#返回QQ主菜单" << endl;
+	string  QQPartyID;
+	cin >> QQPartyID;
+	if (QQPartyID == "#")
+	{
+		QQMenu();
+	}
+	/*cout << "请输入你要查询信息的成员QQ" << endl;
+	string QQPartyMemberID;
+	cin >> QQPartyMemberID;*/
+	int Myqq;
+	int ThisQQPartyID;
+	int ThisQQ;
+	string ThisQQID;
+
+	for (int i = 0; i < size(QQ); i++)
+	{
+		if (QQ[i]->ReturnID() == QQid)
+		{
+			Myqq = i;
+			break;
+		}
+	}
+
+	bool CheckFlag = false;
+	while (1)
+	{
+		for (int i = 0; i < size(QQ[Myqq]->ReturnPartyList()); i++)
+		{
+			if (QQ[Myqq]->ReturnPartyList()[i]->ReturnPartyID() == QQPartyID)
+			{
+				CheckFlag = true;
+				break;
+			}
+
+		}
+
+		if (CheckFlag == true)
+		{
+			break;
+		}
+		else
+		{
+			cout << "你没有加入此群，请重新输入或输入#返回QQ主菜单" << endl;
+			cin >> QQPartyID;
+			continue;
+		}
+	}
+
+
+	system("CLS");
+	bool AdminFlag = false;
+	for (int i = 0; i < size(QQ[Myqq]->ReturnPartyList()); i++)
+	{
+		if (QQ[Myqq]->ReturnPartyList()[i]->ReturnPartyID() == QQPartyID)
+		{
+			ThisQQPartyID = i;
+			break;
+		}
+	}
+
+	for (int i = 0; i < size(QQ[Myqq]->ReturnPartyList()[ThisQQPartyID]->ReturnPartyMembers()); i++)
+	{
+		int m = size(QQ[Myqq]->ReturnPartyList()[ThisQQPartyID]->ReturnPartyMembers());
+
+		ThisQQID = QQ[Myqq]->ReturnPartyList()[ThisQQPartyID]->ReturnPartyMembers()[i];//从群列表获取群成员QQ
+		for (int i = 0; i < size(QQ); i++)
+		{
+			if (QQ[i]->ReturnID() == ThisQQID)
+			{
+				ThisQQ = i;
+				break;
+			}
+		}
+		for (int i = 0; i < size(QQ[Myqq]->ReturnPartyList()[ThisQQPartyID]->ReturnAdminsID()); i++)
+		{
+			if (QQ[Myqq]->ReturnPartyList()[ThisQQPartyID]->ReturnAdminsID()[i] == ThisQQID)
+			{
+				AdminFlag = true;
+				break;
+			}
+		}
+		if (ThisQQID == QQ[Myqq]->ReturnPartyList()[ThisQQPartyID]->ReturnCreatUserID())
+		{
+			cout << "第" << i + 1 << "个成员信息:" << endl;
+			cout << "帐号:" << QQ[ThisQQ]->ReturnID() << endl;
+			cout << "姓名:" << QQ[ThisQQ]->ReturnName() << endl;
+			cout << "群成员属性:群主" << endl;
+			cout << "所在地区:" << QQ[ThisQQ]->ReturnArea() << endl;
+			cout << "个性签名:" << QQ[ThisQQ]->ReturnAutograph() << endl;
+			cout << endl;
+		}
+		else if (AdminFlag == true)
+		{
+			cout << "第" << i + 1 << "个成员信息:" << endl;
+			cout << "帐号:" << QQ[ThisQQ]->ReturnID() << endl;
+			cout << "姓名:" << QQ[ThisQQ]->ReturnName() << endl;
+			cout << "群成员属性:管理员" << endl;
+			cout << "所在地区:" << QQ[ThisQQ]->ReturnArea() << endl;
+			cout << "个性签名:" << QQ[ThisQQ]->ReturnAutograph() << endl;
+			cout << endl;
+			AdminFlag = false;
+		}
+
+		else
+		{
+			cout << "第" << i + 1 << "个成员信息:" << endl;
+			cout << "帐号:" << QQ[ThisQQ]->ReturnID() << endl;
+			cout << "姓名:" << QQ[ThisQQ]->ReturnName() << endl;
+			cout << "群成员属性:普通成员" << endl;
+			cout << "所在地区:" << QQ[ThisQQ]->ReturnArea() << endl;
+			cout << "个性签名:" << QQ[ThisQQ]->ReturnAutograph() << endl;
+			cout << endl;
+		}
+	}
+
+	cout << endl;
+	cout << "按任意键返回QQ主菜单" << endl;
+	_getch();
+	_getch();
+	QQMenu();
 
 }
 

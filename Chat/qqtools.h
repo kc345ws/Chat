@@ -85,6 +85,12 @@ public:
 
 	void ChangeFriendRemarks();
 
+	void ShowPartyInformation();
+
+	void ShowQQPartyNoReturn();
+
+	void ShowPartyMemberS();
+
 private:
 
 	vector<QQ_CHC*>QQ;
