@@ -6,13 +6,14 @@
 
 #include <windows.h>
 
-#include "qqtools.h"
 
 #include "GreedySnake.h"
 
+
 #include <cstdlib>
 
-QQTools_CHC QQtools;
+
+
 
 void Controller::Start()//开始界面
 
@@ -904,9 +905,9 @@ void Controller::Game()//游戏一级循环
 		else if (tmp == 2) //返回值为2时退出游戏
 
 		{
-			/*QQTools_CHC QQtools;
+			/*QQTools_CHC QQTools;
 */
-			QQtools.QQMenu();
+			QQTools.QQMenu();
 
 			break;
 

@@ -4,6 +4,8 @@
 
 #include <vector>
 #include <deque>
+#include"tools.h"
+
 
 class Snake;
 class Point;

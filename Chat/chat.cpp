@@ -1,5 +1,5 @@
 #include<iostream>
-#include"qq.h"
+#include"chat.h"
 #include<time.h>
 #include "stdafx.h"
 #include<conio.h>

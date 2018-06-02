@@ -30,7 +30,13 @@
     <ClCompile Include="qqtools.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="qq.cpp">
+    <ClCompile Include="weibotools.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="weichattools.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="chat.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -50,10 +56,10 @@
     <ClInclude Include="GreedySnake.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="qqtools.h">
+    <ClInclude Include="chat.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="qq.h">
+    <ClInclude Include="tools.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

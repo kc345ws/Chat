@@ -161,6 +161,7 @@ private:
 
 };
 
+
 class QQFriends_CHC
 {
 
@@ -221,6 +222,31 @@ private:
 	vector<string> PartyMembrs;//群成员列表
 
 	vector<string> AdminsList;//管理员列表
+
+};
+
+
+class WeiBo_CHC: public Tencent_CHC//微博类
+{
+public:
+
+	vector<string> &ReturnWeiBoContent() { return WeiBoContent; }
+
+	WeiBo_CHC(){}
+
+	WeiBo_CHC(string id) { ID = id; LinkedQQ = id; }
+
+private:
+
+	string LinkedQQ;//绑定的QQ
+
+	vector<string>WeiBoContent;//微博内容
+
+};
+
+
+class WeiChat_CHC : public Tencent_CHC
+{
 
 };
 

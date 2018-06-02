@@ -1,6 +1,6 @@
 ﻿#include<iostream>
-#include"qqtools.h"
-#include"qq.h"
+#include"tools.h"
+#include"chat.h"
 #include<conio.h>
 #include "stdafx.h"
 #include "Initsock.h"
@@ -18,8 +18,11 @@ using namespace std;
 //string QQparty;//创建的群号;
 /*string PartyMember;*/ //申请加群的QQ号
 
+WeiBoTools_CHC WeiBoTools;
+QQTools_CHC QQTools;
 
-void QQTools_CHC::SaveQQ()
+
+void QQToolsBase_CHC::SaveQQ()
 {
 	ofstream file;
 	file.open("QQ.txt",ios::app);
@@ -39,7 +42,7 @@ void QQTools_CHC::SaveQQ()
 	file.close();
 }
 
-void QQTools_CHC::SaveFriends()
+void QQToolsBase_CHC::SaveFriends()
 {
 	int i = 0, Myqq, n;
 	ofstream file;
@@ -75,7 +78,7 @@ void QQTools_CHC::SaveFriends()
 	
 }
 
-void QQTools_CHC::GetQQ()
+void QQToolsBase_CHC::GetQQ()
 {
 	int qage;
 	string qqid;
@@ -106,7 +109,7 @@ void QQTools_CHC::GetQQ()
 	}
 }
 
-void QQTools_CHC::ShowQQ()
+void QQToolsBase_CHC::ShowQQ()
 {
 	system("CLS");
 	vector<QQ_CHC*>qq;
@@ -182,7 +185,7 @@ void QQTools_CHC::ShowQQ()
 	Menu();
 }
 
-void QQTools_CHC::Menu()
+void QQToolsBase_CHC::Menu()
 {
 	system("CLS");
 	int select , key = 1;
@@ -216,12 +219,12 @@ void QQTools_CHC::Menu()
 		{
 		case 1:
 
-			LoginQQ();
+			Login();
 			break;
 
 		case 2:
 
-			ApplyQQ();
+			Apply();
 			break;
 
 		case 3:
@@ -255,7 +258,7 @@ void QQTools_CHC::Menu()
 	
 }
 
-//void QQTools_CHC::QQSelectMenu()
+//void QQToolsBase_CHC::QQSelectMenu()
 //{
 //	/*getch();*/
 //	system("CLS");
@@ -388,12 +391,12 @@ void QQTools_CHC::Menu()
 //		{
 //			if (key == 1)
 //			{
-//				LoginQQ();
+//				Login();
 //			}
 //
 //			else if (key == 2)
 //			{
-//				ApplyQQ();
+//				Apply();
 //			}
 //
 //			else if (key == 3)
@@ -406,7 +409,7 @@ void QQTools_CHC::Menu()
 //	
 //}
 
-void QQTools_CHC::ApplyQQ()
+void QQToolsBase_CHC::Apply()
 {
 	system("CLS");
 	QQ.emplace_back(new QQ_CHC());
@@ -418,7 +421,7 @@ void QQTools_CHC::ApplyQQ()
 	Menu();
 }
 
-void QQTools_CHC::LoginQQ()
+void QQToolsBase_CHC::Login()
 {
 	system("CLS");
 	string ID;
@@ -485,7 +488,7 @@ void QQTools_CHC::LoginQQ()
 	}
 }
 
-void QQTools_CHC::QQMenu()
+void QQToolsBase_CHC::QQMenu()
 {
 	system("CLS");
 	/*SetColor(6);*/
@@ -661,11 +664,21 @@ void QQTools_CHC::QQMenu()
 		}
 		break;
 	case 6:
-		cout << "还没有开发完成" << endl;
-		cout << "按任意键返回QQ主菜单" << endl;
-		_getch();
-		_getch();
-		QQMenu();
+		cout << "请选择所需功能:" << endl;
+		cout << "1.开通微博" << endl;
+		cin >> select;
+		switch (select)
+		{
+		case 1:
+			CreateWeiBo();
+			break;
+		default:
+			cout << "选择错误，按任意键返回QQ主菜单" << endl;
+			_getch();
+			_getch();
+			QQMenu();
+			break;
+		}
 		break;
 	case 0:
 		
@@ -703,7 +716,7 @@ void QQTools_CHC::QQMenu()
 	_getch();
 }
 
-void QQTools_CHC::AddFriend()
+void QQToolsBase_CHC::AddFriend()
 {
 	system("CLS");
 	int Myqq;
@@ -782,7 +795,7 @@ void QQTools_CHC::AddFriend()
 	QQMenu();
 }
 
-void QQTools_CHC::DeleteFriend()
+void QQToolsBase_CHC::DeleteFriend()
 {
 	system("CLS");
 
@@ -928,7 +941,7 @@ void QQTools_CHC::DeleteFriend()
 	QQMenu();
 }
 
-void QQTools_CHC::ShowFriends()
+void QQToolsBase_CHC::ShowFriends()
 {
 	system("CLS");
 	//GetFriends();
@@ -972,7 +985,7 @@ void QQTools_CHC::ShowFriends()
 	QQMenu();
 }
 
-void QQTools_CHC::GetFriends()
+void QQToolsBase_CHC::GetFriends()
 {
 	ifstream file;
 	string qq = QQid;
@@ -1013,7 +1026,7 @@ void QQTools_CHC::GetFriends()
 	file.close();
 }
 
-void QQTools_CHC::AgreeFriend()
+void QQToolsBase_CHC::AgreeFriend()
 {
 	system("CLS");
 	fstream myqqfile;
@@ -1379,7 +1392,7 @@ void QQTools_CHC::AgreeFriend()
 
 }
 
-void QQTools_CHC::CreatQQparty()//创建QQ群
+void QQToolsBase_CHC::CreatQQparty()//创建QQ群
 {
 	system("CLS");
 	int Myqq;
@@ -1491,7 +1504,7 @@ void QQTools_CHC::CreatQQparty()//创建QQ群
 //	QQMenu();
 //}
 
-void QQTools_CHC::QuitParty()
+void QQToolsBase_CHC::QuitParty()
 {
 	/*ShowQQParty();*/
 
@@ -1688,7 +1701,7 @@ void QQTools_CHC::QuitParty()
 
 }
 
-void QQTools_CHC::AddPartyAdmin()//添加群管理员
+void QQToolsBase_CHC::AddPartyAdmin()//添加群管理员
 {
 
 	cout << "请输入要管理的群号" << endl;
@@ -1862,7 +1875,7 @@ void QQTools_CHC::AddPartyAdmin()//添加群管理员
 	QQMenu();
 }
 
-void QQTools_CHC::SaveQQParty() //每创建一个群便将该群保存成一个.txt文件
+void QQToolsBase_CHC::SaveQQParty() //每创建一个群便将该群保存成一个.txt文件
 {
 	system("CLS");
 	int i = 0, Myqq, n;
@@ -1892,7 +1905,7 @@ void QQTools_CHC::SaveQQParty() //每创建一个群便将该群保存成一个.
 
 }
 
-void QQTools_CHC::GetQQParty() //从文件读取该QQ的群，并保存到容器中
+void QQToolsBase_CHC::GetQQParty() //从文件读取该QQ的群，并保存到容器中
 {
 	int Myqq, line = 0;
 	char c;
@@ -2068,7 +2081,7 @@ void QQTools_CHC::GetQQParty() //从文件读取该QQ的群，并保存到容器
 
 }
 
-void QQTools_CHC::ShowQQParty()
+void QQToolsBase_CHC::ShowQQParty()
 {
 	system("CLS");
 	int Myqq;
@@ -2094,7 +2107,7 @@ void QQTools_CHC::ShowQQParty()
 	QQMenu();
 }
 
-void QQTools_CHC::AddPartyMember()
+void QQToolsBase_CHC::AddPartyMember()
 {
 	system("CLS");
 	cout << "请输入你想加入的群" << endl;
@@ -2125,7 +2138,7 @@ void QQTools_CHC::AddPartyMember()
 	QQMenu();
 }
 
-void QQTools_CHC::AgreeMember()//群主查看申请
+void QQToolsBase_CHC::AgreeMember()//群主查看申请
 {
 	system("CLS");
 	ShowQQPartyNoReturn();
@@ -2412,7 +2425,7 @@ void QQTools_CHC::AgreeMember()//群主查看申请
 	
 }
 
-void QQTools_CHC::DeletePartyMember()//未测试
+void QQToolsBase_CHC::DeletePartyMember()//未测试
 {
 	system("CLS");
 	ShowQQPartyNoReturn();
@@ -2728,7 +2741,7 @@ void QQTools_CHC::DeletePartyMember()//未测试
 
 }
 
-void QQTools_CHC::Client()//聊天服务器
+void QQToolsBase_CHC::Client()//聊天服务器
 {
 	system("CLS");
 	// 创建套节字
@@ -2789,7 +2802,7 @@ void QQTools_CHC::Client()//聊天服务器
 	::closesocket(s);
 }
 
-void QQTools_CHC::PlayGame()
+void QQToolsBase_CHC::PlayGame()
 {
 	Controller c;//声明一个Controller类
 
@@ -2799,7 +2812,7 @@ void QQTools_CHC::PlayGame()
 
 }
 
-void QQTools_CHC::ShowMyInformation()
+void QQToolsBase_CHC::ShowMyInformation()
 {
 	system("CLS");
 	int Myqq;
@@ -2823,7 +2836,7 @@ void QQTools_CHC::ShowMyInformation()
 	QQMenu();
 }
 
-void QQTools_CHC::ChangePassWord()
+void QQToolsBase_CHC::ChangePassWord()
 {
 	system("CLS");
 	cout << "输入你的新密码" << endl;
@@ -2868,7 +2881,7 @@ void QQTools_CHC::ChangePassWord()
 	QQMenu();
 }
 
-void QQTools_CHC::ChangeName()
+void QQToolsBase_CHC::ChangeName()
 {
 	system("CLS");
 	string newname;
@@ -2895,7 +2908,7 @@ void QQTools_CHC::ChangeName()
 	QQMenu();
 }
 
-void QQTools_CHC::ChangeAutoGraph()
+void QQToolsBase_CHC::ChangeAutoGraph()
 {
 	system("CLS");
 	string autograph;
@@ -2921,7 +2934,7 @@ void QQTools_CHC::ChangeAutoGraph()
 	QQMenu();
 }
 
-void QQTools_CHC::ChangeArea()
+void QQToolsBase_CHC::ChangeArea()
 {
 	system("CLS");
 	string Area;
@@ -2945,7 +2958,7 @@ void QQTools_CHC::ChangeArea()
 	QQMenu();
 }
 
-void QQTools_CHC::SaveChange()
+void QQToolsBase_CHC::SaveChange()
 {
 	fstream qqfile;
 	string qqfilename = "QQ.txt";
@@ -2986,7 +2999,7 @@ void QQTools_CHC::SaveChange()
 	qqfriendlistfile.close();
 }
 
-void QQTools_CHC::ShowFriendNoReturn()
+void QQToolsBase_CHC::ShowFriendNoReturn()
 {
 	//GetFriends();
 
@@ -3024,7 +3037,7 @@ void QQTools_CHC::ShowFriendNoReturn()
 	}
 }
 
-void QQTools_CHC::ShowFriendInformation()
+void QQToolsBase_CHC::ShowFriendInformation()
 {
 	system("CLS");
 	ShowFriendNoReturn();
@@ -3109,7 +3122,7 @@ void QQTools_CHC::ShowFriendInformation()
 
 }
 
-void QQTools_CHC::ChangeFriendRemarks()
+void QQToolsBase_CHC::ChangeFriendRemarks()
 {
 	system("CLS");
 	ShowFriendNoReturn();
@@ -3189,7 +3202,7 @@ void QQTools_CHC::ChangeFriendRemarks()
 
 }
 
-void QQTools_CHC::ShowQQPartyNoReturn()
+void QQToolsBase_CHC::ShowQQPartyNoReturn()
 {
 	int Myqq;
 	for (int i = 0; i < size(QQ); i++)
@@ -3211,7 +3224,7 @@ void QQTools_CHC::ShowQQPartyNoReturn()
 
 }
 
-//void QQTools_CHC::ShowPartyMemberS()
+//void QQToolsBase_CHC::ShowPartyMemberS()
 //{
 //	ShowQQPartyNoReturn();
 //	cout << "请输入你要查看成员的QQ群,或输入#返回QQ主菜单" << endl;
@@ -3257,7 +3270,7 @@ void QQTools_CHC::ShowQQPartyNoReturn()
 //	QQMenu();
 //}
 
-void QQTools_CHC::ShowPartyInformation()
+void QQToolsBase_CHC::ShowPartyInformation()
 {
 	system("CLS");
 	ShowQQPartyNoReturn();
@@ -3384,6 +3397,71 @@ void QQTools_CHC::ShowPartyInformation()
 	_getch();
 	QQMenu();
 
+}
+
+void QQToolsBase_CHC::ShowPartyMemberS()
+{
+}
+
+void QQToolsBase_CHC::CreateWeiBo()
+{
+	system("CLS");
+	int Myqq;
+	string WeiBoDirectory = "WeiBo\\" + QQid;
+	/*fstream WeiBoListFile;
+	string WeiBoListFileName = "WeiBoList.txt";*/
+	for (int i = 0; i < size(QQ); i++)
+	{
+		if (QQ[i]->ReturnID() == QQid)
+		{
+			Myqq = i;
+		}
+	}
+
+	//判断是否已经开通微博
+	for (int i = 0; i < size(WeiBoTools.ReturnWeiBolist()); i++)
+	{
+		if (WeiBoTools.ReturnWeiBolist()[i]->ReturnID() == QQid)
+		{
+			cout << "你已开通微博，无需重复开通" << endl;
+			cout << "按任意键返回QQ主菜单" << endl;
+			_getch();
+			_getch();
+			QQMenu();
+		}
+	}
+
+	cout << "你的微博号:" << QQid << endl;
+	cout << "姓名:" << QQ[Myqq]->ReturnName() << endl;
+	cout << "是否要开通微博？" << endl;
+	cout << "1.确定" << endl;
+	cout << "2.取消" << endl;
+	int select;
+	cin >> select;
+	switch (select)
+	{
+	case 1:
+		WeiBoTools.ReturnWeiBolist().emplace_back(new WeiBo_CHC(QQid));
+		/*WeiBoListFile.open(WeiBoListFileName, ios::app);*/
+		CreateDirectory(WeiBoDirectory.c_str(), NULL);//创建文件夹
+		WeiBoTools.SaveWeiBo();
+		/*WeiBoListFile << QQid << endl;
+		WeiBoListFile.close();*/
+		cout << "开通微博成功" << endl;
+		cout << "按任意键返回QQ主菜单" << endl;
+		_getch();
+		_getch();
+		QQMenu();
+		break;
+
+	default:
+		cout << "你取消了开通创建" << endl;
+		cout << "按任意键返回QQ主菜单" << endl;
+		_getch();
+		_getch();
+		QQMenu();
+		break;
+	}
 }
 
 
