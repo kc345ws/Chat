@@ -20,6 +20,7 @@ using namespace std;
 
 WeiBoTools_CHC WeiBoTools;
 QQTools_CHC QQTools;
+WeiChatTools_CHC WeiChatTools;
 
 
 void QQToolsBase_CHC::SaveQQ()
@@ -242,6 +243,13 @@ void QQToolsBase_CHC::Menu()
 		cout << "按任意键返回主菜单" << endl;
 		_getch();
 		Menu();
+		break;
+	case 2:
+		WeiBoTools.Menu();
+		break;
+
+	case 3:
+		WeiChatTools.Menu();
 		break;
 	}
 	default:

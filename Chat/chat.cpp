@@ -64,6 +64,12 @@ QQ_CHC::~QQ_CHC()
 	}
 }
 
+
+
+
+
+
+
 QQFriends_CHC::QQFriends_CHC(string name, string id , string newremarks)
 {
 	FriendName = name;
@@ -83,4 +89,88 @@ QQParties_CHC::QQParties_CHC(string id, string name, string userid)
 	PartyID = id;
 	PartyName = name;
 	CreatUserID = userid;
+}
+
+
+
+
+
+
+WeiChat_CHC::WeiChat_CHC()
+{
+	for (int i = 0; i<1000000; i++) //加强QQ号生成随机性
+	{
+		srand(time(0));
+	}
+	int p = rand()*rand();
+	char temp[128];
+	itoa(p, temp, 10);
+	string PassWordAgin;
+	int select;
+	//cout << "请输入你的微信账号" << endl;
+	ID = temp;
+	/*ID = rand()*rand();*/
+	cout << "你的微信号为:" << ID << endl;
+	cout << "请输入你的密码" << endl;
+	cin >> PassWord;
+	cout << "请再次确认你的密码" << endl;
+	cin >> PassWordAgin;
+	while (1)
+	{
+		if (PassWord == PassWordAgin)
+		{
+			break;
+		}
+		else
+		{
+			cout << "你的两次密码不相符，请重新输入" << endl;
+			cout << "请输入你的密码" << endl;
+			cin >> PassWord;
+			cout << "请再次确认你的密码" << endl;
+			cin >> PassWordAgin;
+			continue;
+		}
+	}
+	ApplyDate.ShowDate();
+	Age = 0;
+	cout << "请输入你的微信名字:" << endl;
+	cin >> Name;
+	cout << "请输入你所在的地区" << endl;
+	cin >> Area;
+
+	cout << "请选择你的性别" << endl;
+	cout << "1.男性" << endl;
+	cout << "2.女性" << endl;
+	cin >> select;
+	switch (select)
+	{
+	case 1:
+		Sex = Man.SexFlag;
+		break;
+	default:
+		Sex = WoMan.SexFlag;
+		break;
+	}
+	cout << "你的性别:" << Sex << endl;
+	cout << "输入你的个性签名" << endl;
+	cin >> Autograph;
+	cout << "微信号申请成功" << endl;
+	cout << "你的微信号为:" << ID << endl;
+	cout << "你的微信密码为:" << PassWord << endl;
+	cout << "请妥善保存帐号和密码" << endl;
+
+	string WeiChat = "WeiChat\\" + ID;
+	CreateDirectory(WeiChat.c_str(), NULL);//每个微信创建一个文件夹
+}
+
+WeiChat_CHC::WeiChat_CHC(string qqid, int qage, string qqpw, string qqname, string qqpv, string ag)
+{
+	ID = qqid;
+	Age = qage;
+	PassWord = qqpw;
+	Name = qqname;
+	Area = qqpv;
+	Autograph = ag;
+	FriendNumber = 0;
+	PartyNumber = 0;
 }

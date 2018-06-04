@@ -24,6 +24,16 @@ public:
 
 	virtual void Login() = 0;
 
+	virtual void Menu() = 0;
+
+	virtual void AddFriend() = 0;
+
+	virtual void SaveFriends() = 0;
+
+	virtual void GetFriends() = 0;
+
+	virtual void ShowFriends() = 0; 
+
 protected:
 
 
@@ -131,6 +141,7 @@ private:
 
 };
 
+
 class WeiBoToolsBase_CHC : public ToolsBase_CHC
 {
 
@@ -149,6 +160,14 @@ public:
 	virtual void Login();
 
 	virtual void Apply() { cout << "请登录QQ开通微博" << endl; }
+
+	virtual void AddFriend() { cout << "未开发"; }
+
+	virtual void SaveFriends() { cout<<"未开发"; }
+
+	virtual void GetFriends() { cout << "未开发"; }
+
+	virtual void ShowFriends() { cout << "未开发"; }
 
 protected:
 
@@ -174,6 +193,20 @@ public:
 
 	virtual void Login();
 
+	virtual void SaveWeiChat();
+
+	virtual void GetWeiChat();
+
+	virtual void ShowWeiChat();
+
+	virtual void AddFriend();
+
+	virtual void SaveFriends();
+
+	virtual void GetFriends();
+
+	virtual void ShowFriends();
+
 	virtual vector<WeiChat_CHC*> &ReturnWeiChatList() { return WeiChatList; }
 
 protected:
@@ -194,6 +227,15 @@ private:
 	void ToolsBase_CHC::isFatherBase(){}
 
 };
+
+
+
+
+
+
+
+
+
 
 
 

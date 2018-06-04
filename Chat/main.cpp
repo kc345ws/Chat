@@ -28,6 +28,7 @@ int main()
 	/*Menu();*/
 	WeiBoTools.GetWeiBo();
 	QQTools.GetQQ();
+	WeiChatTools.GetWeiChat();
 	QQTools.Menu();
 	return 0;
 }

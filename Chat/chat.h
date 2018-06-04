@@ -10,13 +10,18 @@ class Date;
 class QQFriends_CHC;
 class QQParties_CHC;
 class Tencent_CHC;
+class TencentFriends_CHC;
 
 class Tencent_CHC //帐号基类
 {
 
 public:
 
-	virtual int ReturnAge(){return Age;}
+	virtual int ReturnAge()
+	{
+		//Age=ApplyDate.ReturnYear
+		return Age;
+	}
 
 	virtual int ReturnFriendNumber(){return FriendNumber;}
 
@@ -44,6 +49,8 @@ public:
 
 	virtual void ChangeArea(string newarea) { Area = newarea; }
 
+	virtual Date &ReturnApplyDate() { return ApplyDate; }
+
 protected:
 
 	int Age; //注册天数
@@ -62,11 +69,45 @@ protected:
 
 	string Autograph;//用户个性签名
 
+	string Sex;
+
 	Date ApplyDate;//用户注册日期
+
+	struct SexType
+	{
+		string SexFlag;
+	}Man{ "男" }, WoMan{ "女" };
 
 private:
 
 };
+
+//class TencentFriends_CHC
+//{
+//public:
+//
+//	/*friend class QQ_CHC;*/
+//
+//	TencentFriends_CHC(string name, string id, string newremarks);
+//
+//	TencentFriends_CHC(string name, string id);
+//
+//	string ReturnFriendName() { return FriendName; }
+//
+//	string ReturnID() { return ID; }
+//
+//	string ReturnRemarks() { return Remarks; }
+//
+//	void ChangeRemarks(string newremarks) { Remarks = newremarks; }
+//
+//private:
+//
+//	string FriendName;
+//
+//	string ID;
+//
+//	string Remarks;
+//};
 
 
 class QQ_CHC : public Tencent_CHC
@@ -236,17 +277,44 @@ public:
 
 	WeiBo_CHC(string id) { ID = id; LinkedQQ = id; }
 
+	vector<QQFriends_CHC*>& ReturnFriendList() { return FriendList; }
+
+	vector<QQParties_CHC*>& ReturnPartyList() { return PartyList; }
+
+
 private:
 
 	string LinkedQQ;//绑定的QQ
 
 	vector<string>WeiBoContent;//微博内容
 
+	vector<QQFriends_CHC*> FriendList;
+
+	vector<QQParties_CHC*> PartyList;
+
+
 };
+
 
 
 class WeiChat_CHC : public Tencent_CHC
 {
+public:
+
+	WeiChat_CHC();
+
+	WeiChat_CHC(string qqid, int qage, string qqpw, string qqname, string qqpv, string ag);
+
+	vector<QQFriends_CHC*>& ReturnFriendList() { return FriendList; }
+
+	vector<QQParties_CHC*>& ReturnPartyList() { return PartyList; }
+
+
+private:
+
+	vector<QQFriends_CHC*> FriendList;
+
+	vector<QQParties_CHC*> PartyList;
 
 };
 
