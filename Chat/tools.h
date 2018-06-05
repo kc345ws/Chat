@@ -44,6 +44,8 @@ public:
 
 	virtual void SaveChange() = 0;
 
+	virtual void AgreeMember() = 0;
+
 protected:
 
 
@@ -189,6 +191,8 @@ public:
 
 	virtual void SaveChange() {}
 
+	virtual void AgreeMember() {}
+
 protected:
 
 	vector<WeiBo_CHC*> WeiBoList;
@@ -246,6 +250,18 @@ public:
 	virtual void SaveChange();
 
 	virtual void ShowParty();
+
+	virtual void AgreeMember();
+
+	virtual void ShowPartyNoReturn();
+
+	virtual void AddPartyMember();
+
+	virtual void QuitParty();
+
+	virtual void DeletePartyMember();
+
+	virtual void ShowPartyInformation();
 
 	virtual vector<WeiChat_CHC*> &ReturnWeiChatList() { return WeiChatList; }
 

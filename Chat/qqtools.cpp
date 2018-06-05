@@ -3472,4 +3472,3 @@ void QQToolsBase_CHC::CreateWeiBo()
 	}
 }
 
-

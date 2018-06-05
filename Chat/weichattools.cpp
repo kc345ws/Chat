@@ -13,7 +13,7 @@ void WeiChatToolsBase_CHC::Menu()
 	cout << "请选择你所需的功能" << endl;
 	cout << "1.登陆微信" << endl;
 	cout << "2.注册微信" << endl;
-	cout << "3.已注册微信绑定QQ" << endl;
+	cout << "3.已注册微信绑定WeiChatList" << endl;
 
 
 	cin >> select;
@@ -106,7 +106,7 @@ void WeiChatToolsBase_CHC::Login()
 	bool flag = false;
 	string PassWord;
 	bool flag1 = true;
-	//vector<QQ_CHC*>::iterator iter = QQ.begin();
+	//vector<QQ_CHC*>::iterator iter = WeiChatList.begin();
 	cout << "输入你要登陆的微信:" << endl;
 	cin >> ID;
 	LoginedWeiChat = ID;
@@ -152,7 +152,7 @@ void WeiChatToolsBase_CHC::Login()
 	}
 	//if (flag != true)
 	//{
-	//	cout << "没有该QQ号，请先申请" << endl;
+	//	cout << "没有该WeiChatList号，请先申请" << endl;
 	//	cout << "按任意键返回" << endl;
 	//	_getch();
 	//	Menu();
@@ -185,7 +185,7 @@ void WeiChatToolsBase_CHC::Login()
 				if (WeiChatList[i]->ReturnPassWord() == PassWord)
 				{
 					cout << "登陆成功" << endl;
-					cout << "按任意键开始使用QQ" << endl;
+					cout << "按任意键开始使用WeiChatList" << endl;
 					_getch();
 					_getch();
 					WeiChatMenu();
@@ -202,13 +202,13 @@ void WeiChatToolsBase_CHC::Login()
 					continue;
 				}
 			}
-			/*	if (QQ[i]->ReturnPassWord() == PassWord)
+			/*	if (WeiChatList[i]->ReturnPassWord() == PassWord)
 			{
 			cout << "登陆成功" << endl;
-			cout << "按任意键开始使用QQ" << endl;
+			cout << "按任意键开始使用WeiChatList" << endl;
 			_getch();
 			_getch();
-			QQMenu();
+			WeiChatMenu();
 			break;
 			}
 			else
@@ -244,7 +244,7 @@ void WeiChatToolsBase_CHC::ShowWeiChat()
 		}
 	}
 	file.close();
-	file.open("QQ.txt");
+	file.open("WeiChatList.txt");
 	for (int i = 0; i < line; i++)
 	{
 		file >> qqid;
@@ -281,16 +281,16 @@ void WeiChatToolsBase_CHC::ShowWeiChat()
 	int i = 0;
 	for (string s; file >> s;)
 	{
-	QQ[i].push_back(s);
+	WeiChatList[i].push_back(s);
 	}
 	for (int i = 0; i < file.gcount(); i++)
 	{
-	file.read((char *)&QQ[i], sizeof(QQ_CHC));
+	file.read((char *)&WeiChatList[i], sizeof(QQ_CHC));
 	}*/
 
-	//for (int i = 0; i < size(QQ); i++)
+	//for (int i = 0; i < size(WeiChatList); i++)
 	//{
-	//	cout << QQ[i]->ID << endl;
+	//	cout << WeiChatList[i]->ID << endl;
 	//}
 	file.close();
 
@@ -320,13 +320,13 @@ void WeiChatToolsBase_CHC::WeiChatMenu()
 	cout << "6.开通服务" << endl;
 	cout << "0.返回主菜单" << endl;
 	//cout << "1.进入聊天室聊天" << endl;
-	//cout << "2.添加QQ好友" << endl;
-	//cout << "3,查看QQ好友" << endl;
-	//cout << "4.创建QQ群" << endl;
-	//cout << "5.加入QQ群" << endl;
-	//cout << "6.查看自己所有QQ群" << endl;
-	//cout << "7.管理QQ群" << endl;
-	//cout << "8.删除QQ好友" << endl;
+	//cout << "2.添加WeiChatList好友" << endl;
+	//cout << "3,查看WeiChatList好友" << endl;
+	//cout << "4.创建WeiChatList群" << endl;
+	//cout << "5.加入WeiChatList群" << endl;
+	//cout << "6.查看自己所有WeiChatList群" << endl;
+	//cout << "7.管理WeiChatList群" << endl;
+	//cout << "8.删除WeiChatList好友" << endl;
 	//cout << "9.小游戏" << endl;
 	//cout << "10.查看好友申请" << endl;
 	//cout << "11.添加群管理员" << endl;
@@ -344,7 +344,7 @@ void WeiChatToolsBase_CHC::WeiChatMenu()
 		cout << "4.查看好友申请" << endl;
 		cout << "5.查看好友资料" << endl;
 		cout << "6.修改好友备注" << endl;
-		cout << "0.返回QQ主菜单" << endl;
+		cout << "0.返回WeiChatList主菜单" << endl;
 		cin >> select;
 		switch (select)
 		{
@@ -376,12 +376,12 @@ void WeiChatToolsBase_CHC::WeiChatMenu()
 	case 2:
 
 		cout << "请选择使用的群功能" << endl;
-		cout << "1.加入QQ群" << endl;
-		cout << "2.退出QQ群" << endl;
-		cout << "3.创建QQ群" << endl;
-		cout << "4.查看已加入的QQ群" << endl;
+		cout << "1.加入WeiChatList群" << endl;
+		cout << "2.退出WeiChatList群" << endl;
+		cout << "3.创建WeiChatList群" << endl;
+		cout << "4.查看已加入的WeiChatList群" << endl;
 		cout << "5.查看入群申请" << endl;
-		cout << "6.添加QQ群管理员" << endl;
+		cout << "6.添加WeiChatList群管理员" << endl;
 		cout << "7.踢出群成员" << endl;
 		cout << "8.查看群成员信息" << endl;
 		cout << "0.返回主菜单" << endl;
@@ -389,10 +389,10 @@ void WeiChatToolsBase_CHC::WeiChatMenu()
 		switch (select)
 		{
 		case 1:
-			/*AddPartyMember();*/
+			AddPartyMember();
 			break;
 		case 2:
-			/*QuitParty();*/
+			QuitParty();
 			break;
 		case 3:
 			CreatParty();
@@ -401,16 +401,16 @@ void WeiChatToolsBase_CHC::WeiChatMenu()
 			ShowParty();
 			break;
 		case 5:
-			/*AgreeMember();*/
+			AgreeMember();
 			break;
 		case 6:
-		/*	AddPartyAdmin();*/
+			/*AddPartyAdmin();*/
 			break;
 		case 7:
-			/*DeletePartyMember();*/
+			DeletePartyMember();
 			break;
 		case 8:
-			/*ShowPartyInformation();*/
+			ShowPartyInformation();
 			break;
 		default:
 			WeiChatMenu();
@@ -421,7 +421,7 @@ void WeiChatToolsBase_CHC::WeiChatMenu()
 	case 3:
 		cout << "请选择玩的游戏" << endl;
 		cout << "1.贪吃蛇" << endl;
-		cout << "0.返回QQ主菜单" << endl;
+		cout << "0.返回WeiChatList主菜单" << endl;
 		cin >> select;
 		switch (select)
 		{
@@ -437,7 +437,7 @@ void WeiChatToolsBase_CHC::WeiChatMenu()
 	case 4:
 		cout << "请选择使用的聊天功能" << endl;
 		cout << "1.进入聊天室" << endl;
-		cout << "0.返回QQ主菜单" << endl;
+		cout << "0.返回WeiChatList主菜单" << endl;
 		cin >> select;
 		switch (select)
 		{
@@ -489,7 +489,7 @@ void WeiChatToolsBase_CHC::WeiChatMenu()
 			/*CreateWeiBo();*/
 			break;
 		default:
-			cout << "选择错误，按任意键返回QQ主菜单" << endl;
+			cout << "选择错误，按任意键返回WeiChatList主菜单" << endl;
 			_getch();
 			_getch();
 			WeiChatMenu();
@@ -508,19 +508,19 @@ void WeiChatToolsBase_CHC::WeiChatMenu()
 
 		/*for (int i = 0; i < size(WeiChatList[Myqq]->ReturnFriendList()); i++)
 		{
-			delete QQ[Myqq]->ReturnFriendList()[i];
+			delete WeiChatList[Myqq]->ReturnFriendList()[i];
 		}
-		QQ[Myqq]->ReturnFriendList().resize(0);
-		QQ[Myqq]->ReturnFriendList().clear();
-		QQ[Myqq]->ReturnFriendList().shrink_to_fit();
-		for (int i = 0; i < size(QQ[Myqq]->ReturnPartyList()); i++)
+		WeiChatList[Myqq]->ReturnFriendList().resize(0);
+		WeiChatList[Myqq]->ReturnFriendList().clear();
+		WeiChatList[Myqq]->ReturnFriendList().shrink_to_fit();
+		for (int i = 0; i < size(WeiChatList[Myqq]->ReturnPartyList()); i++)
 		{
-			delete  QQ[Myqq]->ReturnPartyList()[i];
+			delete  WeiChatList[Myqq]->ReturnPartyList()[i];
 		}
-		QQ[Myqq]->ReturnPartyList().resize(0);
-		QQ[Myqq]->ReturnPartyList().clear();
-		QQ[Myqq]->ReturnPartyList().shrink_to_fit();*/
-		/*delete QQ[Myqq];*/
+		WeiChatList[Myqq]->ReturnPartyList().resize(0);
+		WeiChatList[Myqq]->ReturnPartyList().clear();
+		WeiChatList[Myqq]->ReturnPartyList().shrink_to_fit();*/
+		/*delete WeiChatList[Myqq];*/
 		Menu();
 		break;
 
@@ -532,6 +532,8 @@ void WeiChatToolsBase_CHC::WeiChatMenu()
 	_getch();
 }
 
+
+
 void WeiChatToolsBase_CHC::AddFriend()
 {
 	system("CLS");
@@ -539,7 +541,7 @@ void WeiChatToolsBase_CHC::AddFriend()
 	string id;
 	string name;
 	bool flag = false;
-	cout << "请输入添加好友的QQ号" << endl;
+	cout << "请输入添加好友的WeiChatList号" << endl;
 	cin >> id;
 	for (int i = 0; i < size(WeiChatList); i++)
 	{
@@ -553,9 +555,9 @@ void WeiChatToolsBase_CHC::AddFriend()
 
 	if (flag == false)
 	{
-		cout << "该QQ还没有注册，按任意键重新输入QQ号" << endl;
-		cout << "1.重新输入QQ号添加好友" << endl;
-		cout << "2.返回QQ主页" << endl;
+		cout << "该WeiChatList还没有注册，按任意键重新输入WeiChatList号" << endl;
+		cout << "1.重新输入WeiChatList号添加好友" << endl;
+		cout << "2.返回WeiChatList主页" << endl;
 		int select;
 		cin >> select;
 		switch (select)
@@ -569,7 +571,7 @@ void WeiChatToolsBase_CHC::AddFriend()
 			break;
 
 		default:
-			cout << "输入错误,按任意键返回QQ主页" << endl;
+			cout << "输入错误,按任意键返回WeiChatList主页" << endl;
 			_getch();
 			WeiChatMenu();
 			break;
@@ -594,9 +596,9 @@ void WeiChatToolsBase_CHC::AddFriend()
 	SaveFriends();
 
 
-	//向好友QQ文件中添加本QQ
+	//向好友WeiChatList文件中添加本WeiChatList
 	fstream file;
-	string friendfilename = "QQ\\" + id + "\\" + id + "Friendlist.txt";
+	string friendfilename = "WeiChatList\\" + id + "\\" + id + "Friendlist.txt";
 	string remarks = "未备注";
 	file.open(friendfilename, ios::app);
 	file << "^" << WeiChatList[Myqq]->ReturnID() << endl;
@@ -605,7 +607,7 @@ void WeiChatToolsBase_CHC::AddFriend()
 	file << " " << endl;
 	file.close();
 
-	cout << "按任意键返回QQ主页" << endl;
+	cout << "按任意键返回WeiChatList主页" << endl;
 	_getch();
 	_getch();
 	WeiChatMenu();
@@ -720,12 +722,12 @@ void WeiChatToolsBase_CHC::ShowFriends()
 		}
 		cout << "第" << friends + 1 << "位好友" << endl;
 		cout << "姓名:" << WeiChatList[Myqq]->ReturnFriendList()[i]->ReturnFriendName() << endl;
-		cout << "QQ:" << WeiChatList[Myqq]->ReturnFriendList()[i]->ReturnID() << endl;
+		cout << "WeiChatList:" << WeiChatList[Myqq]->ReturnFriendList()[i]->ReturnID() << endl;
 		cout << endl;
 		friends++;
 	}
 
-	cout << "按任意键返回QQ主页" << endl;
+	cout << "按任意键返回WeiChatList主页" << endl;
 	_getch();
 	_getch();
 	WeiChatMenu();
@@ -735,7 +737,7 @@ void WeiChatToolsBase_CHC::CreatParty()
 {
 	system("CLS");
 	int Myqq;
-	for (int i = 0; i<1000000; i++) //加强QQ群号生成随机性
+	for (int i = 0; i<1000000; i++) //加强WeiChatList群号生成随机性
 	{
 		srand(time(0));
 	}
@@ -762,12 +764,12 @@ void WeiChatToolsBase_CHC::CreatParty()
 	SaveParty();
 
 
-	//每个QQ都有自己的群列表
+	//每个WeiChatList都有自己的群列表
 	fstream FILE;
 	string qq;
 	qq = LoginedWeiChat;
 	string txt1 = "PartyList.txt";
-	/*"QQ\\" + QQid + "\\" + QQid + ".txt";*/
+	/*"WeiChatList\\" + LoginedWeiChat + "\\" + LoginedWeiChat + ".txt";*/
 	string FILEName = "WeiChat\\" + LoginedWeiChat + "\\" + LoginedWeiChat + "PartyList.txt";
 	FILE.open(FILEName, ios::app);
 	FILE << ID << endl;
@@ -830,7 +832,7 @@ void WeiChatToolsBase_CHC::GetParty()
 	vector<string>party;
 
 	string temp;
-	/*string myqqfilename = "QQ\\" + QQid + "\\" + QQid + "Friendlist.txt";*/
+	/*string myqqfilename = "WeiChatList\\" + LoginedWeiChat + "\\" + LoginedWeiChat + "Friendlist.txt";*/
 	string filename = "WeiChat\\" + qq + "\\" + qq + "PartyList.txt";
 	string partyfilename;
 
@@ -944,7 +946,7 @@ void WeiChatToolsBase_CHC::GetParty()
 
 
 
-	//获取群管理员QQ
+	//获取群管理员WeiChatList
 	fstream adminfile;
 	string adminfilename;
 	string admintemp;
@@ -975,7 +977,7 @@ void WeiChatToolsBase_CHC::GetParty()
 		adminfile.close();
 
 	}
-	/*adminfilename = "QQ\\Parties\\" + id + "\\" + id + "admin.txt";*/
+	/*adminfilename = "WeiChatList\\Parties\\" + id + "\\" + id + "admin.txt";*/
 	/*adminfile.open(adminfilename);*/
 	/*while (!adminfile.eof())
 	{
@@ -1011,7 +1013,7 @@ void WeiChatToolsBase_CHC::DeleteFriend()
 	}
 
 
-	//删除本QQ中的好友
+	//删除本WeiChatList中的好友
 	string qq;
 	cout << "请输入想删除好友的微信号" << endl;
 	cin >> qq;
@@ -1063,7 +1065,7 @@ void WeiChatToolsBase_CHC::DeleteFriend()
 	}
 
 	/*SaveFriends();*/
-	//删除本QQ中的好友QQ
+	//删除本WeiChatList中的好友WeiChatList
 	fstream myqqfile;
 	string temp1;
 	string content1;
@@ -1082,7 +1084,7 @@ void WeiChatToolsBase_CHC::DeleteFriend()
 		content1.push_back('\n');
 		word++;
 	}
-	int m = content1.find(qq);//找到好友QQ文件中本QQ的位置
+	int m = content1.find(qq);//找到好友WeiChatList文件中本WeiChatList的位置
 	for (int i = m; i < (m + word); i++)
 	{
 		content1.erase(content1.begin() + m);//删除
@@ -1094,7 +1096,7 @@ void WeiChatToolsBase_CHC::DeleteFriend()
 
 
 
-	//删除好友QQ文件中的本QQ
+	//删除好友WeiChatList文件中的本WeiChatList
 	fstream outfile;
 	outfile.open(friendqqfilename);
 	string temp;
@@ -1116,7 +1118,7 @@ void WeiChatToolsBase_CHC::DeleteFriend()
 		words++;
 	}
 
-	m = content.find(LoginedWeiChat);//找到好友QQ文件中本QQ的位置
+	m = content.find(LoginedWeiChat);//找到好友WeiChatList文件中本WeiChatList的位置
 	for (int i = m; i < (m + words); i++)
 	{
 		content.erase(content.begin() + m);//删除
@@ -1616,7 +1618,7 @@ void WeiChatToolsBase_CHC::ShowFriendNoReturn()
 		}
 		cout << "第" << friends + 1 << "位好友" << endl;
 		cout << "姓名:" << WeiChatList[Myqq]->ReturnFriendList()[i]->ReturnFriendName() << endl;
-		cout << "QQ:" << WeiChatList[Myqq]->ReturnFriendList()[i]->ReturnID() << endl;
+		cout << "WeiChatList:" << WeiChatList[Myqq]->ReturnFriendList()[i]->ReturnID() << endl;
 		cout << endl;
 		friends++;
 	}
@@ -1762,6 +1764,981 @@ void WeiChatToolsBase_CHC::ShowParty()
 		cout << endl;
 	}
 	cout << "按任意键返回WeiChatList主页" << endl;
+	_getch();
+	_getch();
+	WeiChatMenu();
+}
+
+void WeiChatToolsBase_CHC::AgreeMember()
+{
+	system("CLS");
+	ShowPartyNoReturn();
+	cout << "请输入要管理的群号" << endl;
+	char c;
+	int line = 0;
+	bool flag = false;
+	string id;
+	string txt = ".txt";
+	cin >> id;
+	string filename = "WeiChat\\Parties\\" + id + "\\" + id + ".txt";
+	ifstream infile;
+	infile.open(filename, ios::in);
+	if (!infile)
+	{
+		cout << "没有此群,请重新输入或返回微信主页" << endl;
+		cout << "1.重新输入" << endl;
+		cout << "2.返回WeiChatList主页" << endl;
+		int select;
+		cin >> select;
+		switch (select)
+		{
+		case 1:
+			AgreeMember();
+			break;
+
+		case 2:
+			WeiChatMenu();
+			break;
+		}
+	}
+	infile.close();
+	fstream outfile;
+	outfile.open(filename);
+
+	string temp;
+	while (outfile.get(c))
+	{
+		if (c == '\n')
+		{
+			line++;
+			continue;
+		}
+		if (line == 2) //获取群主WeiChatList号
+		{
+			temp.push_back(c);
+		}
+
+	}
+	string OwnerQQ = temp;
+
+	/*temp.pop_back(); *///删除末尾\n
+
+
+						 //获取群管理员WeiChatList
+	fstream adminfile;
+	string adminfilename;
+	string admintemp;
+	vector<string> AdminQQ;
+	adminfilename = "WeiChatList\\Parties\\" + id + "\\" + id + "admin.txt";
+	adminfile.open(adminfilename);
+
+	while (!adminfile.eof())
+	{
+
+		getline(adminfile, temp);
+
+		AdminQQ.push_back(temp);
+
+	}
+	AdminQQ.pop_back();
+
+
+	bool Adminflag = false;
+	for (int i = 0; i < size(AdminQQ); i++)
+	{
+		if (AdminQQ[i] == LoginedWeiChat)
+		{
+			Adminflag = true;
+			break;
+		}
+	}
+
+	if (OwnerQQ == LoginedWeiChat)
+	{
+		cout << "群主你好，欢迎查看入群申请" << endl;
+
+	}
+	else if (Adminflag == true)
+	{
+		cout << "管理员你好，欢迎查看入群申请" << endl;
+	}
+	else
+	{
+		cout << "你不是该群的群主或管理员,无法管理该群" << endl;
+		cout << "按任意键返回WeiChatList主页" << endl;
+		_getch();
+		_getch();
+		WeiChatMenu();
+	}
+
+	outfile.close();
+	temp.clear();
+
+
+	line = 0;
+	outfile.open(filename);
+
+
+	while (outfile.get(c))
+	{
+		if (c == '^')
+		{
+			line++;
+			flag = true;
+			continue;
+		}
+		//if (line == 1) //获取申请入群的人WeiChatList号
+		//{
+		//	temp.push_back(c);
+		//	//temp.clear();//清除■
+		//	line++;
+		//}
+		if (line == 1)
+		{
+			temp.push_back(c);
+		}
+
+	}
+
+	if (flag == false)
+	{
+		cout << "没有加群申请" << endl;
+		cout << "按任意键返回WeiChatList主页" << endl;
+		_getch();
+		WeiChatMenu();
+	}
+	//}
+	outfile.close();
+	temp.pop_back();
+	cout << "你是否同意" << temp << "入群?" << endl;
+	cout << "1.同意" << endl;
+	cout << "2.拒绝" << endl;
+	int select;
+	cin >> select;
+
+	string member = temp;
+	string PartyList = "PartyList.txt";
+	string filename1 = "WeiChatList\\" + member + "\\" + member + "PartyList.txt";
+	string msg;
+	vector<char> content;
+	int n = 0;
+
+	/*auto iter = content.begin();
+	auto iter1 = temp.begin();*/
+	/*int m = 0;*/
+	/*char ch1[1000];*/
+	/*int words = 0;*/
+
+	switch (select)
+	{
+	case 1:
+		outfile.open(filename, ios::in | ios::out);
+
+		while (!outfile.eof())
+		{
+
+			char ch[1000];
+
+			outfile.getline(ch, 1000);
+			for (int i = 0; i < strlen(ch); i++)
+			{
+				msg.push_back(ch[i]);//读取文件内容
+			}
+
+
+			msg.push_back('\n');
+
+		}
+
+
+
+		for (int i = 0; i < size(msg); i++)//将未加入标记删除
+		{
+			if (msg[i] == '^')
+			{
+				/*			content[i];*/
+				//content.erase(content.begin() + i);
+				msg.erase(msg.begin() + i);
+				break;
+			}
+		}
+		msg.pop_back();
+		/*size(temp);*/
+		/*cout << msg;*/
+
+
+		outfile.close();
+
+		outfile.open(filename, ios::out, ios::trunc); //清空原有文件内容
+
+		outfile << msg;
+
+		cout << "确认申请成功" << endl;
+
+		outfile.close();
+
+		outfile.open(filename1, ios::app);
+
+		outfile << id << endl;
+
+		cout << "按任意键返回WeiChatList主页" << endl;
+		_getch();
+		WeiChatMenu();
+
+		break;
+
+
+	default:
+
+		cout << "你已拒绝该请求" << endl;
+		outfile.open(filename);
+
+		while (!outfile.eof())
+		{
+
+			char ch[1000];
+
+			outfile.getline(ch, 1000);
+			for (int i = 0; i < strlen(ch); i++)
+			{
+				msg.push_back(ch[i]);//读取文件内容
+			}
+
+			msg.push_back('\n');
+
+		}
+		outfile.close();
+
+		/*while (outfile.get(c))
+		{
+		content.emplace_back(c);
+		}*/
+
+		for (int i = 0; i < size(msg); i++)
+		{
+			if (msg[i] == '^')
+			{
+
+				n = i;
+
+				while (1)
+				{
+					msg.erase(msg.begin() + n); //删除申请人WeiChatList
+
+
+					if (msg[n] == '\n')
+					{
+						msg.erase(msg.begin() + n);
+						break;
+					}
+
+
+				}
+
+				break;
+			}
+		}
+		msg.pop_back();
+
+		outfile.open(filename, ios::out, ios::trunc);//清空原有内容
+
+		outfile << msg;
+
+		outfile.close();
+
+		cout << "按任意键返回WeiChatList主页" << endl;
+		_getch();
+		WeiChatMenu();
+
+		break;
+	}
+}
+
+void WeiChatToolsBase_CHC::ShowPartyNoReturn()
+{
+	system("CLS");
+	int Myqq;
+	for (int i = 0; i < size(WeiChatList); i++)
+	{
+		if (WeiChatList[i]->ReturnID() == LoginedWeiChat)
+		{
+			Myqq = i;
+		}
+	}
+	cout << "你共有" << WeiChatList[Myqq]->ReturnPartyNumber() << "个群" << endl;
+	for (int i = 0; i < WeiChatList[Myqq]->ReturnPartyNumber(); i++)
+	{
+		cout << "第" << WeiChatList[Myqq]->ReturnPartyNumber() << "个群" << endl;
+		cout << "群号:" << WeiChatList[Myqq]->ReturnPartyList()[i]->ReturnPartyID() << endl;
+		cout << "群名称:" << WeiChatList[Myqq]->ReturnPartyList()[i]->ReturnPartyName() << endl;
+		cout << "群主:" << WeiChatList[Myqq]->ReturnPartyList()[i]->ReturnCreatUserID() << endl;
+		cout << endl;
+	}
+	
+}
+
+void WeiChatToolsBase_CHC::AddPartyMember()
+{
+	system("CLS");
+	cout << "请输入你想加入的群" << endl;
+	string partyid;
+	cin >> partyid;
+	WeiChatPartyMember = partyid;
+	string id;
+	int Myqq;
+	id = WeiChatPartyMember;
+	string txt = ".txt";
+
+	string filename = "WeiChat\\Parties\\" + partyid + "\\" + partyid + ".txt";
+	ofstream ofile;
+	ofile.open(filename, ios::app);
+	ofile << "^" << LoginedWeiChat << endl;
+	/*for (int i = 0; i < size(WeiChatList); i++)
+	{
+	if (WeiChatList[i]->ReturnID() == LoginedWeiChat)
+	{
+	Myqq = i;
+	}
+	}*/
+	ofile.close();
+	cout << "申请入群成功,请等待群主同意" << endl;
+	cout << "按任意键返回WeiChatList主页" << endl;
+	_getch();
+	_getch();
+	WeiChatMenu();
+}
+
+void WeiChatToolsBase_CHC::QuitParty()
+{
+	bool flag = false;
+	int Myqq, select;
+	string partyid;
+	cout << "请输入你想退出的微信群" << endl;
+	cin >> partyid;
+
+	for (int i = 0; i < size(WeiChatList); i++)
+	{
+		if (WeiChatList[i]->ReturnID() == LoginedWeiChat)
+		{
+			Myqq = i;
+			break;
+		}
+	}
+
+	for (int i = 0; i < size(WeiChatList[Myqq]->ReturnPartyList()); i++)
+	{
+		if (WeiChatList[Myqq]->ReturnPartyList()[i]->ReturnPartyID() == partyid)
+		{
+			flag = true;
+		}
+	}
+
+	if (flag == false)
+	{
+		cout << "你没有加入此群" << endl;
+		cout << "请选择重新输入或返回微信主菜单" << endl;
+		cout << "1.重新输入微信群" << endl;
+		cout << "2.返回微信主菜单" << endl;
+		cin >> select;
+		switch (select)
+		{
+		case 1:
+			QuitParty();
+			break;
+		default:
+			WeiChatMenu();
+			break;
+		}
+	}
+
+
+	//向本WeiChatList群列表中删除该群
+	fstream myqqpartylistfile;
+	string temp;//读取文件每行内容
+	string content;//保存文件所有内容
+	string myqqpartylistfilename = "WeiChat\\" + LoginedWeiChat + "\\" + LoginedWeiChat + "PartyList.txt";
+	myqqpartylistfile.open(myqqpartylistfilename);
+
+	while (!myqqpartylistfile.eof())
+	{
+		getline(myqqpartylistfile, temp);
+
+		if (temp == partyid)
+		{
+			continue;
+		}
+
+		for (int i = 0; i < size(temp); i++)
+		{
+			content.push_back(temp[i]);
+		}
+		content.push_back('\n');
+
+
+	}
+	content.pop_back();//删除多余\n
+	myqqpartylistfile.close();
+
+	myqqpartylistfile.open(myqqpartylistfilename, ios::out | ios::trunc);
+	myqqpartylistfile << content;
+	myqqpartylistfile.close();
+
+
+
+	//从本群列表中删除此WeiChatList
+	fstream partyfile;
+	string partyfilename = "WeiChat\\Parties\\" + partyid + "\\" + partyid + ".txt";
+	partyfile.open(partyfilename);
+	string partycontent;
+	string partytemp;
+	vector<string> partyvec;
+
+	while (!partyfile.eof())
+	{
+		getline(partyfile, partytemp);
+		partyvec.push_back(partytemp);
+		for (int i = 0; i < size(partytemp); i++)
+		{
+			partycontent.push_back(partytemp[i]);
+		}
+
+		partycontent.push_back('\n');
+	}
+	partycontent.pop_back();//删除末尾\n
+	partyvec.pop_back();
+	partyfile.close();
+	partyvec.shrink_to_fit();
+
+	partyfile.open(partyfilename, ios::out | ios::trunc);
+
+	for (int i = 0; i < size(partyvec); i++)
+	{
+		if (partyvec[i] == LoginedWeiChat)
+		{
+			partyvec.erase(partyvec.begin() + i);
+			break;
+		}
+	}
+	partyvec.shrink_to_fit();
+	for (int i = 0; i < size(partyvec); i++)
+	{
+		partyfile << partyvec[i] << endl;
+	}
+	/*partyfile << partycontent;*/
+	partyfile.close();
+
+
+
+	fstream partyadminfile;
+	string partyadminfilename;
+	string admincontent;
+	string admintemp;
+	vector<string> AdminQQ;
+	partyadminfilename = "WeiChat\\Parties\\" + partyid + "\\" + partyid + "admin.txt";
+	partyadminfile.open(partyadminfilename);
+
+	while (!partyadminfile.eof())
+	{
+		getline(partyadminfile, admintemp);
+		/*admintemp.push_back('\n');*/
+		AdminQQ.push_back(admintemp);
+		for (int i = 0; i < size(admintemp); i++)
+		{
+			admincontent.push_back(admintemp[i]);
+		}
+
+		admincontent.push_back('\n');
+	}
+	admincontent.pop_back();
+	AdminQQ.pop_back();
+	partyadminfile.close();
+
+	bool adminflag = false;
+	for (int i = 0; i < size(AdminQQ); i++)
+	{
+		if (AdminQQ[i] == LoginedWeiChat)
+		{
+			adminflag = true;
+			break;
+		}
+	}
+
+
+	if (adminflag == false)
+	{
+		cout << "退出群" << partyid << "成功" << endl;
+		cout << "按任意键返回WeiChatList主菜单" << endl;
+		_getch();
+		_getch();
+		WeiChatMenu();
+	}
+
+	partyadminfile.open(partyadminfilename, ios::out | ios::trunc);
+
+	for (int i = 0; i < size(AdminQQ); i++)
+	{
+		if (AdminQQ[i] == LoginedWeiChat)
+		{
+			AdminQQ.erase(AdminQQ.begin() + i);
+		}
+	}
+
+	AdminQQ.clear();
+	AdminQQ.shrink_to_fit();
+	for (int i = 0; i < size(AdminQQ); i++)
+	{
+		partyadminfile << AdminQQ[i] << endl;
+	}
+
+	partyadminfile.close();
+
+
+	cout << "退出群" << partyid << "成功" << endl;
+	cout << "按任意键返回WeiChatList主菜单" << endl;
+
+	_getch();
+	_getch();
+	WeiChatMenu();
+}
+
+void WeiChatToolsBase_CHC::DeletePartyMember()
+{
+	system("CLS");
+	ShowPartyNoReturn();
+	cout << "请输入要管理的群号" << endl;
+	char c;
+	int line = 0;
+	bool flag = false;
+	string id;
+	string txt = ".txt";
+	string PartyOwner;
+	cin >> id;
+	string filename = "WeiChat\\Parties\\" + id + "\\" + id + ".txt";
+	ifstream infile;
+	infile.open(filename, ios::in);
+	if (!infile)
+	{
+		cout << "没有此群,请重新输入或返回WeiChatList主页" << endl;
+		cout << "1.重新输入" << endl;
+		cout << "2.返回WeiChatList主页" << endl;
+		int select;
+		cin >> select;
+		switch (select)
+		{
+		case 1:
+			AgreeMember();
+			break;
+
+		case 2:
+			WeiChatMenu();
+			break;
+		}
+	}
+	infile.close();
+
+
+
+	//获取群主WeiChatList
+	fstream outfile;
+	outfile.open(filename);
+	string temp;
+	while (outfile.get(c))
+	{
+		if (c == '\n')
+		{
+			line++;
+			continue;
+		}
+		if (line == 2) //获取群主WeiChatList号
+		{
+			temp.push_back(c);
+		}
+
+	}
+	/*temp.pop_back(); *///删除末尾\n
+	PartyOwner = temp;//群主WeiChatList
+
+
+					  //获取群管理员WeiChatList
+	fstream adminfile;
+	string adminfilename;
+	string admintemp;
+	vector<string> AdminQQ;
+	adminfilename = "WeiChat\\Parties\\" + id + "\\" + id + "admin.txt";
+	adminfile.open(adminfilename);
+	while (!adminfile.eof())
+	{
+
+		getline(adminfile, temp);
+
+		AdminQQ.push_back(temp);
+
+	}
+	AdminQQ.pop_back();
+
+
+
+	//判断是否是管理员或群主
+	bool Adminflag = false;
+	for (int i = 0; i < size(AdminQQ); i++)
+	{
+		if (AdminQQ[i] == LoginedWeiChat)
+		{
+			Adminflag = true;
+			break;
+		}
+	}
+
+	if (PartyOwner == LoginedWeiChat)
+	{
+		cout << "群主你好，欢迎来到群成员管理" << endl;
+		/*cout << "你不是该群的群主或管理员,无法管理该群" << endl;
+		cout << "按任意键返回WeiChatList主页" << endl;
+		_getch();
+		_getch();
+		WeiChatMenu();*/
+	}
+	else if (Adminflag == true)
+	{
+		cout << "管理员你好，欢迎来到群成员管理" << endl;
+	}
+	else
+	{
+		cout << "你不是该群的群主或管理员,无法管理该群" << endl;
+		cout << "按任意键返回WeiChatList主页" << endl;
+		_getch();
+		_getch();
+		WeiChatMenu();
+	}
+	outfile.close();
+	temp.clear();
+
+
+
+
+	//获取群成员
+	fstream Partyfile;
+	string Partyfilename = "WeiChat\\Parties\\" + id + "\\" + id + ".txt";
+	string PartyMembertemp;
+	vector<string> PartyMember;
+	Partyfile.open(Partyfilename);
+	while (!Partyfile.eof())
+	{
+		getline(Partyfile, PartyMembertemp);
+
+		PartyMember.push_back(PartyMembertemp);
+	}
+	PartyMember.pop_back();
+
+
+
+
+
+	bool Ownerflag = false;
+	Adminflag = false;
+	if (LoginedWeiChat == PartyOwner)
+	{
+		cout << "你为此群群主可以踢出除你外的任何人" << endl;
+		Ownerflag = true;
+	}
+	else
+	{
+		cout << "你为此群管理员，可以踢出除群主和管理员以外的人" << endl;
+		Adminflag = true;
+	}
+
+
+	cout << "请输入要踢出的成员WeiChatList号" << endl;
+	string DeleteMemberQQ;
+	cin >> DeleteMemberQQ;
+
+
+	//检查输入WeiChatList是否是群主或是自己
+	bool checkflag = false;//检查是否有此成员
+						   /*if (DeleteMemberQQ == PartyOwner|| DeleteMemberQQ == LoginedWeiChat)
+						   {*/
+						   /*cout << "无法踢出群主或自己，请重新输入" << endl;
+						   cin >> DeleteMemberQQ;*/
+	while (1)
+	{
+		if (DeleteMemberQQ == PartyOwner || DeleteMemberQQ == LoginedWeiChat)
+		{
+			cout << "无法踢出群主或自己，请重新输入" << endl;
+			cin >> DeleteMemberQQ;
+			continue;
+		}
+
+		for (int i = 0; i < size(PartyMember); i++)//检查是否有此成员
+		{
+			if (DeleteMemberQQ == PartyMember[i])
+			{
+				checkflag = true;
+				break;
+			}
+		}
+
+		if (checkflag == false)
+		{
+			cout << "没有此成员请重新输入" << endl;
+			cin >> DeleteMemberQQ;
+			continue;
+		}
+
+		if (Adminflag == true)//如果本账号是管理员则检查踢出成员是否是管理员
+		{
+			for (int i = 0; i < size(AdminQQ); i++)
+			{
+				if (AdminQQ[i] == DeleteMemberQQ)
+				{
+					cout << "管理员不能踢出其他管理员,请重新输入" << endl;
+					cin >> DeleteMemberQQ;
+					continue;
+				}
+			}
+		}
+
+
+		//检查是否是群主或自己
+		if (DeleteMemberQQ != PartyOwner && DeleteMemberQQ != LoginedWeiChat)
+		{
+			break;
+		}
+		else
+		{
+			cout << "无法踢出群主或自己，请重新输入" << endl;
+			cin >> DeleteMemberQQ;
+			continue;
+		}
+
+	}
+	/*}*/
+
+
+
+	//从该成员群列表中删除此群
+	fstream memberpartylistfile;
+	string memberpartylistfilename = "WeiChat\\" + DeleteMemberQQ + "\\" + DeleteMemberQQ + "PartyList.txt";
+	string memberpartylisttemp;
+	vector<string> memeberpartylistcontent;
+	memberpartylistfile.open(memberpartylistfilename);
+	while (!memberpartylistfile.eof())
+	{
+		getline(memberpartylistfile, memberpartylisttemp);
+		memeberpartylistcontent.push_back(memberpartylisttemp);
+	}
+	memeberpartylistcontent.pop_back();
+	memberpartylistfile.close();
+
+	for (int i = 0; i < size(memeberpartylistcontent); i++)
+	{
+		if (memeberpartylistcontent[i] == id)
+		{
+			memeberpartylistcontent.erase(memeberpartylistcontent.begin() + i);
+		}
+	}
+	memeberpartylistcontent.shrink_to_fit();
+
+	memberpartylistfile.open(memberpartylistfilename, ios::trunc | ios::out);
+	for (int i = 0; i < size(memeberpartylistcontent); i++)
+	{
+		memberpartylistfile << memeberpartylistcontent[i] << endl;
+	}
+	memberpartylistfile.close();
+
+
+
+	//从本群成员列表中删除此成员
+	fstream PartyMemberListFile;
+	string PartyMEmberListFileName = "WeiChat\\Parties\\" + id + "\\" + id + ".txt";
+	string PartyMEmberListTemp;
+	vector<string> PartyMemberListContent;
+	PartyMemberListFile.open(PartyMEmberListFileName);
+	while (!PartyMemberListFile.eof())
+	{
+		getline(PartyMemberListFile, PartyMEmberListTemp);
+
+		PartyMemberListContent.push_back(PartyMEmberListTemp);
+	}
+	PartyMemberListContent.pop_back();
+	PartyMemberListFile.close();
+
+	for (int i = 0; i < size(PartyMemberListContent); i++)
+	{
+		if (PartyMemberListContent[i] == DeleteMemberQQ)
+		{
+			PartyMemberListContent.erase(PartyMemberListContent.begin() + i);
+			break;
+		}
+	}
+	PartyMemberListContent.shrink_to_fit();
+
+	PartyMemberListFile.close();
+	PartyMemberListFile.open(PartyMEmberListFileName, ios::trunc | ios::out);
+	for (int i = 0; i < size(PartyMemberListContent); i++)
+	{
+
+		PartyMemberListFile << PartyMemberListContent[i] << endl;
+
+	}
+	PartyMemberListFile.close();
+
+
+
+	//如果该成员是管理员则从管理员列表中删除该WeiChatList
+	for (int i = 0; i < size(AdminQQ); i++)
+	{
+		if (DeleteMemberQQ == AdminQQ[i])
+		{
+			AdminQQ.erase(AdminQQ.begin() + i);
+			adminfile.open(adminfilename, ios::trunc);
+			for (int i = 0; i < size(AdminQQ); i++)
+			{
+				adminfile << AdminQQ[i];
+			}
+			adminfile.close();
+
+			cout << "踢出" << DeleteMemberQQ << "成功" << endl;
+			cout << "按任意键返回WeiChatList主菜单" << endl;
+			_getch();
+			_getch();
+			WeiChatMenu();
+
+		}
+
+		else
+		{
+			cout << "踢出" << DeleteMemberQQ << "成功" << endl;
+			cout << "按任意键返回WeiChatList主菜单" << endl;
+			_getch();
+			_getch();
+			WeiChatMenu();
+		}
+	}
+}
+
+void WeiChatToolsBase_CHC::ShowPartyInformation()
+{
+	system("CLS");
+	ShowPartyNoReturn();
+
+	cout << "请输入你要查询成员信息的WeiChatList群,或输入#返回WeiChatList主菜单" << endl;
+	string  QQPartyID;
+	cin >> QQPartyID;
+	if (QQPartyID == "#")
+	{
+		WeiChatMenu();
+	}
+	/*cout << "请输入你要查询信息的成员WeiChatList" << endl;
+	string QQPartyMemberID;
+	cin >> QQPartyMemberID;*/
+	int Myqq;
+	int ThisQQPartyID;
+	int ThisQQ;
+	string ThisQQID;
+
+	for (int i = 0; i < size(WeiChatList); i++)
+	{
+		if (WeiChatList[i]->ReturnID() == LoginedWeiChat)
+		{
+			Myqq = i;
+			break;
+		}
+	}
+
+	bool CheckFlag = false;
+	while (1)
+	{
+		for (int i = 0; i < size(WeiChatList[Myqq]->ReturnPartyList()); i++)
+		{
+			if (WeiChatList[Myqq]->ReturnPartyList()[i]->ReturnPartyID() == QQPartyID)
+			{
+				CheckFlag = true;
+				break;
+			}
+
+		}
+
+		if (CheckFlag == true)
+		{
+			break;
+		}
+		else
+		{
+			cout << "你没有加入此群，请重新输入或输入#返回WeiChatList主菜单" << endl;
+			cin >> QQPartyID;
+			continue;
+		}
+	}
+
+
+	system("CLS");
+	bool AdminFlag = false;
+	for (int i = 0; i < size(WeiChatList[Myqq]->ReturnPartyList()); i++)
+	{
+		if (WeiChatList[Myqq]->ReturnPartyList()[i]->ReturnPartyID() == QQPartyID)
+		{
+			ThisQQPartyID = i;
+			break;
+		}
+	}
+
+	for (int i = 0; i < size(WeiChatList[Myqq]->ReturnPartyList()[ThisQQPartyID]->ReturnPartyMembers()); i++)
+	{
+		int m = size(WeiChatList[Myqq]->ReturnPartyList()[ThisQQPartyID]->ReturnPartyMembers());
+
+		ThisQQID = WeiChatList[Myqq]->ReturnPartyList()[ThisQQPartyID]->ReturnPartyMembers()[i];//从群列表获取群成员WeiChatList
+		for (int i = 0; i < size(WeiChatList); i++)
+		{
+			if (WeiChatList[i]->ReturnID() == ThisQQID)
+			{
+				ThisQQ = i;
+				break;
+			}
+		}
+		for (int i = 0; i < size(WeiChatList[Myqq]->ReturnPartyList()[ThisQQPartyID]->ReturnAdminsID()); i++)
+		{
+			if (WeiChatList[Myqq]->ReturnPartyList()[ThisQQPartyID]->ReturnAdminsID()[i] == ThisQQID)
+			{
+				AdminFlag = true;
+				break;
+			}
+		}
+		if (ThisQQID == WeiChatList[Myqq]->ReturnPartyList()[ThisQQPartyID]->ReturnCreatUserID())
+		{
+			cout << "第" << i + 1 << "个成员信息:" << endl;
+			cout << "帐号:" << WeiChatList[ThisQQ]->ReturnID() << endl;
+			cout << "姓名:" << WeiChatList[ThisQQ]->ReturnName() << endl;
+			cout << "群成员属性:群主" << endl;
+			cout << "所在地区:" << WeiChatList[ThisQQ]->ReturnArea() << endl;
+			cout << "个性签名:" << WeiChatList[ThisQQ]->ReturnAutograph() << endl;
+			cout << endl;
+		}
+		else if (AdminFlag == true)
+		{
+			cout << "第" << i + 1 << "个成员信息:" << endl;
+			cout << "帐号:" << WeiChatList[ThisQQ]->ReturnID() << endl;
+			cout << "姓名:" << WeiChatList[ThisQQ]->ReturnName() << endl;
+			cout << "群成员属性:管理员" << endl;
+			cout << "所在地区:" << WeiChatList[ThisQQ]->ReturnArea() << endl;
+			cout << "个性签名:" << WeiChatList[ThisQQ]->ReturnAutograph() << endl;
+			cout << endl;
+			AdminFlag = false;
+		}
+
+		else
+		{
+			cout << "第" << i + 1 << "个成员信息:" << endl;
+			cout << "帐号:" << WeiChatList[ThisQQ]->ReturnID() << endl;
+			cout << "姓名:" << WeiChatList[ThisQQ]->ReturnName() << endl;
+			cout << "群成员属性:普通成员" << endl;
+			cout << "所在地区:" << WeiChatList[ThisQQ]->ReturnArea() << endl;
+			cout << "个性签名:" << WeiChatList[ThisQQ]->ReturnAutograph() << endl;
+			cout << endl;
+		}
+	}
+
+	cout << endl;
+	cout << "按任意键返回WeiChatList主菜单" << endl;
 	_getch();
 	_getch();
 	WeiChatMenu();
