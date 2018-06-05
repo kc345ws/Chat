@@ -1003,7 +1003,7 @@ int Controller::GameOver()//游戏结束界面
 
 	SetCursorPosition(9, 18);
 
-	std::cout << " ┃    嗯，好的        不了，返回QQ主页       ┃";
+	std::cout << " ┃    嗯，好的        不了，返回WeiChat主页       ┃";
 
 	Sleep(30);
 
@@ -1069,7 +1069,7 @@ int Controller::GameOver()//游戏结束界面
 
 				SetColor(11);
 
-				std::cout << "不了，返回QQ主页";
+				std::cout << "不了，返回WeiChat主页";
 
 				--tmp_key;
 
@@ -1089,7 +1089,7 @@ int Controller::GameOver()//游戏结束界面
 
 				SetBackColor();
 
-				std::cout << "不了，返回QQ主页";
+				std::cout << "不了，返回WeiChat主页";
 
 				SetCursorPosition(12, 18);
 

@@ -28,7 +28,7 @@ void WeiBoToolsBase_CHC::GetWeiBo()
 	{
 	WeiBoListFileCheck.close();
 	cout << "Ã»ÓÐÒÑ×¢²áÎ¢²©ºÅ" << endl;
-	cout << "°´ÈÎÒâ¼ü·µ»ØQQÖ÷²Ëµ¥" << endl;
+	cout << "°´ÈÎÒâ¼ü·µ»ØWeiChatÖ÷²Ëµ¥" << endl;
 	_getch();
 	_getch();
 	QQTools.Menu();
@@ -58,7 +58,7 @@ void WeiBoToolsBase_CHC::Login()
 	int ThisWeiBo;
 	bool isCheckFlag = false;
 	bool PWCheckFlag = false;
-	cout << "ÇëÊäÈëÄãµÄÎ¢²©(QQ)ºÅ" << endl;
+	cout << "ÇëÊäÈëÄãµÄÎ¢²©(WeiChat)ºÅ" << endl;
 	cin >> WeiBoID;
 	
 
@@ -93,7 +93,7 @@ void WeiBoToolsBase_CHC::Login()
 	}
 
 
-	cout << "ÇëÊäÈëÄãµÄÎ¢²©(QQ)ºÅÃÜÂë" << endl;
+	cout << "ÇëÊäÈëÄãµÄÎ¢²©(WeiChat)ºÅÃÜÂë" << endl;
 	cin >> WeiBoPW;
 	while (1)
 	{

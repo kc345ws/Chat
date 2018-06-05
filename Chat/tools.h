@@ -34,6 +34,16 @@ public:
 
 	virtual void ShowFriends() = 0; 
 
+	virtual void DeleteFriend() = 0;
+
+	virtual void AgreeFriend() = 0;
+
+	virtual void ShowFriendInformation() = 0;
+
+	virtual void ChangeFriendRemarks() = 0;
+
+	virtual void SaveChange() = 0;
+
 protected:
 
 
@@ -169,6 +179,16 @@ public:
 
 	virtual void ShowFriends() { cout << "Î´¿ª·¢"; }
 
+	virtual void DeleteFriend() {}
+
+	virtual void AgreeFriend() {}
+
+	virtual void ShowFriendInformation() {}
+
+	virtual void ChangeFriendRemarks() {}
+
+	virtual void SaveChange() {}
+
 protected:
 
 	vector<WeiBo_CHC*> WeiBoList;
@@ -206,6 +226,26 @@ public:
 	virtual void GetFriends();
 
 	virtual void ShowFriends();
+
+	virtual void CreatParty();
+
+	virtual void SaveParty();
+
+	virtual void GetParty();
+
+	virtual void DeleteFriend();
+
+	virtual void AgreeFriend();
+
+	virtual void ShowFriendInformation();
+
+	virtual void ShowFriendNoReturn();
+
+	virtual void ChangeFriendRemarks();
+
+	virtual void SaveChange();
+
+	virtual void ShowParty();
 
 	virtual vector<WeiChat_CHC*> &ReturnWeiChatList() { return WeiChatList; }
 

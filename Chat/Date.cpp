@@ -17,7 +17,7 @@ Date::Date()
 
 void Date::ShowDate()
 {
-	cout << "你的QQ的注册日期:" << endl;
+	cout << "你的WeiChat的注册日期:" << endl;
 	cout << year << "." << month << "." << day << endl;
 }
 
