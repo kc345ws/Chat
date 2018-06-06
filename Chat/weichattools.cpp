@@ -14,7 +14,7 @@ void WeiChatToolsBase_CHC::Menu()
 	cout << "请选择你所需的功能" << endl;
 	cout << "1.登陆微信" << endl;
 	cout << "2.注册微信" << endl;
-	cout << "3.已注册微信绑定WeiChatList" << endl;
+	cout << "3.查看已注册微信" << endl;
 
 
 	cin >> select;
@@ -98,6 +98,7 @@ void WeiChatToolsBase_CHC::GetWeiChat()
 		//QQ_CHC qq(qqid, qage, qqpw, qqname, qqpv,qqag);
 		WeiChatList.emplace_back(new WeiChat_CHC(qqid, qage, qqpw, qqname, qqpv, qqag));
 	}
+	file.close();
 }
 
 void WeiChatToolsBase_CHC::Login()
@@ -246,7 +247,7 @@ void WeiChatToolsBase_CHC::ShowWeiChat()
 		}
 	}
 	file.close();
-	file.open("WeiChatList.txt");
+	file.open("WeiChat.txt");
 	for (int i = 0; i < line; i++)
 	{
 		file >> qqid;
@@ -319,7 +320,7 @@ void WeiChatToolsBase_CHC::WeiChatMenu()
 	cout << "3.游戏功能" << endl;
 	cout << "4.聊天功能" << endl;
 	cout << "5.个人资料" << endl;
-	/*cout << "6.开通服务" << endl;*/
+	cout << "6.绑定其他服务" << endl;
 	cout << "0.返回主菜单" << endl;
 	//cout << "1.进入聊天室聊天" << endl;
 	//cout << "2.添加WeiChatList好友" << endl;
@@ -481,23 +482,23 @@ void WeiChatToolsBase_CHC::WeiChatMenu()
 			break;
 		}
 		break;
-	//case 6:
-	//	cout << "请选择所需功能:" << endl;
-	//	cout << "1.开通微博" << endl;
-	//	cin >> select;
-	//	switch (select)
-	//	{
-	//	case 1:
-	//		/*CreateWeiBo();*/
-	//		break;
-	//	default:
-	//		cout << "选择错误，按任意键返回WeiChatList主菜单" << endl;
-	//		_getch();
-	//		_getch();
-	//		WeiChatMenu();
-	//		break;
-	//	}
-	//	break;
+	case 6:
+		cout << "请选择所需功能:" << endl;
+		cout << "1.绑定QQ" << endl;
+		cin >> select;
+		switch (select)
+		{
+		case 1:
+			LinkQQ();
+			break;
+		default:
+			cout << "选择错误，按任意键返回WeiChatList主菜单" << endl;
+			_getch();
+			_getch();
+			WeiChatMenu();
+			break;
+		}
+		break;
 	case 0:
 
 		for (int i = 0; i < size(WeiChatList); i++)
@@ -3067,6 +3068,10 @@ void WeiChatToolsBase_CHC::LinkQQ()
 			}
 			continue;
 		}
+		else
+		{
+			break;
+		}
 	}
 
 	cout << "请输入此QQ号的密码" << endl;
@@ -3102,7 +3107,7 @@ void WeiChatToolsBase_CHC::LinkQQ()
 
 
 	fstream QQLinkFile;
-	string QQLinkFileName = "QQ\\" + QQTools.ReturnQQid() + "Links.txt";
+	string QQLinkFileName = "QQ\\" + linkqq + "\\Links.txt";
 	QQLinkFile.open(QQLinkFileName,ios::app);
 
 	QQLinkFile << "微信:" + LoginedWeiChat;
@@ -3121,7 +3126,17 @@ void WeiChatToolsBase_CHC::GetLinks()
 	system("CLS");
 	int ThisWeiChat;
 	fstream GetLinksFile;
+	fstream CheckFile;
 	string GetLinkFileName = "WeiChat\\" + LoginedWeiChat + "\\Links.txt";
+
+	CheckFile.open(GetLinkFileName, ios::in);
+	if (!CheckFile)
+	{
+		CheckFile.close();
+		CheckFile.open(GetLinkFileName, ios::out);
+	}
+	CheckFile.close();
+
 	GetLinksFile.open(GetLinkFileName);
 	vector<string> Links;
 	string GetLinksFileTemp;
@@ -3130,7 +3145,7 @@ void WeiChatToolsBase_CHC::GetLinks()
 	{
 		if (WeiChatList[i]->ReturnID() == LoginedWeiChat)
 		{
-			ThisWeiChat == i;
+			ThisWeiChat = i;
 		}
 	}
 
@@ -3144,6 +3159,9 @@ void WeiChatToolsBase_CHC::GetLinks()
 		Links.emplace_back(GetLinksFileTemp);
 	}
 	
-	WeiChatList[ThisWeiChat]->ChangeLinkedQQ(Links[0]);
+	if (Links.size() != 0)
+	{
+		WeiChatList[ThisWeiChat]->ChangeLinkedQQ(Links[0]);
+	}
 
 }

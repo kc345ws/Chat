@@ -675,11 +675,15 @@ void QQToolsBase_CHC::QQMenu()
 	case 6:
 		cout << "请选择所需功能:" << endl;
 		cout << "1.开通微博" << endl;
+		cout << "2.绑定微信" << endl;
 		cin >> select;
 		switch (select)
 		{
 		case 1:
 			CreateWeiBo();
+			break;
+		case 2:
+			LinkWeiChat();
 			break;
 		default:
 			cout << "选择错误，按任意键返回QQ主菜单" << endl;
@@ -3576,6 +3580,10 @@ void QQToolsBase_CHC::LinkWeiChat()
 			}
 			continue;
 		}
+		else
+		{
+			break;
+		}
 	}
 
 	cout << "请输入此QQ号的密码" << endl;
@@ -3614,7 +3622,7 @@ void QQToolsBase_CHC::LinkWeiChat()
 
 	//向QQ添加微信
 	fstream QQLinkFile;
-	string QQLinkFileName = "QQ\\" + QQid + "Links.txt";
+	string QQLinkFileName = "QQ\\" + QQid + "\\Links.txt";
 	QQLinkFile.open(QQLinkFileName, ios::app);
 
 	QQLinkFile << "微信:" + linkweichat;
@@ -3632,9 +3640,21 @@ void QQToolsBase_CHC::GetLinks()
 {
 	system("CLS");
 
+	fstream CheckFile;
 	fstream GetLinksFile;
 	string GetLinkFileName = "QQ\\" + QQid + "\\Links.txt";
-	GetLinksFile.open(GetLinkFileName);
+
+	CheckFile.open(GetLinkFileName, ios::in);
+	if (!CheckFile)
+	{
+		CheckFile.close();
+		CheckFile.open(GetLinkFileName, ios::out);
+	}
+	CheckFile.close();
+
+	CheckFile.open(GetLinkFileName, ios::out);
+	CheckFile.close();
+	GetLinksFile.open(GetLinkFileName,ios::out|ios::in);
 	vector<string> Links;
 	string GetLinksFileTemp;
 	int Myqq;
