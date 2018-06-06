@@ -46,6 +46,19 @@ public:
 
 	virtual void AgreeMember() = 0;
 
+	virtual void ShowMyInformation() = 0;
+
+	virtual void ChangePassWord() = 0;
+
+	virtual void ChangeName() = 0;
+
+	virtual void ChangeAutoGraph() = 0;
+
+	virtual void ChangeArea() = 0;;
+
+	virtual void GetLinks() = 0;
+
+
 protected:
 
 
@@ -137,6 +150,12 @@ public:
 
 	virtual vector<QQ_CHC*> &ReturnQQ() { return QQ; }
 
+	virtual void GetLinks();
+
+	virtual void LinkWeiChat();
+
+	/*friend WeiChatToolsBase_CHC;*/
+
 protected:
 
 	vector<QQ_CHC*>QQ;
@@ -192,6 +211,18 @@ public:
 	virtual void SaveChange() {}
 
 	virtual void AgreeMember() {}
+
+	virtual void ShowMyInformation(){}
+
+	virtual void ChangePassWord() {}
+
+	virtual void ChangeName() {}
+
+	virtual void ChangeAutoGraph(){}
+
+	virtual void ChangeArea() {}
+
+	virtual void GetLinks() {}
 
 protected:
 
@@ -263,6 +294,28 @@ public:
 
 	virtual void ShowPartyInformation();
 
+	virtual void ShowMyInformation();
+
+	virtual void ChangePassWord();
+
+	virtual void ChangeName();
+
+	virtual void ChangeAutoGraph();
+
+	virtual void ChangeArea();
+
+	virtual void PlayGame();
+
+	virtual void Client();
+
+	virtual void LinkQQ();
+
+	virtual void GetLinks();
+
+	virtual string &ReturnLoginedWeiChat() { return LoginedWeiChat; }
+
+	/*friend QQToolsBase_CHC;*/
+
 	virtual vector<WeiChat_CHC*> &ReturnWeiChatList() { return WeiChatList; }
 
 protected:
@@ -274,6 +327,8 @@ protected:
 	string WeiChatparty;//创建的群号;
 
 	string WeiChatPartyMember; //申请加群的QQ号
+
+	//string LinkedQQ;// 绑定的QQ
 
 
 

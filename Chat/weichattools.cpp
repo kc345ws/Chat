@@ -4,6 +4,7 @@
 #include<fstream>
 #include<time.h>
 #include<windows.h>
+#include"GreedySnake.h"
 
 
 void WeiChatToolsBase_CHC::Menu()
@@ -164,7 +165,8 @@ void WeiChatToolsBase_CHC::Login()
 		if (WeiChatList[i]->ReturnID() == ID && WeiChatList[i]->ReturnPassWord() == PassWord)
 		{
 			GetFriends();//获取好友
-			//GetQQParty();//获取群
+			GetParty();//获取群
+			GetLinks();//获取绑定
 			cout << "登陆成功" << endl;
 			cout << "按任意键开始使用微信" << endl;
 			_getch();
@@ -317,7 +319,7 @@ void WeiChatToolsBase_CHC::WeiChatMenu()
 	cout << "3.游戏功能" << endl;
 	cout << "4.聊天功能" << endl;
 	cout << "5.个人资料" << endl;
-	cout << "6.开通服务" << endl;
+	/*cout << "6.开通服务" << endl;*/
 	cout << "0.返回主菜单" << endl;
 	//cout << "1.进入聊天室聊天" << endl;
 	//cout << "2.添加WeiChatList好友" << endl;
@@ -344,7 +346,7 @@ void WeiChatToolsBase_CHC::WeiChatMenu()
 		cout << "4.查看好友申请" << endl;
 		cout << "5.查看好友资料" << endl;
 		cout << "6.修改好友备注" << endl;
-		cout << "0.返回WeiChatList主菜单" << endl;
+		cout << "0.返回微信主菜单" << endl;
 		cin >> select;
 		switch (select)
 		{
@@ -376,14 +378,14 @@ void WeiChatToolsBase_CHC::WeiChatMenu()
 	case 2:
 
 		cout << "请选择使用的群功能" << endl;
-		cout << "1.加入WeiChatList群" << endl;
-		cout << "2.退出WeiChatList群" << endl;
-		cout << "3.创建WeiChatList群" << endl;
-		cout << "4.查看已加入的WeiChatList群" << endl;
+		cout << "1.加入微信群" << endl;
+		cout << "2.退出微信群" << endl;
+		cout << "3.创建微信群" << endl;
+		cout << "4.查看已加入的微信群" << endl;
 		cout << "5.查看入群申请" << endl;
-		cout << "6.添加WeiChatList群管理员" << endl;
-		cout << "7.踢出群成员" << endl;
-		cout << "8.查看群成员信息" << endl;
+		/*cout << "6.添加WeiChatList群管理员" << endl;*/
+		cout << "6.踢出群成员" << endl;
+		cout << "7.查看群成员信息" << endl;
 		cout << "0.返回主菜单" << endl;
 		cin >> select;
 		switch (select)
@@ -403,13 +405,13 @@ void WeiChatToolsBase_CHC::WeiChatMenu()
 		case 5:
 			AgreeMember();
 			break;
+		//case 6:
+		//	/*AddPartyAdmin();*/
+		//	break;
 		case 6:
-			/*AddPartyAdmin();*/
-			break;
-		case 7:
 			DeletePartyMember();
 			break;
-		case 8:
+		case 7:
 			ShowPartyInformation();
 			break;
 		default:
@@ -421,12 +423,12 @@ void WeiChatToolsBase_CHC::WeiChatMenu()
 	case 3:
 		cout << "请选择玩的游戏" << endl;
 		cout << "1.贪吃蛇" << endl;
-		cout << "0.返回WeiChatList主菜单" << endl;
+		cout << "0.返回微信主菜单" << endl;
 		cin >> select;
 		switch (select)
 		{
 		case 1:
-			/*PlayGame();*/
+			PlayGame();
 			break;
 		default:
 			WeiChatMenu();
@@ -437,12 +439,12 @@ void WeiChatToolsBase_CHC::WeiChatMenu()
 	case 4:
 		cout << "请选择使用的聊天功能" << endl;
 		cout << "1.进入聊天室" << endl;
-		cout << "0.返回WeiChatList主菜单" << endl;
+		cout << "0.返回微信主菜单" << endl;
 		cin >> select;
 		switch (select)
 		{
 		case 1:
-			/*Client();*/
+			Client();
 			break;
 		default:
 			WeiChatMenu();
@@ -460,42 +462,42 @@ void WeiChatToolsBase_CHC::WeiChatMenu()
 		switch (select)
 		{
 		case 1:
-			/*ShowMyInformation();*/
+			ShowMyInformation();
 			break;
 		case 2:
-			/*ChangePassWord();*/
+			ChangePassWord();
 			break;
 		case 3:
-			/*ChangeName();*/
+			ChangeName();
 			break;
 		case 4:
-			/*ChangeAutoGraph();*/
+			ChangeAutoGraph();
 			break;
 		case 5:
-			/*ChangeArea();*/
+			ChangeArea();
 			break;
 		default:
 			WeiChatMenu();
 			break;
 		}
 		break;
-	case 6:
-		cout << "请选择所需功能:" << endl;
-		cout << "1.开通微博" << endl;
-		cin >> select;
-		switch (select)
-		{
-		case 1:
-			/*CreateWeiBo();*/
-			break;
-		default:
-			cout << "选择错误，按任意键返回WeiChatList主菜单" << endl;
-			_getch();
-			_getch();
-			WeiChatMenu();
-			break;
-		}
-		break;
+	//case 6:
+	//	cout << "请选择所需功能:" << endl;
+	//	cout << "1.开通微博" << endl;
+	//	cin >> select;
+	//	switch (select)
+	//	{
+	//	case 1:
+	//		/*CreateWeiBo();*/
+	//		break;
+	//	default:
+	//		cout << "选择错误，按任意键返回WeiChatList主菜单" << endl;
+	//		_getch();
+	//		_getch();
+	//		WeiChatMenu();
+	//		break;
+	//	}
+	//	break;
 	case 0:
 
 		for (int i = 0; i < size(WeiChatList); i++)
@@ -506,7 +508,7 @@ void WeiChatToolsBase_CHC::WeiChatMenu()
 			}
 		}
 
-		/*for (int i = 0; i < size(WeiChatList[Myqq]->ReturnFriendList()); i++)
+		for (int i = 0; i < size(WeiChatList[Myqq]->ReturnFriendList()); i++)
 		{
 			delete WeiChatList[Myqq]->ReturnFriendList()[i];
 		}
@@ -519,8 +521,8 @@ void WeiChatToolsBase_CHC::WeiChatMenu()
 		}
 		WeiChatList[Myqq]->ReturnPartyList().resize(0);
 		WeiChatList[Myqq]->ReturnPartyList().clear();
-		WeiChatList[Myqq]->ReturnPartyList().shrink_to_fit();*/
-		/*delete WeiChatList[Myqq];*/
+		WeiChatList[Myqq]->ReturnPartyList().shrink_to_fit();
+		delete WeiChatList[Myqq];
 		Menu();
 		break;
 
@@ -541,8 +543,38 @@ void WeiChatToolsBase_CHC::AddFriend()
 	string id;
 	string name;
 	bool flag = false;
-	cout << "请输入添加好友的WeiChatList号" << endl;
+	cout << "请输入添加好友的WeiChat号" << endl;
 	cin >> id;
+
+	if (id == LoginedWeiChat)
+	{
+		cout << "你不能添加自己为好友" << endl;
+		cout << "按任意键返回QQ主页" << endl;
+		_getch();
+		_getch();
+		WeiChatMenu();
+	}
+
+	for (int i = 0; i < size(WeiChatList); i++)
+	{
+		if (WeiChatList[i]->ReturnID() == id)
+		{
+			Myqq = i;
+			break;
+		}
+	}
+
+	for (int i = 0; i < size(WeiChatList[Myqq]->ReturnFriendList()); i++)
+	{
+		if (id == WeiChatList[Myqq]->ReturnFriendList()[i]->ReturnID())
+		{
+			cout << "你已添加此好友,请按任意键返回QQ主页" << endl;
+			_getch();
+			_getch();
+			WeiChatMenu();
+		}
+	}
+
 	for (int i = 0; i < size(WeiChatList); i++)
 	{
 		if (WeiChatList[i]->ReturnID() == id)
@@ -2089,6 +2121,28 @@ void WeiChatToolsBase_CHC::AddPartyMember()
 	id = WeiChatPartyMember;
 	string txt = ".txt";
 
+	for (int i = 0; i < size(WeiChatList); i++)
+	{
+		if (WeiChatList[i]->ReturnID() == LoginedWeiChat)
+		{
+			Myqq = i;
+			break;
+		}
+	}
+
+	for (int i = 0; i < size(WeiChatList[Myqq]->ReturnPartyList()); i++)
+	{
+		if (WeiChatList[Myqq]->ReturnPartyList()[i]->ReturnPartyID() == partyid)
+		{
+			cout << "你已添加此群" << endl;
+			cout << "按任意键返回QQ主页" << endl;
+			_getch();
+			_getch();
+			WeiChatMenu();
+		}
+	}
+
+
 	string filename = "WeiChat\\Parties\\" + partyid + "\\" + partyid + ".txt";
 	ofstream ofile;
 	ofile.open(filename, ios::app);
@@ -2744,3 +2798,352 @@ void WeiChatToolsBase_CHC::ShowPartyInformation()
 	WeiChatMenu();
 }
 
+void WeiChatToolsBase_CHC::ShowMyInformation()
+{
+	system("CLS");
+	int Myqq;
+	for (int i = 0; i < size(WeiChatList); i++)
+	{
+		if (WeiChatList[i]->ReturnID() == LoginedWeiChat)
+		{
+			Myqq = i;
+		}
+	}
+	cout << "以下为你的个人信息:" << endl;
+	cout << "帐号:" << WeiChatList[Myqq]->ReturnID() << endl;
+	cout << "密码:" << WeiChatList[Myqq]->ReturnPassWord() << endl;
+	cout << "姓名:" << WeiChatList[Myqq]->ReturnName() << endl;
+	cout << "地区:" << WeiChatList[Myqq]->ReturnArea() << endl;
+	cout << "个性签名:" << WeiChatList[Myqq]->ReturnAutograph() << endl;
+	cout << endl;
+	cout << "按任意键返回微信主菜单" << endl;
+	_getch();
+	_getch();
+	WeiChatMenu();
+}
+
+void WeiChatToolsBase_CHC::ChangePassWord()
+{
+	system("CLS");
+	cout << "输入你的新密码" << endl;
+	string pw;
+	string pwagin;
+	cin >> pw;
+	cout << "再次确认你的新密码" << endl;
+	cin >> pwagin;
+	while (1)
+	{
+		if (pw != pwagin)
+		{
+			cout << "两次密码不符，请重新输入" << endl;
+			cin >> pw;
+			cout << "再次确认你的新密码" << endl;
+			cin >> pwagin;
+			continue;
+		}
+		else
+		{
+			break;
+		}
+	}
+
+	int Myqq;
+
+	for (int i = 0; i < size(WeiChatList); i++)
+	{
+		if (WeiChatList[i]->ReturnID() == LoginedWeiChat)
+		{
+			Myqq = i;
+		}
+	}
+
+	WeiChatList[Myqq]->ChangePassWord(pw);
+	SaveChange();
+
+	cout << "修改密码成功" << endl;
+	cout << "按任意键返回QQ主菜单" << endl;
+	_getch();
+	_getch();
+	WeiChatMenu();
+}
+
+void WeiChatToolsBase_CHC::ChangeName()
+{
+	system("CLS");
+	string newname;
+	cout << "输入你的新名字" << endl;
+	cin >> newname;
+
+	int Myqq;
+
+	for (int i = 0; i < size(WeiChatList); i++)
+	{
+		if (WeiChatList[i]->ReturnID() == LoginedWeiChat)
+		{
+			Myqq = i;
+		}
+	}
+
+	WeiChatList[Myqq]->ChangeName(newname);
+	SaveChange();
+
+	cout << "修改名称成功" << endl;
+	cout << "按任意键返回QQ主菜单" << endl;
+	_getch();
+	_getch();
+	WeiChatMenu();
+}
+
+void WeiChatToolsBase_CHC::ChangeAutoGraph()
+{
+	system("CLS");
+	string autograph;
+	cout << "输入你的新签名" << endl;
+	cin >> autograph;
+
+	int Myqq;
+	for (int i = 0; i < size(WeiChatList); i++)
+	{
+		if (WeiChatList[i]->ReturnID() == LoginedWeiChat)
+		{
+			Myqq = i;
+		}
+	}
+
+	WeiChatList[Myqq]->ChangeAutoGraph(autograph);
+	cout << "修改个新签名成功" << endl;
+	SaveChange();
+
+	cout << "按任意键返回QQ主菜单" << endl;
+	_getch();
+	_getch();
+	WeiChatMenu();
+}
+
+void WeiChatToolsBase_CHC::ChangeArea()
+{
+	system("CLS");
+	string Area;
+	cout << "输入你的地区" << endl;
+	cin >> Area;
+
+	int Myqq;
+	for (int i = 0; i < size(WeiChatList); i++)
+	{
+		if (WeiChatList[i]->ReturnID() == LoginedWeiChat)
+		{
+			Myqq = i;
+		}
+	}
+	WeiChatList[Myqq]->ChangeArea(Area);
+	SaveChange();
+
+	cout << "按任意键返回QQ主菜单" << endl;
+	_getch();
+	_getch();
+	WeiChatMenu();
+}
+
+void WeiChatToolsBase_CHC::PlayGame()
+{
+	Controller c;//声明一个Controller类
+
+	c.Game();//整个游戏循环
+
+	_getch();
+}
+
+void WeiChatToolsBase_CHC::Client()
+{
+	system("CLS");
+	// 创建套节字
+	cout << "按#键返回QQ主页" << endl;
+	SOCKET s = ::socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+	if (s == INVALID_SOCKET)
+	{
+		printf(" 创建失败 socket() \n");
+		exit(0);
+	}
+
+	// 也可以在这里调用bind函数绑定一个本地地址
+	// 否则系统将会自动安排
+
+	// 填写远程地址信息
+	sockaddr_in servAddr;
+	servAddr.sin_family = AF_INET;
+	servAddr.sin_port = htons(4567);
+	// 注意，这里要填写服务器程序（TCPServer程序）所在机器的IP地址
+	// 如果你的计算机没有联网，直接使用127.0.0.1即可
+	servAddr.sin_addr.S_un.S_addr = inet_addr("127.0.0.1");
+
+	if (::connect(s, (sockaddr*)&servAddr, sizeof(servAddr)) == -1)
+	{
+		printf(" 连接聊天服务器失败connect() \n");
+		cout << "按任意键返回QQ主页" << endl;
+		_getch();
+		WeiChatMenu();
+	}
+
+	char buff[256];
+	char szText[256];
+	cout << "登陆服务器成功" << endl;
+	while (TRUE)
+	{
+		//从服务器端接收数据
+		int nRecv = ::recv(s, buff, 256, 0);
+		if (nRecv > 0)
+		{
+			buff[nRecv] = '\0';
+			printf("来自对方的消息：%s\n", buff);
+		}
+
+		// 向服务器端发送数据
+		cout << "请发送消息:" << endl;
+		cin >> szText;
+		if (szText[0] == '#')
+		{
+			WeiChatMenu();
+		}
+		szText[255] = '\0';
+		::send(s, szText, strlen(szText), 0);
+
+		cout << "请等待对方回复" << endl;
+	}
+
+	// 关闭套节字
+	::closesocket(s);
+}
+
+void WeiChatToolsBase_CHC::LinkQQ()
+{
+	string linkqq;
+	string linkpw;
+	int ThisQQ;
+	int ThisWeiChat;
+	system("CLS");
+
+	for (int i = 0; i < size(WeiChatList); i++)
+	{
+		if (WeiChatList[i]->ReturnID() == LoginedWeiChat)
+		{
+			ThisWeiChat = i;
+		}
+			
+	}
+
+
+
+	if (WeiChatList[ThisWeiChat]->ReturnLinkedQQ() != "")
+	{
+		cout << "你已经绑定QQ，按任意键返回微信主页" << endl;
+		_getch();
+		_getch();
+		WeiChatMenu();
+	}
+	cout << "请输入你要绑定的QQ号" << endl;
+	cin >> linkqq;
+
+	bool CheckFlag = false;
+	while (1)
+	{
+		for (int i = 0; i < size(QQTools.ReturnQQ()); i++)
+		{
+			if (QQTools.ReturnQQ()[i]->ReturnID() == linkqq)
+			{
+				CheckFlag = true;
+				ThisQQ = i;
+				break;
+
+			}
+		}
+
+		if (CheckFlag == false)
+		{
+			cout << "没有此QQ，请重新输入或输入#返回微信主页" << endl;
+			cin >> linkqq;
+			if (linkqq == "#")
+			{
+				WeiChatMenu();
+			}
+			continue;
+		}
+	}
+
+	cout << "请输入此QQ号的密码" << endl;
+	cin >> linkpw;
+	bool PWCheckFlag = false;
+	while (1)
+	{
+		if (QQTools.ReturnQQ()[ThisQQ]->ReturnPassWord() == linkpw)
+		{
+			PWCheckFlag = true;
+			break;
+		}
+
+		if(PWCheckFlag == false)
+		{
+			cout << "密码输入错误，请重新输入或输入#返回微信主页" << endl;
+			cin >> linkpw;
+			if (linkpw == "#")
+			{
+				WeiChatMenu();
+			}
+			continue;
+		}
+	}
+
+	fstream LinkFile;
+	string LinkFileName = "WeiChat\\" + LoginedWeiChat + "\\Links.txt";
+	LinkFile.open(LinkFileName, ios::app);
+
+	LinkFile << "QQ:" + linkqq;
+	LinkFile.close();
+	WeiChatList[ThisWeiChat]->ChangeLinkedQQ(linkqq);
+
+
+	fstream QQLinkFile;
+	string QQLinkFileName = "QQ\\" + QQTools.ReturnQQid() + "Links.txt";
+	QQLinkFile.open(QQLinkFileName,ios::app);
+
+	QQLinkFile << "微信:" + LoginedWeiChat;
+	QQLinkFile.close();
+	QQTools.ReturnQQ()[ThisQQ]->ChangeLinkedWeiChat(LoginedWeiChat);
+
+	cout << "绑定QQ成功" << endl;
+	cout << "按任意键返回微信主页" << endl;
+	_getch();
+	_getch();
+	WeiChatMenu();
+}
+
+void WeiChatToolsBase_CHC::GetLinks()
+{
+	system("CLS");
+	int ThisWeiChat;
+	fstream GetLinksFile;
+	string GetLinkFileName = "WeiChat\\" + LoginedWeiChat + "\\Links.txt";
+	GetLinksFile.open(GetLinkFileName);
+	vector<string> Links;
+	string GetLinksFileTemp;
+
+	for (int i = 0; i < size(WeiChatList); i++)
+	{
+		if (WeiChatList[i]->ReturnID() == LoginedWeiChat)
+		{
+			ThisWeiChat == i;
+		}
+	}
+
+	while (!GetLinksFile.eof())
+	{
+		getline(GetLinksFile, GetLinksFileTemp);
+		GetLinksFileTemp.erase(GetLinksFileTemp.begin());
+		GetLinksFileTemp.erase(GetLinksFileTemp.begin());
+		GetLinksFileTemp.erase(GetLinksFileTemp.begin());
+
+		Links.emplace_back(GetLinksFileTemp);
+	}
+	
+	WeiChatList[ThisWeiChat]->ChangeLinkedQQ(Links[0]);
+
+}

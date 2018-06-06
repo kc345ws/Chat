@@ -1145,6 +1145,7 @@ int Controller::GameOver()//游戏结束界面
 
 	case 2:
 
+		QQTools.Menu();
 		return 2;//退出游戏
 
 	default:

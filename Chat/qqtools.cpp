@@ -463,6 +463,7 @@ void QQToolsBase_CHC::Login()
 		{
 			GetFriends();//获取好友
 			GetQQParty();//获取群
+			GetLinks();//获取绑定
 			cout << "登陆成功" << endl;
 			cout << "按任意键开始使用QQ" << endl;
 			_getch();
@@ -733,6 +734,36 @@ void QQToolsBase_CHC::AddFriend()
 	bool flag = false;
 	cout << "请输入添加好友的QQ号" << endl;
 	cin >> id;
+
+	if (id == QQid)
+	{
+		cout << "你不能添加自己为好友" << endl;
+		cout << "按任意键返回QQ主页" << endl;
+		_getch();
+		_getch();
+		QQMenu();
+	}
+
+	for (int i = 0; i < size(QQ); i++)
+	{
+		if (QQ[i]->ReturnID() == QQid)
+		{
+			Myqq = i;
+			break;
+		}
+	}
+
+	for (int i = 0; i < size(QQ[Myqq]->ReturnFriendList()); i++)
+	{
+		if (id == QQ[Myqq]->ReturnFriendList()[i]->ReturnID())
+		{
+			cout << "你已添加此好友,请按任意键返回QQ主页" << endl;
+			_getch();
+			_getch();
+			QQMenu();
+		}
+	}
+
 	for (int i = 0; i < size(QQ); i++)
 	{
 		if (QQ[i]->ReturnID() == id)
@@ -742,6 +773,7 @@ void QQToolsBase_CHC::AddFriend()
 			cout << "好友申请成功，请等待对方确认" << endl;
 		}
 	}
+
 
 	if(flag == false)
 		{
@@ -2126,6 +2158,27 @@ void QQToolsBase_CHC::AddPartyMember()
 	int Myqq;
 	id = PartyMember;
 	string txt = ".txt";
+
+	for (int i = 0; i < size(QQ); i++)
+	{
+		if (QQ[i]->ReturnID() == QQid)
+		{
+			Myqq = i;
+			break;
+		}
+	}
+
+	for (int i = 0; i < size(QQ[Myqq]->ReturnPartyList()); i++)
+	{
+		if (QQ[Myqq]->ReturnPartyList()[i]->ReturnPartyID() == partyid)
+		{
+			cout << "你已添加此群" << endl;
+			cout << "按任意键返回QQ主页" << endl;
+			_getch();
+			_getch();
+			QQMenu();
+		}
+	}
 	
 	string filename = "QQ\\Parties\\" + partyid + "\\" + partyid + ".txt";
 	ofstream ofile;
@@ -3470,5 +3523,142 @@ void QQToolsBase_CHC::CreateWeiBo()
 		QQMenu();
 		break;
 	}
+}
+
+void QQToolsBase_CHC::LinkWeiChat()
+{
+	string linkweichat;
+	string linkpw;
+	int ThisQQ;
+	int ThisWeiChat;
+	system("CLS");
+
+	for (int i = 0; i < size(QQ); i++)
+	{
+		if (QQ[i]->ReturnID() == QQid)
+		{
+			ThisQQ = i;
+		}
+
+	}
+
+	if (QQ[ThisQQ]->ReturnLinkedWeiChat() != "")
+	{
+		cout << "你已经绑定微信，按任意键返回微信主页" << endl;
+		_getch();
+		_getch();
+		QQMenu();
+	}
+	cout << "请输入你要绑定的微信号" << endl;
+	cin >> linkweichat;
+
+	bool CheckFlag = false;
+	while (1)
+	{
+		for (int i = 0; i < size(WeiChatTools.ReturnWeiChatList()); i++)
+		{
+			if (WeiChatTools.ReturnWeiChatList()[i]->ReturnID() == linkweichat)
+			{
+				CheckFlag = true;
+				ThisWeiChat = i;
+				break;
+
+			}
+		}
+
+		if (CheckFlag == false)
+		{
+			cout << "没有此微信，请重新输入或输入#返回微信主页" << endl;
+			cin >> linkweichat;
+			if (linkweichat == "#")
+			{
+				QQMenu();
+			}
+			continue;
+		}
+	}
+
+	cout << "请输入此QQ号的密码" << endl;
+	cin >> linkpw;
+	bool PWCheckFlag = false;
+	while (1)
+	{
+		if (WeiChatTools.ReturnWeiChatList()[ThisWeiChat]->ReturnPassWord() == linkpw)
+		{
+			PWCheckFlag = true;
+			break;
+		}
+
+		if (PWCheckFlag == false)
+		{
+			cout << "密码输入错误，请重新输入或输入#返回微信主页" << endl;
+			cin >> linkpw;
+			if (linkpw == "#")
+			{
+				QQMenu();
+			}
+			continue;
+		}
+	}
+
+	//向微信添加QQ
+	fstream LinkFile;
+	string LinkFileName = "WeiChat\\" + linkweichat + "\\Links.txt";
+	LinkFile.open(LinkFileName, ios::app);
+
+	LinkFile << "QQ:" + QQid;
+	LinkFile.close();
+	WeiChatTools.ReturnWeiChatList()[ThisWeiChat]->ChangeLinkedQQ(QQid);
+
+
+
+	//向QQ添加微信
+	fstream QQLinkFile;
+	string QQLinkFileName = "QQ\\" + QQid + "Links.txt";
+	QQLinkFile.open(QQLinkFileName, ios::app);
+
+	QQLinkFile << "微信:" + linkweichat;
+	QQLinkFile.close();
+	QQTools.ReturnQQ()[ThisQQ]->ChangeLinkedWeiChat(linkweichat);
+
+	cout << "绑定微信成功" << endl;
+	cout << "按任意键返回QQ主页" << endl;
+	_getch();
+	_getch();
+	QQMenu();
+}
+
+void QQToolsBase_CHC::GetLinks()
+{
+	system("CLS");
+
+	fstream GetLinksFile;
+	string GetLinkFileName = "QQ\\" + QQid + "\\Links.txt";
+	GetLinksFile.open(GetLinkFileName);
+	vector<string> Links;
+	string GetLinksFileTemp;
+	int Myqq;
+
+	for (int i = 0; i < size(QQ); i++)
+	{
+		if (QQ[i]->ReturnID() == QQid)
+		{
+			Myqq = i;
+		}
+	}
+
+	while (!GetLinksFile.eof())
+	{
+		getline(GetLinksFile, GetLinksFileTemp);
+		GetLinksFileTemp.erase(GetLinksFileTemp.begin());
+		GetLinksFileTemp.erase(GetLinksFileTemp.begin());
+		GetLinksFileTemp.erase(GetLinksFileTemp.begin());
+
+		Links.emplace_back(GetLinksFileTemp);
+	}
+
+
+	QQ[Myqq]->ChangeLinkedWeiChat(Links[0]);
+	/*LinkedWeiChat = Links[1];*/
 }
 

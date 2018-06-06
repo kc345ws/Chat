@@ -125,80 +125,18 @@ public:
 
 	vector<QQParties_CHC*>& ReturnPartyList(){return PartyList;}
 
+	string &ReturnLinkedWeiChat() { return LinkedWeiChat; }
 
-	//string ReturnID()
-	//{
-	//	return ID;
-	//}
+	void ChangeLinkedWeiChat(string weichat) { LinkedWeiChat = weichat; }
 
-	//int ReturnAge()
-	//{
-	//	return Age;
-	//}
-
-	//int ReturnFriendNumber()
-	//{
-	//	return FriendNumber;
-	//}
-
-	//string  ReturnPassWord()
-	//{
-	//	return PassWord;
-	//}
-
-	//string  ReturnName()
-	//{
-	//	return Name;
-	//}
-
-	//string  ReturnArea()
-	//{
-	//	return Area;
-	//}
-
-	//string  ReturnAutograph()
-	//{
-	//	return Autograph;
-	//}
-
-	/*int ReturnPartyNumber()
-	{
-		return PartyNumber;
-	}
-
-	void ChangePartyNumbers(int num)
-	{
-		PartyNumber = num;
-	}
-
-	void ChangeFriendsNumber(int num)
-	{
-		FriendNumber = num;
-	}*/
 
 private:
-
-	//int Age;
-
-	//int FriendNumber;
-
-	//int PartyNumber;
-
-	//string ID;
-
-	//string PassWord;//
-
-	//string Name;
-
-	//string Area;
-
-	//string Autograph;
-
-	//Date ApplyDate;
 
 	vector<QQFriends_CHC*> FriendList;
 
 	vector<QQParties_CHC*> PartyList;
+
+	string LinkedWeiChat;
 
 };
 
@@ -296,7 +234,6 @@ private:
 };
 
 
-
 class WeiChat_CHC : public Tencent_CHC
 {
 public:
@@ -309,12 +246,18 @@ public:
 
 	vector<QQParties_CHC*>& ReturnPartyList() { return PartyList; }
 
+	string &ReturnLinkedQQ() { return LinkedQQ; }
+
+	void ChangeLinkedQQ(string qq) { LinkedQQ = qq; }
+
 
 private:
 
 	vector<QQFriends_CHC*> FriendList;
 
 	vector<QQParties_CHC*> PartyList;
+
+	string LinkedQQ;
 
 };
 
