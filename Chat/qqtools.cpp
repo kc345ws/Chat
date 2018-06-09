@@ -439,7 +439,6 @@ void QQToolsBase_CHC::Login()
 	//vector<QQ_CHC*>::iterator iter = QQ.begin();
 	cout << "输入你要登陆的QQ:" << endl;
 	cin >> ID;
-	QQid = ID;
 
 	for (int i = 0; i < size(QQ); i++)
 	{
@@ -461,6 +460,7 @@ void QQToolsBase_CHC::Login()
 	{
 		if (QQ[i]->ReturnID() == ID && QQ[i]->ReturnPassWord() == PassWord)
 		{
+			QQid = ID;
 			GetFriends();//获取好友
 			GetQQParty();//获取群
 			GetLinks();//获取绑定
@@ -477,6 +477,10 @@ void QQToolsBase_CHC::Login()
 			cin >> PassWord;
 			if (QQ[i]->ReturnPassWord() == PassWord)
 			{
+				QQid = ID;
+				GetFriends();//获取好友
+				GetQQParty();//获取群
+				GetLinks();//获取绑定
 				cout << "登陆成功" << endl;
 				cout << "按任意键开始使用QQ" << endl;
 				_getch();
@@ -540,6 +544,8 @@ void QQToolsBase_CHC::QQMenu()
 		cout << "4.查看好友申请" << endl;
 		cout << "5.查看好友资料" << endl;
 		cout << "6.修改好友备注" << endl;
+		cout << "7.查看微信共同好友" << endl;
+		cout << "8.添加微信共同好友" << endl;
 		cout << "0.返回QQ主菜单" << endl;
 		cin >> select;
 		switch (select)
@@ -562,6 +568,8 @@ void QQToolsBase_CHC::QQMenu()
 		case 6:
 			ChangeFriendRemarks();
 			break;
+		case 7:
+			ShowWeiChatCommonFriends();
 		default:
 			QQMenu();
 			break;
@@ -3548,7 +3556,7 @@ void QQToolsBase_CHC::LinkWeiChat()
 
 	if (QQ[ThisQQ]->ReturnLinkedWeiChat() != "")
 	{
-		cout << "你已经绑定微信，按任意键返回微信主页" << endl;
+		cout << "你已经绑定微信"<< QQ[ThisQQ]->ReturnLinkedWeiChat() <<endl<<"按任意键返回微信主页" << endl;
 		_getch();
 		_getch();
 		QQMenu();
@@ -3652,8 +3660,6 @@ void QQToolsBase_CHC::GetLinks()
 	}
 	CheckFile.close();
 
-	CheckFile.open(GetLinkFileName, ios::out);
-	CheckFile.close();
 	GetLinksFile.open(GetLinkFileName,ios::out|ios::in);
 	vector<string> Links;
 	string GetLinksFileTemp;
@@ -3670,15 +3676,121 @@ void QQToolsBase_CHC::GetLinks()
 	while (!GetLinksFile.eof())
 	{
 		getline(GetLinksFile, GetLinksFileTemp);
-		GetLinksFileTemp.erase(GetLinksFileTemp.begin());
-		GetLinksFileTemp.erase(GetLinksFileTemp.begin());
-		GetLinksFileTemp.erase(GetLinksFileTemp.begin());
+		
+		GetLinksFileTemp.erase(GetLinksFileTemp.begin() + 0);
+		GetLinksFileTemp.erase(GetLinksFileTemp.begin() + 0);
+		GetLinksFileTemp.erase(GetLinksFileTemp.begin() + 0);
+		GetLinksFileTemp.erase(GetLinksFileTemp.begin() + 0);
+		GetLinksFileTemp.erase(GetLinksFileTemp.begin() + 0);
 
+		//中文字符需要erase两次
+		
 		Links.emplace_back(GetLinksFileTemp);
 	}
 
-
-	QQ[Myqq]->ChangeLinkedWeiChat(Links[0]);
+	if (Links.size() != 0)
+	{
+		QQ[Myqq]->ChangeLinkedWeiChat(Links[0]);
+	}
 	/*LinkedWeiChat = Links[1];*/
 }
 
+void QQToolsBase_CHC::ShowWeiChatCommonFriends()
+{
+	system("CLS");
+	/*int MyWeiChat;
+	int LinkedQQ;*/
+	int Myqq;
+	int LinkedWeiChat;
+	int ThisQQ;
+
+	for (int i = 0; i < size(QQ); i++)
+	{
+		if (QQ[i]->ReturnID() == QQid)
+		{
+			Myqq = i;
+			break;
+		}
+	}
+
+	for (int i = 0; i < size(WeiChatTools.ReturnWeiChatList()); i++)
+	{
+		string m = QQ[Myqq]->ReturnLinkedWeiChat();
+		if (WeiChatTools.ReturnWeiChatList()[i]->ReturnID() == QQ[Myqq]->ReturnLinkedWeiChat())
+		{
+			LinkedWeiChat = i;
+			break;
+		}
+	}
+
+	if (QQ[Myqq]->ReturnLinkedWeiChat() == "")
+	{
+		cout << "你没有绑定微信，请先绑定微信" << endl;
+		cout << "按任意键返回QQ主页" << endl;
+		_getch();
+		_getch();
+		QQMenu();
+	}
+
+	cout << "你绑定的微信号为" << QQ[Myqq]->ReturnLinkedWeiChat() << endl;
+	cout << "你和此微信的共同好友有如下" << endl;
+
+	int FriendFlag = false;
+	int CommonFriendNumber = 1;
+
+	WeiChatTools.ReturnWeiChatList()[LinkedWeiChat]->GetFriends();
+	//for (int i = 0; i < size(QQ[Myqq]->ReturnFriendList()); i++)//QQ好友列表
+	//{
+
+		for (int j = 0; j < size(WeiChatTools.ReturnWeiChatList()[LinkedWeiChat]->ReturnFriendList()); j++)//微信好友列表
+		{
+
+			FriendFlag = false;
+
+			for (int k = 0; k < size(QQ); k++)
+			{
+				QQ[k]->GetLinks();
+				//QQ列表中找到此好友
+				if (QQ[k]->ReturnLinkedWeiChat() == WeiChatTools.ReturnWeiChatList()[LinkedWeiChat]->ReturnFriendList()[j]->ReturnID())
+				{
+					ThisQQ = k;
+					FriendFlag = true;
+					break;
+				}
+			}
+
+			if (FriendFlag == false)
+			{
+				continue;
+			}
+
+			for (int p = 0; p < size(QQ[Myqq]->ReturnFriendList()); p++)
+			{
+				if (QQ[Myqq]->ReturnFriendList()[p]->ReturnID() == QQ[ThisQQ]->ReturnID())
+				{
+					cout << "第" << CommonFriendNumber << "个共同好友" << endl;
+					cout << "帐号:" << QQ[Myqq]->ReturnFriendList()[j]->ReturnID();
+					cout << "姓名:" << QQ[Myqq]->ReturnFriendList()[j]->ReturnFriendName();
+					cout << "备注:" << QQ[Myqq]->ReturnFriendList()[j]->ReturnRemarks();
+					cout << endl;
+
+					CommonFriendNumber++;
+					break;
+				}
+			}
+
+		}
+
+		
+
+	//}
+
+	WeiChatTools.ReturnWeiChatList()[LinkedWeiChat]->ReturnFriendList().clear();
+	WeiChatTools.ReturnWeiChatList()[LinkedWeiChat]->ReturnFriendList().shrink_to_fit();
+
+
+	cout << "按任意键返回QQ主页" << endl;
+	_getch();
+	_getch();
+	QQMenu();
+}

@@ -5,6 +5,7 @@
 #include<conio.h>
 #include<windows.h>
 #include<stdlib.h>
+#include<fstream>
 using namespace std;
 
 QQ_CHC::QQ_CHC()
@@ -62,6 +63,102 @@ QQ_CHC::~QQ_CHC()
 	{
 		delete PartyList[i];
 	}
+}
+
+void QQ_CHC::GetFriends()
+{
+	ifstream file;
+	string qq = ID;
+	string txt = ".txt";
+	string filename = "QQ\\" + qq + "\\" + qq + "Friendlist.txt";
+	string id;
+	string name;
+	string remarks;
+	char c;
+	int line = 0;
+	int Myqq;
+	file.open(filename, ios::app);
+	while (file.get(c))
+	{
+		if (c == ' ')
+		{
+			line++;
+		}
+	}
+	file.close();
+	/*for (int i = 0; i < size(QQ); i++)
+	{
+		if (QQ[i]->ReturnID() == QQid)
+		{
+			Myqq = i;
+		}
+	}*/
+	/*ChangeFriendsNumber(line);*/
+	FriendNumber = line;
+
+	file.open(filename, ios::app);
+
+	for (int i = 0; i < line; i++)
+	{
+		file >> id;
+		file >> name;
+		file >> remarks;
+		FriendList.emplace_back(new QQFriends_CHC(name, id, remarks));
+	}
+
+	file.close();
+}
+
+void QQ_CHC::GetLinks()
+{
+
+
+	fstream CheckFile;
+	fstream GetLinksFile;
+	string GetLinkFileName = "QQ\\" + ID + "\\Links.txt";
+
+	CheckFile.open(GetLinkFileName, ios::in);
+	if (!CheckFile)
+	{
+		CheckFile.close();
+		CheckFile.open(GetLinkFileName, ios::out);
+	}
+	CheckFile.close();
+
+	GetLinksFile.open(GetLinkFileName, ios::out | ios::in);
+	vector<string> Links;
+	string GetLinksFileTemp;
+	int Myqq;
+
+	//for (int i = 0; i < size(QQ); i++)
+	//{
+	//	if (QQ[i]->ReturnID() == QQid)
+	//	{
+	//		Myqq = i;
+	//	}
+	//}
+
+	while (!GetLinksFile.eof())
+	{
+		getline(GetLinksFile, GetLinksFileTemp);
+
+		GetLinksFileTemp.erase(GetLinksFileTemp.begin() + 0);
+		GetLinksFileTemp.erase(GetLinksFileTemp.begin() + 0);
+		GetLinksFileTemp.erase(GetLinksFileTemp.begin() + 0);
+		GetLinksFileTemp.erase(GetLinksFileTemp.begin() + 0);
+		GetLinksFileTemp.erase(GetLinksFileTemp.begin() + 0);
+
+		//中文字符需要erase两次
+
+		Links.emplace_back(GetLinksFileTemp);
+	}
+
+
+	if (Links.size() != 0)
+	{
+		LinkedWeiChat = Links[0];
+	};
+	/*LinkedWeiChat = Links[1];*/
 }
 
 
@@ -173,4 +270,105 @@ WeiChat_CHC::WeiChat_CHC(string qqid, int qage, string qqpw, string qqname, stri
 	Autograph = ag;
 	FriendNumber = 0;
 	PartyNumber = 0;
+}
+
+WeiChat_CHC::~WeiChat_CHC()
+{
+	for (int i = 0; i < size(FriendList); i++)
+	{
+		delete FriendList[i];
+	}
+
+	for (int i = 0; i < size(PartyList); i++)
+	{
+		delete PartyList[i];
+	}
+}
+
+void WeiChat_CHC::GetLinks()
+{
+
+	int ThisWeiChat;
+	fstream GetLinksFile;
+	fstream CheckFile;
+	string GetLinkFileName = "WeiChat\\" + ID + "\\Links.txt";
+
+	CheckFile.open(GetLinkFileName, ios::in);
+	if (!CheckFile)
+	{
+		CheckFile.close();
+		CheckFile.open(GetLinkFileName, ios::out);
+	}
+	CheckFile.close();
+
+	GetLinksFile.open(GetLinkFileName);
+	vector<string> Links;
+	string GetLinksFileTemp;
+
+	/*for (int i = 0; i < size(WeiChatList); i++)
+	{
+		if (WeiChatList[i]->ReturnID() == LoginedWeiChat)
+		{
+			ThisWeiChat = i;
+		}
+	}*/
+
+	while (!GetLinksFile.eof())
+	{
+		getline(GetLinksFile, GetLinksFileTemp);
+		GetLinksFileTemp.erase(GetLinksFileTemp.begin());
+		GetLinksFileTemp.erase(GetLinksFileTemp.begin());
+		GetLinksFileTemp.erase(GetLinksFileTemp.begin());
+
+		Links.emplace_back(GetLinksFileTemp);
+	}
+
+	if (Links.size() != 0)
+	{
+		/*WeiChatList[ThisWeiChat]->ChangeLinkedQQ(Links[0]);*/
+		LinkedQQ = Links[0];
+	}
+}
+
+void WeiChat_CHC::GetFriends()
+{
+	ifstream file;
+	string qq = ID;
+	string txt = ".txt";
+	string filename = "WeiChat\\" + qq + "\\" + qq + "Friendlist.txt";
+	string id;
+	string name;
+	string remarks;
+	char c;
+	int line = 0;
+	int Myqq;
+	file.open(filename, ios::app);
+	while (file.get(c))
+	{
+		if (c == ' ')
+		{
+			line++;
+		}
+	}
+	file.close();
+	/*for (int i = 0; i < size(WeiChatList); i++)
+	{
+		if (WeiChatList[i]->ReturnID() == LoginedWeiChat)
+		{
+			Myqq = i;
+		}
+	}*/
+	/*WeiChatList[Myqq]->ChangeFriendsNumber(line);*/
+	FriendNumber = line;
+
+	file.open(filename, ios::app);
+	for (int i = 0; i < line; i++)
+	{
+		file >> id;
+		file >> name;
+		file >> remarks;
+		FriendList.emplace_back(new QQFriends_CHC(name, id, remarks));
+	}
+
+	file.close();
 }

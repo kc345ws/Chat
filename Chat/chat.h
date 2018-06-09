@@ -51,6 +51,7 @@ public:
 
 	virtual Date &ReturnApplyDate() { return ApplyDate; }
 
+
 protected:
 
 	int Age; //×¢²áÌìÊý
@@ -126,6 +127,10 @@ public:
 	vector<QQParties_CHC*>& ReturnPartyList(){return PartyList;}
 
 	string &ReturnLinkedWeiChat() { return LinkedWeiChat; }
+
+	void GetFriends();
+
+	void GetLinks();
 
 	void ChangeLinkedWeiChat(string weichat) { LinkedWeiChat = weichat; }
 
@@ -242,11 +247,17 @@ public:
 
 	WeiChat_CHC(string qqid, int qage, string qqpw, string qqname, string qqpv, string ag);
 
+	~WeiChat_CHC();
+
 	vector<QQFriends_CHC*>& ReturnFriendList() { return FriendList; }
 
 	vector<QQParties_CHC*>& ReturnPartyList() { return PartyList; }
 
 	string &ReturnLinkedQQ() { return LinkedQQ; }
+
+	void GetLinks();
+
+	void GetFriends();
 
 	void ChangeLinkedQQ(string qq) { LinkedQQ = qq; }
 

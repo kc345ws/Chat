@@ -146,6 +146,8 @@ public:
 
 	virtual void CreateWeiBo();
 
+	virtual void ShowWeiChatCommonFriends();
+
 	virtual string &ReturnQQid() { return QQid; }
 
 	virtual vector<QQ_CHC*> &ReturnQQ() { return QQ; }
@@ -311,6 +313,8 @@ public:
 	virtual void LinkQQ();
 
 	virtual void GetLinks();
+
+	virtual void ShowQQCommonFriends();
 
 	virtual string &ReturnLoginedWeiChat() { return LoginedWeiChat; }
 
