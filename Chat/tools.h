@@ -156,6 +156,22 @@ public:
 
 	virtual void LinkWeiChat();
 
+	virtual void ShowWeiChatCommonFriendsNoReturn();
+
+	virtual void AddWeiChatCommonFriend();
+
+	virtual void CreatTemporaryParty();
+
+	virtual void JoinTemporaryParty();
+
+	/*virtual void PartyMenu();*/
+
+	virtual void PartyType();
+
+	vector<QQParties_CHC*> ReturnAllQQTemporaryParty() { return AllQQTemporaryParty; }
+
+	/*virtual void ShowFriendsNoReturn();*/
+
 	/*friend WeiChatToolsBase_CHC;*/
 
 protected:
@@ -167,6 +183,8 @@ protected:
 	string QQparty;//创建的群号;
 
 	string PartyMember; //申请加群的QQ号
+
+	vector<QQParties_CHC*>AllQQTemporaryParty;//临时讨论组
 
 private:
 
@@ -319,6 +337,13 @@ public:
 	virtual string &ReturnLoginedWeiChat() { return LoginedWeiChat; }
 
 	/*friend QQToolsBase_CHC;*/
+	virtual void ShowQQCommonFriendsNoReturn();
+
+	virtual void ShowFriendsNoReturn();
+
+	virtual void AddQQCommonFriend();
+
+	virtual void InvitePartyMember();
 
 	virtual vector<WeiChat_CHC*> &ReturnWeiChatList() { return WeiChatList; }
 
@@ -356,6 +381,9 @@ private:
 
 class QQTools_CHC : public QQToolsBase_CHC
 {
+
+public:
+
 
 };
 

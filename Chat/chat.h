@@ -126,6 +126,8 @@ public:
 
 	vector<QQParties_CHC*>& ReturnPartyList(){return PartyList;}
 
+	vector<QQParties_CHC*>& ReturnTemporaryPartyList() { return TemporaryPartyList;}
+
 	string &ReturnLinkedWeiChat() { return LinkedWeiChat; }
 
 	void GetFriends();
@@ -134,12 +136,16 @@ public:
 
 	void ChangeLinkedWeiChat(string weichat) { LinkedWeiChat = weichat; }
 
+	
+
 
 private:
 
 	vector<QQFriends_CHC*> FriendList;
 
 	vector<QQParties_CHC*> PartyList;
+
+	vector<QQParties_CHC*> TemporaryPartyList;
 
 	string LinkedWeiChat;
 
@@ -195,7 +201,11 @@ public:
 
 	vector<string> &ReturnAdminsID() { return AdminsList; }
 
-private:
+	void ChangeTypeID(int id) { TypeID = id; }
+
+protected:
+
+	int TypeID;
 	
 	string PartyID;//群号
 
@@ -208,6 +218,22 @@ private:
 	vector<string> AdminsList;//管理员列表
 
 };
+
+
+//class QQParties_Game_CHC :public QQParties_CHC
+//{
+//public:
+//	
+//	void PlayGame();
+//
+//private:
+//
+//};
+//
+//class QQParties_Study_CHC :public QQParties_CHC
+//{
+//
+//};
 
 
 class WeiBo_CHC: public Tencent_CHC//微博类
@@ -271,5 +297,8 @@ private:
 	string LinkedQQ;
 
 };
+
+
+
 
 #endif

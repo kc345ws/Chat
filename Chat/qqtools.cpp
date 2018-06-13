@@ -546,6 +546,7 @@ void QQToolsBase_CHC::QQMenu()
 		cout << "6.修改好友备注" << endl;
 		cout << "7.查看微信共同好友" << endl;
 		cout << "8.添加微信共同好友" << endl;
+		
 		cout << "0.返回QQ主菜单" << endl;
 		cin >> select;
 		switch (select)
@@ -570,6 +571,8 @@ void QQToolsBase_CHC::QQMenu()
 			break;
 		case 7:
 			ShowWeiChatCommonFriends();
+		case 8:
+			AddWeiChatCommonFriend();
 		default:
 			QQMenu();
 			break;
@@ -588,6 +591,9 @@ void QQToolsBase_CHC::QQMenu()
 		cout << "6.添加QQ群管理员" << endl;
 		cout << "7.踢出群成员" << endl;
 		cout << "8.查看群成员信息" << endl;
+		cout << "9.创建临时讨论组" << endl;
+		cout << "10.加入临时讨论组" << endl;
+		cout << "11.改变群类型" << endl;
 		cout << "0.返回主菜单" << endl;
 		cin >> select;
 		switch (select)
@@ -616,6 +622,15 @@ void QQToolsBase_CHC::QQMenu()
 		case 8:
 			ShowPartyInformation();
 			break;
+		case 9:
+			CreatTemporaryParty();
+			break;
+		case 10:
+			JoinTemporaryParty();
+			break;
+		case 11:
+			PartyType();
+			break; 
 		default:
 			QQMenu();
 			break;
@@ -3793,4 +3808,427 @@ void QQToolsBase_CHC::ShowWeiChatCommonFriends()
 	_getch();
 	_getch();
 	QQMenu();
+}
+
+void QQToolsBase_CHC::ShowWeiChatCommonFriendsNoReturn()
+{
+	system("CLS");
+	/*int MyWeiChat;
+	int LinkedQQ;*/
+	int Myqq;
+	int LinkedWeiChat;
+	int ThisQQ;
+
+	for (int i = 0; i < size(QQ); i++)
+	{
+		if (QQ[i]->ReturnID() == QQid)
+		{
+			Myqq = i;
+			break;
+		}
+	}
+
+	for (int i = 0; i < size(WeiChatTools.ReturnWeiChatList()); i++)
+	{
+		string m = QQ[Myqq]->ReturnLinkedWeiChat();
+		if (WeiChatTools.ReturnWeiChatList()[i]->ReturnID() == QQ[Myqq]->ReturnLinkedWeiChat())
+		{
+			LinkedWeiChat = i;
+			break;
+		}
+	}
+
+	if (QQ[Myqq]->ReturnLinkedWeiChat() == "")
+	{
+		cout << "你没有绑定微信，请先绑定微信" << endl;
+		cout << "按任意键返回QQ主页" << endl;
+		_getch();
+		_getch();
+		QQMenu();
+	}
+
+	cout << "你绑定的微信号为" << QQ[Myqq]->ReturnLinkedWeiChat() << endl;
+	cout << "你和此微信的共同好友有如下" << endl;
+
+	int FriendFlag = false;
+	int CommonFriendNumber = 1;
+
+	WeiChatTools.ReturnWeiChatList()[LinkedWeiChat]->GetFriends();
+	//for (int i = 0; i < size(QQ[Myqq]->ReturnFriendList()); i++)//QQ好友列表
+	//{
+
+	for (int j = 0; j < size(WeiChatTools.ReturnWeiChatList()[LinkedWeiChat]->ReturnFriendList()); j++)//微信好友列表
+	{
+
+		FriendFlag = false;
+
+		for (int k = 0; k < size(QQ); k++)
+		{
+			QQ[k]->GetLinks();
+			//QQ列表中找到此好友
+			if (QQ[k]->ReturnLinkedWeiChat() == WeiChatTools.ReturnWeiChatList()[LinkedWeiChat]->ReturnFriendList()[j]->ReturnID())
+			{
+				ThisQQ = k;
+				FriendFlag = true;
+				break;
+			}
+		}
+
+		if (FriendFlag == false)
+		{
+			continue;
+		}
+
+		for (int p = 0; p < size(QQ[Myqq]->ReturnFriendList()); p++)
+		{
+			if (QQ[Myqq]->ReturnFriendList()[p]->ReturnID() == QQ[ThisQQ]->ReturnID())
+			{
+				cout << "第" << CommonFriendNumber << "个共同好友" << endl;
+				cout << "QQ:" << QQ[Myqq]->ReturnFriendList()[j]->ReturnID();
+				cout << "姓名:" << QQ[Myqq]->ReturnFriendList()[j]->ReturnFriendName();
+				cout << "备注:" << QQ[Myqq]->ReturnFriendList()[j]->ReturnRemarks();
+				cout << endl;
+
+				CommonFriendNumber++;
+				break;
+			}
+		}
+
+	}
+
+
+
+	//}
+
+	WeiChatTools.ReturnWeiChatList()[LinkedWeiChat]->ReturnFriendList().clear();
+	WeiChatTools.ReturnWeiChatList()[LinkedWeiChat]->ReturnFriendList().shrink_to_fit();
+}
+
+void QQToolsBase_CHC::AddWeiChatCommonFriend()
+{
+	ShowWeiChatCommonFriendsNoReturn();
+
+
+	/*cout << "输入你要添加的微信共同好友的QQ号" << endl;
+	string CommonFriendQQ;
+	cin >> CommonFriendQQ;*/
+
+	int Myqq;
+	string id;
+	string name;
+	bool flag = false;
+	cout << "输入你要添加的微信共同好友的QQ号" << endl;
+	cin >> id;
+
+	if (id == QQid)
+	{
+		cout << "你不能添加自己为好友" << endl;
+		cout << "按任意键返回QQ主页" << endl;
+		_getch();
+		_getch();
+		QQMenu();
+	}
+
+	for (int i = 0; i < size(QQ); i++)
+	{
+		if (QQ[i]->ReturnID() == QQid)
+		{
+			Myqq = i;
+			break;
+		}
+	}
+
+	for (int i = 0; i < size(QQ[Myqq]->ReturnFriendList()); i++)
+	{
+		if (id == QQ[Myqq]->ReturnFriendList()[i]->ReturnID())
+		{
+			cout << "你已添加此好友,请按任意键返回QQ主页" << endl;
+			_getch();
+			_getch();
+			QQMenu();
+		}
+	}
+
+	for (int i = 0; i < size(QQ); i++)
+	{
+		if (QQ[i]->ReturnID() == id)
+		{
+			flag = true;
+			name = QQ[i]->ReturnName();
+			cout << "好友申请成功，请等待对方确认" << endl;
+		}
+	}
+
+
+	if (flag == false)
+	{
+		cout << "该QQ还没有注册，按任意键重新输入QQ号" << endl;
+		cout << "1.重新输入QQ号添加好友" << endl;
+		cout << "2.返回QQ主页" << endl;
+		int select;
+		cin >> select;
+		switch (select)
+		{
+		case 1:
+			AddFriend();
+			break;
+
+		case 2:
+			QQMenu();
+			break;
+
+		default:
+			cout << "输入错误,按任意键返回QQ主页" << endl;
+			_getch();
+			QQMenu();
+			break;
+		}
+
+	}
+
+	string mark = "&";
+	string ID = mark + id;
+	if (flag)
+	{
+		for (int i = 0; i < size(QQ); i++)
+		{
+			if (QQ[i]->ReturnID() == QQid)
+			{
+				Myqq = i;
+			}
+		}
+		QQ[Myqq]->ReturnFriendList().emplace_back(new QQFriends_CHC(name, ID));
+		QQ[Myqq]->ChangeFriendsNumber(QQ[Myqq]->ReturnFriendNumber() + 1);
+	}
+	SaveFriends();
+
+
+	//向好友QQ文件中添加本QQ
+	fstream file;
+	string friendfilename = "QQ\\" + id + "\\" + id + "Friendlist.txt";
+	string remarks = "未备注";
+	file.open(friendfilename, ios::app);
+	file << "^" << QQ[Myqq]->ReturnID() << endl;
+	file << QQ[Myqq]->ReturnName() << endl;
+	file << remarks << endl;
+	file << " " << endl;
+	file.close();
+
+
+
+	cout << "按任意键返回QQ主页" << endl;
+	_getch();
+	_getch();
+	QQMenu();
+
+}
+
+void QQToolsBase_CHC::CreatTemporaryParty()
+{
+	system("CLS");
+	int Myqq;
+	for (int i = 0; i<1000000; i++) //加强QQ群号生成随机性
+	{
+		srand(time(0));
+	}
+	int p = rand()*rand();
+	char temp[128];
+	itoa(p, temp, 10);
+	string ID;
+	/*cin >> ID;*/
+	ID = string(temp);
+	cout << "你的临时讨论组号为:" << ID << endl;
+	QQparty = ID;
+	cout << "请输入讨论组名称" << endl;
+	string name;
+	cin >> name;
+	for (int i = 0; i < size(QQ); i++)
+	{
+		if (QQ[i]->ReturnID() == QQid)
+		{
+			Myqq = i;
+		}
+	}
+	QQ[Myqq]->ReturnTemporaryPartyList().emplace_back(new QQParties_CHC(ID, name, QQid));
+	AllQQTemporaryParty.emplace_back(new QQParties_CHC(ID, name, QQid));
+	/*QQ[Myqq]->ChangePartyNumbers(QQ[Myqq]->ReturnPartyNumber() + 1);
+	SaveQQParty();*/
+
+
+	cout << "按任意键返回QQ主页" << endl;
+	_getch();
+	_getch();
+	QQMenu();
+	
+}
+
+void QQToolsBase_CHC::JoinTemporaryParty()
+{
+	system("CLS");
+	int Myqq;
+	int ThisTemporaryParty;
+	string TemporaryName;
+	string TemporaryOwner;
+	for (int i = 0; i < size(AllQQTemporaryParty); i++)
+	{
+		cout << "第" << i + 1 << "个临时讨论组" << endl;
+		cout << "群号:" << ReturnAllQQTemporaryParty()[i]->ReturnPartyID();
+		cout << "群名称" << ReturnAllQQTemporaryParty()[i]->ReturnPartyName();
+	}
+
+	cout << "请输入你想加入的群号，或输入#返回QQ主页" << endl;
+	string TemporaryParty;
+	cin >> TemporaryParty;
+	if (TemporaryParty == "#")
+	{
+		QQMenu();
+	}
+
+	bool CheckFlag = false;
+	while (1)
+	{
+		for (int i = 0; i < size(AllQQTemporaryParty); i++)
+		{
+			if (ReturnAllQQTemporaryParty()[i]->ReturnPartyID() == TemporaryParty)
+			{
+				CheckFlag = true;
+				break;
+			}
+			else
+			{
+				cout << "没有此讨论组" << endl;
+				cout << "请重新输入群号或输入#返回QQ主页" << endl;
+				string TemporaryParty;
+				cin >> TemporaryParty;
+				if (TemporaryParty == "#")
+				{
+					QQMenu();
+				}
+				continue;
+			}
+		}
+
+		if (CheckFlag == true)
+		{
+			break;
+		}
+	}
+
+	for (int i = 0; i > size(QQ); i++)
+	{
+		if (QQ[i]->ReturnID() == QQid)
+		{
+			Myqq = i;
+			break;
+		}
+	}
+	for (int i = 0; i < size(AllQQTemporaryParty); i++)
+	{
+		if (ReturnAllQQTemporaryParty()[i]->ReturnPartyID() == TemporaryParty)
+		{
+			ThisTemporaryParty = i;
+			break;
+		}
+	}
+	TemporaryName = ReturnAllQQTemporaryParty()[ThisTemporaryParty]->ReturnPartyName();
+	TemporaryOwner = ReturnAllQQTemporaryParty()[ThisTemporaryParty]->ReturnCreatUserID();
+
+	QQ[Myqq]->ReturnTemporaryPartyList().emplace_back(new QQParties_CHC(TemporaryParty, TemporaryName, TemporaryOwner));
+
+	cout << "加入临时讨论组成功" << endl;
+	cout << "按任意键返回QQ主页" << endl;
+	_getch();
+	_getch();
+	QQMenu();
+}
+
+void QQToolsBase_CHC::PartyType()
+{
+	system("CLS");
+	int Myqq;
+	int ThisParty;
+	ShowQQPartyNoReturn();
+	cout << "请输入你要管理的群号" << endl;
+	string PartyMenuID;
+	cin >> PartyMenuID;
+
+	for (int i = 0; i < size(QQ); i++)
+	{
+		if (QQ[i]->ReturnID() == QQid)
+		{
+			Myqq = i;
+			break;
+		}
+	}
+
+	bool CheckFlag = false;
+	while (1)
+	{
+		for (int i = 0; i < size(QQ[Myqq]->ReturnPartyList()); i++)
+		{
+			if (QQ[Myqq]->ReturnPartyList()[i]->ReturnPartyID() == PartyMenuID)
+			{
+				CheckFlag = true;
+				break;
+			}
+			else if (QQ[Myqq]->ReturnPartyList()[i]->ReturnCreatUserID() != QQid)
+			{
+				cout << "你不是该群群主，不能管理该群" << endl;
+				cout << "请重新输入或输入#返回QQ主页" << endl;
+				cin >> PartyMenuID;
+				if (PartyMenuID == "#")
+				{
+					QQMenu();
+				}
+				continue;
+			}
+			else
+			{
+				cout << "你没有加入此群,请重新输入或输入#返回QQ主页" << endl;
+				cin >> PartyMenuID;
+				if (PartyMenuID == "#")
+				{
+					QQMenu();
+				}
+				continue;
+			}
+		}
+
+		if (CheckFlag == true)
+		{
+			break;
+		}
+	}
+
+	for (int i = 0; i < size(QQ[Myqq]->ReturnPartyList()); i++)
+	{
+		if (QQ[Myqq]->ReturnPartyList()[i]->ReturnPartyID() == PartyMenuID)
+		{
+			ThisParty = i;
+			break;
+		}
+	}
+
+	cout << "请输入你要转换的群类型" << endl;
+	cout << "1.游戏群" << endl;
+	cout << "2.学习群" << endl;
+	int TypeID;
+	cin >> TypeID;
+
+	switch (TypeID)
+	{
+	case 1:
+		QQ[Myqq]->ReturnPartyList()[ThisParty]->ChangeTypeID(1);
+		
+		
+		break;
+
+	default:
+		cout << "输入错误" << endl;
+		cout << "按任意键返回QQ主页" << endl;
+		_getch();
+		_getch();
+		QQMenu();
+	}
+
 }

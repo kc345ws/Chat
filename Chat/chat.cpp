@@ -6,7 +6,10 @@
 #include<windows.h>
 #include<stdlib.h>
 #include<fstream>
+#include"tools.h"
 using namespace std;
+
+//QQTools_CHC QQTools;
 
 QQ_CHC::QQ_CHC()
 {
@@ -188,7 +191,10 @@ QQParties_CHC::QQParties_CHC(string id, string name, string userid)
 	CreatUserID = userid;
 }
 
-
+//void QQParties_Game_CHC::PlayGame()
+//{
+//	QQTools.PlayGame();
+//}
 
 
 
