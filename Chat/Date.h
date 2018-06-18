@@ -11,7 +11,7 @@ public:
 
 	void ShowDate();
 
-	bool ChechBirthday();
+	/*bool ChechBirthday();*/
 
 	string &ReturnDate() 
 	{
@@ -19,17 +19,17 @@ public:
 		return YearMonthDay;
 	}
 
-	int &ReturnYear() { return year; }
+	string &ReturnYear() { return year; }
 
-	int &ReturnMonth() { return month; }
+	string &ReturnMonth() { return month; }
 
-	int &ReturnDay() { return day; }
+	string &ReturnDay() { return day; }
 
 	
 
 protected:
 
-	int year, month, day;
+	string year, month, day;
 
 private:
 

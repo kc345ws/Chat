@@ -24,13 +24,52 @@ QQ_CHC::QQ_CHC()
 	/*ID = rand()*rand();*/
 	cout << "你的QQ号为:" << ID <<endl;
 	cout << "请输入你的密码" << endl;
+	string PassWordAgin;
 	cin >> PassWord;
+
+	cout << "请再次确认你的密码" << endl;
+	cin >> PassWordAgin;
+	while (1)
+	{
+		if (PassWord == PassWordAgin)
+		{
+			break;
+		}
+		else
+		{
+			cout << "你的两次密码不相符，请重新输入" << endl;
+			cout << "请输入你的密码" << endl;
+			cin >> PassWord;
+			cout << "请再次确认你的密码" << endl;
+			cin >> PassWordAgin;
+			continue;
+		}
+	}
+
 	ApplyDate.ShowDate();
-	Age = 0;
+	/*Age = 0;*/
+	Age = ApplyDate.ReturnDate();
 	cout << "请输入你的QQ名字:" << endl;
 	cin >> Name;
-	cout << "请输入你所在的省份" << endl;
+	cout << "请输入你所在的地区" << endl;
 	cin >> Area;
+
+	cout << "请选择你的性别" << endl;
+	cout << "1.男性" << endl;
+	cout << "2.女性" << endl;
+	int select;
+	cin >> select;
+	switch (select)
+	{
+	case 1:
+		Sex = Man.SexFlag;
+		break;
+	default:
+		Sex = WoMan.SexFlag;
+		break;
+	}
+	cout << "你的性别:" << Sex << endl;
+
 	cout << "输入你的个性签名" << endl;
 	cin >> Autograph;
 	cout << "QQ号申请成功" << endl;
@@ -43,7 +82,7 @@ QQ_CHC::QQ_CHC()
 
 }
 
-QQ_CHC::QQ_CHC(string qqid, int qage, string qqpw, string qqname, string qqpv, string ag)
+QQ_CHC::QQ_CHC(string qqid, string qage, string qqpw, string qqname, string qqpv, string ag)
 {
 	ID = qqid;
 	Age = qage;
@@ -235,7 +274,7 @@ WeiChat_CHC::WeiChat_CHC()
 		}
 	}
 	ApplyDate.ShowDate();
-	Age = 0;
+	Age = ApplyDate.ReturnDate();
 	cout << "请输入你的微信名字:" << endl;
 	cin >> Name;
 	cout << "请输入你所在的地区" << endl;

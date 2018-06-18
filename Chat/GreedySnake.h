@@ -8,7 +8,7 @@
 
 
 class Snake;
-class Point;
+extern class Point;
 class Map;
 class Snake;
 class Food;
@@ -359,8 +359,6 @@ private:
 
 };
 
-
-
 class Food
 
 {
@@ -450,7 +448,6 @@ private:
 	friend class Food;//将Food类置为友元，以便访问其私有元素
 
 };
-
 
 class StartInterface
 
@@ -604,13 +601,13 @@ public:
 
 	void PrintThird();//蛇从接触右边到消失的过程
 
-	void PrintText();//动画界面文字
+	virtual void PrintText();//动画界面文字
 
 	void ClearText();//清空动画界面文字
 
 	void Action();//蛇三个动画的集合
 
-private:
+protected:
 
 	std::deque<Point> startsnake;//开始动画中的蛇
 
@@ -618,6 +615,341 @@ private:
 
 	int speed;//动画的速度
 
+};
+
+class StartChatInterface:public StartInterface
+{
+public:
+
+	StartChatInterface() : speed(50)
+	{
+		//startsnake.emplace_back(Point(0, 14));//c //向容器内添加一个点 
+
+		//startsnake.emplace_back(Point(1, 14));
+
+		//startsnake.emplace_back(Point(2, 15));
+
+		//startsnake.emplace_back(Point(3, 16));
+
+		//startsnake.emplace_back(Point(4, 17));
+
+		//startsnake.emplace_back(Point(5, 18));
+
+		//startsnake.emplace_back(Point(6, 17));
+
+		//startsnake.emplace_back(Point(7, 16));
+
+		//startsnake.emplace_back(Point(8, 15));
+
+		//startsnake.emplace_back(Point(9, 14));
+
+
+
+		textsnake.emplace_back(Point(-26+30 +5, 14));//C
+
+		textsnake.emplace_back(Point(-25 + 30 + 5, 14));
+
+		textsnake.emplace_back(Point(-27 + 30 + 5, 15));
+
+		textsnake.emplace_back(Point(-27 + 30 + 5, 16));
+
+		textsnake.emplace_back(Point(-27 + 30 + 5, 17));
+
+		textsnake.emplace_back(Point(-25 + 30 + 5, 18));
+
+		textsnake.emplace_back(Point(-26 + 30 + 5, 18));
+
+
+
+		textsnake.emplace_back(Point(-23 + 30 + 5, 14));//H
+
+		textsnake.emplace_back(Point(-23 + 30 + 5, 15));
+
+		textsnake.emplace_back(Point(-23 + 30 + 5, 16));
+
+		textsnake.emplace_back(Point(-23 + 30 + 5, 17));
+
+		textsnake.emplace_back(Point(-23 + 30 + 5, 18));
+
+		textsnake.emplace_back(Point(-22 + 30 + 5, 16));
+
+		textsnake.emplace_back(Point(-21 + 30 + 5, 16));
+
+		textsnake.emplace_back(Point(-20 + 30 + 5, 16));
+
+		textsnake.emplace_back(Point(-19 + 30 + 5, 14));
+
+		textsnake.emplace_back(Point(-19 + 30 + 5, 15));
+
+		textsnake.emplace_back(Point(-19 + 30 + 5, 16));
+
+		textsnake.emplace_back(Point(-19 + 30 + 5, 17));
+
+		textsnake.emplace_back(Point(-19 + 30 + 5, 18));
+
+
+
+		textsnake.emplace_back(Point(-17 + 30 + 5, 18));//A
+
+		textsnake.emplace_back(Point(-16 + 30 + 5, 17));
+
+		textsnake.emplace_back(Point(-15 + 30 + 5, 16));
+
+		textsnake.emplace_back(Point(-14 + 30 + 5, 15));
+
+		textsnake.emplace_back(Point(-14 + 30 + 5, 16));
+
+		textsnake.emplace_back(Point(-13 + 30 + 5, 14));
+
+		textsnake.emplace_back(Point(-13 + 30 + 5, 16));
+
+		textsnake.emplace_back(Point(-12 + 30 + 5, 15));
+
+		textsnake.emplace_back(Point(-12 + 30 + 5, 16));
+
+		textsnake.emplace_back(Point(-11 + 30 + 5, 16));
+
+		textsnake.emplace_back(Point(-10 + 30 + 5, 17));
+
+		textsnake.emplace_back(Point(-9 + 30 + 5, 18));
+
+
+
+		//textsnake.emplace_back(Point(-7, 14));//K
+
+		//textsnake.emplace_back(Point(-7, 15));
+
+		//textsnake.emplace_back(Point(-7, 16));
+
+		//textsnake.emplace_back(Point(-7, 17));
+
+		//textsnake.emplace_back(Point(-7, 18));
+
+		//textsnake.emplace_back(Point(-6, 16));
+
+		//textsnake.emplace_back(Point(-5, 15));
+
+		//textsnake.emplace_back(Point(-5, 17));
+
+		//textsnake.emplace_back(Point(-4, 14));
+
+		//textsnake.emplace_back(Point(-4, 18));
+
+
+		textsnake.emplace_back(Point(-3 + 30 -2 + 5, 14));
+
+		textsnake.emplace_back(Point(-4 + 30 -2 + 5, 14));
+
+		textsnake.emplace_back(Point(-5 + 30 -2 + 5, 14));
+
+		textsnake.emplace_back(Point(-1 + 30 -2 + 5, 14));
+
+		textsnake.emplace_back(Point(-0 + 30 -2 + 5, 14));
+
+		textsnake.emplace_back(Point(1 + 30 -2 + 5, 14));
+
+		textsnake.emplace_back(Point(-2 + 30 -2 + 5, 14));//T
+
+		textsnake.emplace_back(Point(-2 + 30 - 2 + 5, 15));
+
+		/*textsnake.emplace_back(Point(-2 - 2, 16));*/
+
+		textsnake.emplace_back(Point(-2 + 30 -2 + 5, 16));
+
+		textsnake.emplace_back(Point(-2 + 30 -2 + 5, 17));
+
+		textsnake.emplace_back(Point(-2 + 30 -2 + 5, 18));
+
+		/*textsnake.emplace_back(Point(-2 + 30, 19));*/
+
+		textsnake.emplace_back(Point(-1 + 30 -2 + 5, 14));
+
+		/*textsnake.emplace_back(Point(-1, 16));*/
+
+		/*textsnake.emplace_back(Point(-1 + 30, 18));*/
+
+	/*	textsnake.emplace_back(Point(0 + 30, 14));*/
+
+		/*textsnake.emplace_back(Point(0, 16));*/
+
+		//textsnake.emplace_back(Point(0 + 30, 18));
+
+		void PrintText();
+	}
+
+	void PrintText();
+
+private:
+
+	int speed;
+
+};
+
+class PrintfChat
+{
+public:
+	PrintfChat()
+	{
+		//startsnake.emplace_back(Point(0, 14));//c //向容器内添加一个点 
+
+		//startsnake.emplace_back(Point(1, 14));
+
+		//startsnake.emplace_back(Point(2, 15));
+
+		//startsnake.emplace_back(Point(3, 16));
+
+		//startsnake.emplace_back(Point(4, 17));
+
+		//startsnake.emplace_back(Point(5, 18));
+
+		//startsnake.emplace_back(Point(6, 17));
+
+		//startsnake.emplace_back(Point(7, 16));
+
+		//startsnake.emplace_back(Point(8, 15));
+
+		//startsnake.emplace_back(Point(9, 14));
+
+
+
+		textsnake.emplace_back(Point(-26 + 30 + 5, 14-10));//C
+
+		textsnake.emplace_back(Point(-25 + 30 + 5, 14-10));
+
+		textsnake.emplace_back(Point(-27 + 30 + 5, 15-10));
+
+		textsnake.emplace_back(Point(-27 + 30 + 5, 16 - 10));
+
+		textsnake.emplace_back(Point(-27 + 30 + 5, 17 - 10));
+
+		textsnake.emplace_back(Point(-25 + 30 + 5, 18 - 10));
+
+		textsnake.emplace_back(Point(-26 + 30 + 5, 18 - 10));
+
+
+
+		textsnake.emplace_back(Point(-23 + 30 + 5, 14 - 10));//H
+
+		textsnake.emplace_back(Point(-23 + 30 + 5, 15 - 10));
+
+		textsnake.emplace_back(Point(-23 + 30 + 5, 16 - 10));
+
+		textsnake.emplace_back(Point(-23 + 30 + 5, 17 - 10));
+
+		textsnake.emplace_back(Point(-23 + 30 + 5, 18 - 10));
+
+		textsnake.emplace_back(Point(-22 + 30 + 5, 16 - 10));
+
+		textsnake.emplace_back(Point(-21 + 30 + 5, 16 - 10));
+
+		textsnake.emplace_back(Point(-20 + 30 + 5, 16 - 10));
+
+		textsnake.emplace_back(Point(-19 + 30 + 5, 14 - 10));
+
+		textsnake.emplace_back(Point(-19 + 30 + 5, 15 - 10));
+
+		textsnake.emplace_back(Point(-19 + 30 + 5, 16 - 10));
+
+		textsnake.emplace_back(Point(-19 + 30 + 5, 17 - 10));
+
+		textsnake.emplace_back(Point(-19 + 30 + 5, 18 - 10));
+
+
+
+		textsnake.emplace_back(Point(-17 + 30 + 5, 18 - 10));//A
+
+		textsnake.emplace_back(Point(-16 + 30 + 5, 17 - 10));
+
+		textsnake.emplace_back(Point(-15 + 30 + 5, 16 - 10));
+
+		textsnake.emplace_back(Point(-14 + 30 + 5, 15 - 10));
+
+		textsnake.emplace_back(Point(-14 + 30 + 5, 16 - 10));
+
+		textsnake.emplace_back(Point(-13 + 30 + 5, 14 - 10));
+
+		textsnake.emplace_back(Point(-13 + 30 + 5, 16 - 10));
+
+		textsnake.emplace_back(Point(-12 + 30 + 5, 15 - 10));
+
+		textsnake.emplace_back(Point(-12 + 30 + 5, 16 - 10));
+
+		textsnake.emplace_back(Point(-11 + 30 + 5, 16 - 10));
+
+		textsnake.emplace_back(Point(-10 + 30 + 5, 17 - 10));
+
+		textsnake.emplace_back(Point(-9 + 30 + 5, 18 - 10));
+
+
+
+		//textsnake.emplace_back(Point(-7, 14));//K
+
+		//textsnake.emplace_back(Point(-7, 15));
+
+		//textsnake.emplace_back(Point(-7, 16));
+
+		//textsnake.emplace_back(Point(-7, 17));
+
+		//textsnake.emplace_back(Point(-7, 18));
+
+		//textsnake.emplace_back(Point(-6, 16));
+
+		//textsnake.emplace_back(Point(-5, 15));
+
+		//textsnake.emplace_back(Point(-5, 17));
+
+		//textsnake.emplace_back(Point(-4, 14));
+
+		//textsnake.emplace_back(Point(-4, 18));
+
+
+		textsnake.emplace_back(Point(-3 + 30 - 2 + 5, 14 - 10));
+
+		textsnake.emplace_back(Point(-4 + 30 - 2 + 5, 14 - 10));
+
+		textsnake.emplace_back(Point(-5 + 30 - 2 + 5, 14 - 10));
+
+		textsnake.emplace_back(Point(-1 + 30 - 2 + 5, 14 - 10));
+
+		textsnake.emplace_back(Point(-0 + 30 - 2 + 5, 14 - 10));
+
+		textsnake.emplace_back(Point(1 + 30 - 2 + 5, 14 - 10));
+
+		textsnake.emplace_back(Point(-2 + 30 - 2 + 5, 14 - 10));//T
+
+		textsnake.emplace_back(Point(-2 + 30 - 2 + 5, 15 - 10));
+
+		/*textsnake.emplace_back(Point(-2 - 2, 16));*/
+
+		textsnake.emplace_back(Point(-2 + 30 - 2 + 5, 16 - 10));
+
+		textsnake.emplace_back(Point(-2 + 30 - 2 + 5, 17 - 10));
+
+		textsnake.emplace_back(Point(-2 + 30 - 2 + 5, 18 - 10));
+
+		/*textsnake.emplace_back(Point(-2 + 30, 19));*/
+
+		textsnake.emplace_back(Point(-1 + 30 - 2 + 5, 14 - 10));
+
+		/*textsnake.emplace_back(Point(-1, 16));*/
+
+		/*textsnake.emplace_back(Point(-1 + 30, 18));*/
+
+		/*	textsnake.emplace_back(Point(0 + 30, 14));*/
+
+		/*textsnake.emplace_back(Point(0, 16));*/
+
+		//textsnake.emplace_back(Point(0 + 30, 18));
+
+	}
+	void PrintText();
+
+private:
+	std::deque<Point> startsnake;//开始动画中的蛇
+
+	std::vector<Point> textsnake;//开始动画中的文字
+
+	int speed;//动画的速度
 };
 
 void SetWindowSize(int cols, int lines);//窗口大小

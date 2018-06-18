@@ -17,7 +17,7 @@ class Tencent_CHC //帐号基类
 
 public:
 
-	virtual int ReturnAge()
+	virtual string ReturnAge()
 	{
 		//Age=ApplyDate.ReturnYear
 		return Age;
@@ -54,7 +54,8 @@ public:
 
 protected:
 
-	int Age; //注册天数
+	//int Age; //注册天数
+	string Age;
 
 	int FriendNumber; //好友数量
 
@@ -118,7 +119,7 @@ public:
 
 	QQ_CHC();
 
-	QQ_CHC(string qqid, int qage, string qqpw, string qqname,string qqpv, string ag);
+	QQ_CHC(string qqid, string qage, string qqpw, string qqname,string qqpv, string ag);
 
 	~QQ_CHC();
 

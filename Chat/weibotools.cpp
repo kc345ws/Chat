@@ -123,9 +123,18 @@ void WeiBoToolsBase_CHC::Login()
 void WeiBoToolsBase_CHC::Menu()
 {
 	system("CLS");
+	PrintfChat pfchat;
+	pfchat.PrintText();
 	int select;
+	SetCursorPosition(15, 15);
 	cout << "请选择你所需的功能" << endl;
+	SetCursorPosition(15, 16);
 	cout << "1.登陆微博" << endl;
+	SetCursorPosition(15, 17);
+	cout << "2.返回上一级菜单" << endl;
+	SetCursorPosition(15, 18);
+	cout << "你的选择:" << endl;
+	SetCursorPosition(15+5, 18);
 	cin >> select;
 
 	switch (select)
@@ -133,11 +142,16 @@ void WeiBoToolsBase_CHC::Menu()
 	case 1:
 		Login();
 		break;
+	case 2:
+		mainmenu.Menu();
 	default:
+		Menu();
+		/*system("CLS");
+		SetCursorPosition(15, 15);
 		cout << "输入错误,按任意键返回微博主菜单" << endl;
 		_getch();
 		_getch();
-		WeiBoMenu();
+		Menu();*/
 		break;
 	}
 }

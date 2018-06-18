@@ -7,15 +7,28 @@
 #include<conio.h>
 #include<fstream>
 using namespace std;
-void MainMenu();
+//void MainMenu();
+//void Loding();
 
 extern QQTools_CHC QQTools;
 extern WeiBoTools_CHC WeiBoTools;
 extern WeiChatTools_CHC WeiChatTools;
+extern MainMenu mainmenu;
+
 
 int main()
 {
 	SetConsoleTitle("Chat-2017级吉林大学软件工程9班陈鸿超制作");
+	//Loding();
+	StartChatInterface Start;
+	Start.PrintText();
+	SetCursorPosition(17, 22);
+	cout << "按任意键继续" << endl;
+	_getch();
+	_getch();
+	system("CLS");
+	
+	
 	/*SetWindowSize(41, 32);*/
 	string QQ = "QQ";
 	string WeiChat = "WeiChat";
@@ -29,39 +42,69 @@ int main()
 	WeiBoTools.GetWeiBo();
 	QQTools.GetQQ();
 	WeiChatTools.GetWeiChat();
-	QQTools.Menu();
+
+
+	mainmenu.Menu();
 	return 0;
 }
 
-
-void MainMenu()
+void MainMenu::Menu()
 {
 	system("CLS");
-	int select;
+	PrintfChat pfchat;
+	pfchat.PrintText();
+	int select, key = 1;
+	bool flag = false;
 
-	cout << "请选择使用的软件编号:" << endl;
+	SetCursorPosition(15, 15);
+	cout << "请选择登陆/注册的帐号" << endl;
+
+	/*SetBackColor();*/
+	SetCursorPosition(15, 16);
 	cout << "1.QQ" << endl;
+	//SetColor(3);
+
+	SetCursorPosition(15, 17);
 	cout << "2.微博" << endl;
+
+	SetCursorPosition(15, 18);
 	cout << "3.微信" << endl;
 
-	cin >> select;
+	SetCursorPosition(15, 19);
+	cout << "你的选择:" << endl;
 
+	SetCursorPosition(15 + 5, 19);
+	cin >> select;
 	switch (select)
 	{
 	case 1:
+	{
 		QQTools.Menu();
 		break;
 	case 2:
 		WeiBoTools.Menu();
 		break;
+
 	case 3:
-		cout << "未开发" << endl;
+		WeiChatTools.Menu();
 		break;
+	}
 	default:
-		cout << "选择错误请重新选择" << endl;
-		cout << "按任意键返回主菜单" << endl;
-		_getch();
-		_getch();
-		MainMenu();
+	{
+		Menu();
+		break;
+	}
 	}
 }
+//void Loding()
+//{
+//	SetCursorPosition(15, 15);
+//	cout << "正在载入中:";
+//	for (int i = 0; i < 20; i++)
+//	{
+//		Sleep(100);
+//		cout << "-";
+//	}
+//	system("CLS");
+//	SetCursorPosition(15, 15);
+//}

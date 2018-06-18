@@ -1,20 +1,26 @@
-#pragma once
+ï»¿#pragma once
 #ifndef QQTOOLS_H
 #define QQTOOLS_H
 #include<iostream>
-#include"GreedySnake.h"
 #include"chat.h"
 #include<vector>
 #include<string>
+#include<deque>
+#include"GreedySnake.h"
+
+
 using namespace std;
 //class WeiBo_CHC;
 class QQTools_CHC;
 class WeiBoTools_CHC;
 class WeiChatTools_CHC;
+class MainMenu;
+
 
 extern QQTools_CHC QQTools;
 extern WeiBoTools_CHC WeiBoTools;
 extern WeiChatTools_CHC WeiChatTools;
+extern MainMenu mainmenu;
 
 class ToolsBase_CHC
 {
@@ -178,13 +184,13 @@ protected:
 
 	vector<QQ_CHC*>QQ;
 
-	string QQid; //µÇÂ½µÄQQºÅ
+	string QQid; //ç™»é™†çš„QQå·
 
-	string QQparty;//´´½¨µÄÈººÅ;
+	string QQparty;//åˆ›å»ºçš„ç¾¤å·;
 
-	string PartyMember; //ÉêÇë¼ÓÈºµÄQQºÅ
+	string PartyMember; //ç”³è¯·åŠ ç¾¤çš„QQå·
 
-	vector<QQParties_CHC*>AllQQTemporaryParty;//ÁÙÊ±ÌÖÂÛ×é
+	vector<QQParties_CHC*>AllQQTemporaryParty;//ä¸´æ—¶è®¨è®ºç»„
 
 private:
 
@@ -210,15 +216,15 @@ public:
 
 	virtual void Login();
 
-	virtual void Apply() { cout << "ÇëµÇÂ¼QQ¿ªÍ¨Î¢²©" << endl; }
+	virtual void Apply() { cout << "è¯·ç™»å½•QQå¼€é€šå¾®åš" << endl; }
 
-	virtual void AddFriend() { cout << "Î´¿ª·¢"; }
+	virtual void AddFriend() { cout << "æœªå¼€å‘"; }
 
-	virtual void SaveFriends() { cout<<"Î´¿ª·¢"; }
+	virtual void SaveFriends() { cout<<"æœªå¼€å‘"; }
 
-	virtual void GetFriends() { cout << "Î´¿ª·¢"; }
+	virtual void GetFriends() { cout << "æœªå¼€å‘"; }
 
-	virtual void ShowFriends() { cout << "Î´¿ª·¢"; }
+	virtual void ShowFriends() { cout << "æœªå¼€å‘"; }
 
 	virtual void DeleteFriend() {}
 
@@ -353,11 +359,11 @@ protected:
 
 	string LoginedWeiChat;
 
-	string WeiChatparty;//´´½¨µÄÈººÅ;
+	string WeiChatparty;//åˆ›å»ºçš„ç¾¤å·;
 
-	string WeiChatPartyMember; //ÉêÇë¼ÓÈºµÄQQºÅ
+	string WeiChatPartyMember; //ç”³è¯·åŠ ç¾¤çš„QQå·
 
-	//string LinkedQQ;// °ó¶¨µÄQQ
+	//string LinkedQQ;// ç»‘å®šçš„QQ
 
 
 
@@ -399,6 +405,18 @@ class WeiChatTools_CHC:public WeiChatToolsBase_CHC
 {
 
 };
+
+
+
+class MainMenu
+{
+public:
+	void Menu();
+
+private:
+
+};
+
 
 
 #endif

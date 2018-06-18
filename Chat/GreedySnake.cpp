@@ -1800,15 +1800,17 @@ void StartInterface::PrintText()//蛇，打印蛇的文字图像
 
 {
 
-	for (auto& point : textsnake)
-
-	{
-
-		if (point.GetX() >= 0)
-
-			point.Print();
-
-	}
+		for (auto& point : textsnake)
+		{
+	
+			if (point.GetX() >= 0)
+			{
+	
+				
+				point.Print();
+			}
+	
+		}
 
 }
 
@@ -1904,4 +1906,34 @@ void SetBackColor()//设置文本背景色
 
 		BACKGROUND_RED);
 
+}
+
+void StartChatInterface::PrintText()
+{
+	for (auto& point : textsnake)
+	{
+
+		if (point.GetX() >= 1)
+		{
+
+			Sleep(50);
+			point.Print();
+		}
+
+	}
+}
+
+void PrintfChat::PrintText()
+{
+	for (auto& point : textsnake)
+	{
+
+		if (point.GetX() >= 1)
+		{
+
+
+			point.Print();
+		}
+
+	}
 }

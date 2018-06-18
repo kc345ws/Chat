@@ -2,32 +2,50 @@
 #include"Date.h"
 #include<time.h>
 #include "stdafx.h"
+#include<string>
 using namespace std;
 
 
 Date::Date()
 {
+	/*int p = rand()*rand();*/
+	char charYear[128];
+	char charMonth[128];
+	char charDay[128];
+	/*itoa(p, temp, 10);*/
+	/*ID = string(temp);*/
+
+	int intYear, intMonth, intDay;
+
 	time_t timer;
 	time(&timer);
 	tm* t_tm = localtime(&timer);
-	year = t_tm->tm_year+1900;
-	month = t_tm->tm_mon + 1;
-	day = t_tm->tm_mday;
+	intYear = t_tm->tm_year+1900;
+	intMonth = t_tm->tm_mon + 1;
+	intDay = t_tm->tm_mday;
+
+	itoa(intYear, charYear, 10);
+	year = string(charYear);
+	itoa(intMonth, charMonth, 10);
+	month = string(charMonth);
+	itoa(intDay, charDay, 10);
+	day = string(charDay);
 }
 
 void Date::ShowDate()
 {
-	cout << "你的WeiChat的注册日期:" << endl;
+	cout << "注册日期:" << endl;
 	cout << year << "." << month << "." << day << endl;
+	
 }
 
-bool Date::ChechBirthday()
-{
-	time_t timer;
-	time(&timer);
-	tm* t_tm = localtime(&timer);
-	if (t_tm->tm_mon + 1 == month)
-		return true;
-	else
-		return false;
-}
+//bool Date::ChechBirthday()
+//{
+//	time_t timer;
+//	time(&timer);
+//	tm* t_tm = localtime(&timer);
+//	if (t_tm->tm_mon + 1 == month)
+//		return true;
+//	else
+//		return false;
+//}

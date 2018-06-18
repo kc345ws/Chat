@@ -21,6 +21,7 @@ using namespace std;
 WeiBoTools_CHC WeiBoTools;
 QQTools_CHC QQTools;
 WeiChatTools_CHC WeiChatTools;
+MainMenu mainmenu;
 
 
 void QQToolsBase_CHC::SaveQQ()
@@ -81,7 +82,7 @@ void QQToolsBase_CHC::SaveFriends()
 
 void QQToolsBase_CHC::GetQQ()
 {
-	int qage;
+	string qage;
 	string qqid;
 	string qqpw, qqname, qqpv, qqag;
 	ifstream file;
@@ -114,7 +115,7 @@ void QQToolsBase_CHC::ShowQQ()
 {
 	system("CLS");
 	vector<QQ_CHC*>qq;
-	int  qage;
+	string  qage;
 	string qqid;
 	string qqpw, qqname, qqpv, qqag;
 	ifstream file;
@@ -189,32 +190,55 @@ void QQToolsBase_CHC::ShowQQ()
 void QQToolsBase_CHC::Menu()
 {
 	system("CLS");
+	PrintfChat pfchat;
+	pfchat.PrintText();
 	int select , key = 1;
 	bool flag = false;
 
-	/*SetColor(3);
-	SetCursorPosition(13, 10);*/
-	cout << "请选择登陆/注册的帐号" << endl;
-	/*SetCursorPosition(13, 11);
-	SetBackColor();*/
-	cout << "1.QQ" << endl;
-	/*SetColor(3);
-	SetCursorPosition(13, 12);*/
-	cout << "2.微博" << endl;
-	//SetCursorPosition(13, 13);
-	cout << "3.微信" << endl;
-	//SetCursorPosition(0, 31);
+	
 
-	cin >> select;
-	switch (select)
-	{
-	case 1:
-	{
+	//SetColor(3);
+
+	//SetCursorPosition(15, 15);
+	//cout << "请选择登陆/注册的帐号" << endl;
+
+	///*SetBackColor();*/
+	//SetCursorPosition(15, 16);
+	//cout << "1.QQ" << endl;
+	////SetColor(3);
+
+	//SetCursorPosition(15, 17);
+	//cout << "2.微博" << endl;
+
+	//SetCursorPosition(15, 18);
+	//cout << "3.微信" << endl;
+
+	//SetCursorPosition(15, 19);
+	//cout << "你的选择:" << endl;
+
+	//SetCursorPosition(15 + 5, 19);
+	//cin >> select;
+	//switch (select)
+	//{
+	//case 1:
+	//{
+		system("CLS");
+
+		pfchat.PrintText();
+		SetCursorPosition(15, 15);
 		cout << "请选择所需功能" << endl;
+		SetCursorPosition(15, 16);
 		cout << "1.登陆QQ" << endl;
+		SetCursorPosition(15, 17);
 		cout << "2.注册QQ" << endl;
+		SetCursorPosition(15, 18);
 		cout << "3.查看已申请QQ号" << endl;
+		SetCursorPosition(15, 19);
+		cout << "4.返回上一级菜单" << endl;
+		SetCursorPosition(15, 20);
+		cout << "你的选择:" << endl;
 		int ch;
+		SetCursorPosition(15 + 5, 20);
 		cin >> ch;
 		switch (ch)
 		{
@@ -232,35 +256,47 @@ void QQToolsBase_CHC::Menu()
 			ShowQQ();
 			break;
 
+		case 4:
+			mainmenu.Menu();
+			break;
+
 		default:
 		{
+			/*system("CLS");
+			SetCursorPosition(15, 15);
 			cout << "输入错误" << endl;
+			SetCursorPosition(15, 16);
 			cout << "按任意键返回主菜单" << endl;
-			getch();
+			getch();*/
 			Menu();
+			break;
 		}
 		}
-		cout << "按任意键返回主菜单" << endl;
-		_getch();
-		Menu();
-		break;
-	case 2:
-		WeiBoTools.Menu();
-		break;
+	//	cout << "按任意键返回主菜单" << endl;
+	//	_getch();
+	//	Menu();
+	//	break;
+	//case 2:
+	//	WeiBoTools.Menu();
+	//	break;
 
-	case 3:
-		WeiChatTools.Menu();
-		break;
-	}
-	default:
-	{
-		cout << "输入错误" << endl;
-		cout << "按任意键返回主菜单" << endl;
-		_getch();
-		Menu();
-		break;
-	}
-	}
+	//case 3:
+	//	WeiChatTools.Menu();
+	//	break;
+	//}
+	//default:
+	//{
+	//	Menu();
+	//	/*system("CLS");
+	//	SetCursorPosition(15, 15);
+	//	cout << "输入错误" << endl;
+	//	SetCursorPosition(15, 16);
+	//	cout << "按任意键返回主菜单" << endl;
+	//	_getch();
+	//	Menu();*/
+	//	break;
+	//}
+	//}
 	
 
 	
@@ -437,7 +473,9 @@ void QQToolsBase_CHC::Login()
 	string PassWord;
 	bool flag1 = true;
 	//vector<QQ_CHC*>::iterator iter = QQ.begin();
+
 	cout << "输入你要登陆的QQ:" << endl;
+
 	cin >> ID;
 
 	for (int i = 0; i < size(QQ); i++)
@@ -449,12 +487,16 @@ void QQToolsBase_CHC::Login()
 	}
 	if (flag != true)
 	{
+
 		cout << "没有该QQ号，请先申请" << endl;
+
 		cout << "按任意键返回" << endl;
 		_getch();
 		Menu();
 	}
+
 	cout << "请输入该QQ的密码" << endl;
+
 	cin >> PassWord;
 	for (int i = 0 ; i < size(QQ) ; i++)
 	{
@@ -464,7 +506,9 @@ void QQToolsBase_CHC::Login()
 			GetFriends();//获取好友
 			GetQQParty();//获取群
 			GetLinks();//获取绑定
+
 			cout << "登陆成功" << endl;
+
 			cout << "按任意键开始使用QQ" << endl;
 			_getch();
 			QQMenu();
@@ -593,7 +637,7 @@ void QQToolsBase_CHC::QQMenu()
 		cout << "8.查看群成员信息" << endl;
 		cout << "9.创建临时讨论组" << endl;
 		cout << "10.加入临时讨论组" << endl;
-		cout << "11.改变群类型" << endl;
+		/*cout << "11.改变群类型" << endl;*/
 		cout << "0.返回主菜单" << endl;
 		cin >> select;
 		switch (select)
@@ -628,8 +672,8 @@ void QQToolsBase_CHC::QQMenu()
 		case 10:
 			JoinTemporaryParty();
 			break;
-		case 11:
-			PartyType();
+		/*case 11:
+			PartyType();*/
 			break; 
 		default:
 			QQMenu();
@@ -2916,6 +2960,7 @@ void QQToolsBase_CHC::ShowMyInformation()
 	cout << "密码:" << QQ[Myqq]->ReturnPassWord() << endl;
 	cout << "姓名:" << QQ[Myqq]->ReturnName() << endl;
 	cout << "地区:" << QQ[Myqq]->ReturnArea() << endl;
+	cout << "注册日期:" << QQ[Myqq]->ReturnAge() << endl;
 	cout << "个性签名:" << QQ[Myqq]->ReturnAutograph()<< endl;
 	cout << endl;
 	cout << "按任意键返回QQ主菜单" << endl;
@@ -3709,6 +3754,7 @@ void QQToolsBase_CHC::GetLinks()
 	}
 	/*LinkedWeiChat = Links[1];*/
 }
+
 
 void QQToolsBase_CHC::ShowWeiChatCommonFriends()
 {

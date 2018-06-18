@@ -10,13 +10,22 @@
 void WeiChatToolsBase_CHC::Menu()
 {
 	system("CLS");
+	PrintfChat pfchat;
+	pfchat.PrintText();
 	int select;
+	SetCursorPosition(15, 15);
 	cout << "请选择你所需的功能" << endl;
+	SetCursorPosition(15, 16);
 	cout << "1.登陆微信" << endl;
+	SetCursorPosition(15, 17);
 	cout << "2.注册微信" << endl;
+	SetCursorPosition(15, 18);
 	cout << "3.查看已注册微信" << endl;
-
-
+	SetCursorPosition(15, 19);
+	cout << "4.返回上一级菜单" << endl;
+	SetCursorPosition(15, 20);
+	cout << "你的选择:" << endl;
+	SetCursorPosition(15 + 5, 20);
 	cin >> select;
 
 	switch (select)
@@ -29,6 +38,9 @@ void WeiChatToolsBase_CHC::Menu()
 		break;
 	case 3:
 		ShowWeiChat();
+		break;
+	case 4:
+		mainmenu.Menu();
 		break;
 	default:
 		Menu();
@@ -2860,6 +2872,7 @@ void WeiChatToolsBase_CHC::ShowMyInformation()
 	cout << "密码:" << WeiChatList[Myqq]->ReturnPassWord() << endl;
 	cout << "姓名:" << WeiChatList[Myqq]->ReturnName() << endl;
 	cout << "地区:" << WeiChatList[Myqq]->ReturnArea() << endl;
+	cout << "注册日期:" << WeiChatList[Myqq]->ReturnAge() << endl;
 	cout << "个性签名:" << WeiChatList[Myqq]->ReturnAutograph() << endl;
 	cout << endl;
 	cout << "按任意键返回微信主菜单" << endl;
