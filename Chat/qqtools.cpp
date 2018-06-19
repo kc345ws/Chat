@@ -22,6 +22,7 @@ WeiBoTools_CHC WeiBoTools;
 QQTools_CHC QQTools;
 WeiChatTools_CHC WeiChatTools;
 MainMenu mainmenu;
+extern int GameReturnFlag;
 
 
 void QQToolsBase_CHC::SaveQQ()
@@ -146,7 +147,7 @@ void QQToolsBase_CHC::ShowQQ()
 	for (int i = 0; i < line; i++)
 	{
 		cout << "QQ号:"<<qq[i]->ReturnID() << endl;
-		cout << "Q龄:"<<qq[i]->ReturnAge() << endl;
+		cout << "注册日期:"<<qq[i]->ReturnAge() << endl;
 		cout << "QQ密码:"<<qq[i]->ReturnPassWord() << endl;
 		cout << "QQ名称:"<<qq[i]->ReturnName() << endl;
 		cout << "所在地区:"<<qq[i]->ReturnArea() << endl;
@@ -186,6 +187,8 @@ void QQToolsBase_CHC::ShowQQ()
 	_getch();
 	Menu();
 }
+
+
 
 void QQToolsBase_CHC::Menu()
 {
@@ -563,18 +566,6 @@ void QQToolsBase_CHC::QQMenu()
 	cout << "5.个人资料" << endl;
 	cout << "6.开通服务" << endl;
 	cout << "0.返回主菜单" << endl;
-	//cout << "1.进入聊天室聊天" << endl;
-	//cout << "2.添加QQ好友" << endl;
-	//cout << "3,查看QQ好友" << endl;
-	//cout << "4.创建QQ群" << endl;
-	//cout << "5.加入QQ群" << endl;
-	//cout << "6.查看自己所有QQ群" << endl;
-	//cout << "7.管理QQ群" << endl;
-	//cout << "8.删除QQ好友" << endl;
-	//cout << "9.小游戏" << endl;
-	//cout << "10.查看好友申请" << endl;
-	//cout << "11.添加群管理员" << endl;
-	//cout << "0.返回主菜单" << endl;
 	cin >> select;
 	switch (select)
 	{
@@ -719,6 +710,7 @@ void QQToolsBase_CHC::QQMenu()
 		cout << "3.修改名称" << endl;
 		cout << "4.修改签名" << endl;
 		cout << "5.修改所在地" << endl;
+		cout << "6.返回上一级菜单" << endl;
 		cin >> select;
 		switch (select)
 		{
@@ -737,12 +729,16 @@ void QQToolsBase_CHC::QQMenu()
 		case 5:
 			ChangeArea();
 			break;
+		default:
+			QQMenu();
+			break;
 		}
 		break;
 	case 6:
 		cout << "请选择所需功能:" << endl;
 		cout << "1.开通微博" << endl;
 		cout << "2.绑定微信" << endl;
+		cout << "3.返回上一级" << endl;
 		cin >> select;
 		switch (select)
 		{
@@ -752,6 +748,8 @@ void QQToolsBase_CHC::QQMenu()
 		case 2:
 			LinkWeiChat();
 			break;
+		case 3:
+			QQMenu();
 		default:
 			cout << "选择错误，按任意键返回QQ主菜单" << endl;
 			_getch();
@@ -931,8 +929,12 @@ void QQToolsBase_CHC::DeleteFriend()
 
 	//删除本QQ中的好友
 	string qq;
-	cout << "请输入想删除好友的QQ号" << endl;
+	cout << "请输入想删除好友的QQ号，或输入#返回QQ主页" << endl;
 	cin >> qq;
+	if (qq == "#")
+	{
+		QQMenu();
+	}
 	for (int i = 0; i < size(QQ); i++)
 	{
 		if (QQ[i]->ReturnID() == QQid)
@@ -1550,7 +1552,9 @@ void QQToolsBase_CHC::CreatQQparty()//创建QQ群
 	PartyListFile << ID << endl;
 
 	PartyListFile.close();
+	cout << "创建成功" << endl;
 	cout << "按任意键返回QQ主页" << endl;
+	_getch();
 	_getch();
 	QQMenu();
 }
@@ -1814,7 +1818,8 @@ void QQToolsBase_CHC::QuitParty()
 
 void QQToolsBase_CHC::AddPartyAdmin()//添加群管理员
 {
-
+	system("CLS");
+	ShowQQPartyNoReturn();
 	cout << "请输入要管理的群号" << endl;
 	int Myqq;
 	char c;
@@ -1927,6 +1932,7 @@ void QQToolsBase_CHC::AddPartyAdmin()//添加群管理员
 	string adminfilename;
 	adminfilename = "QQ\\Parties\\" + id + "\\" + id + "admin.txt";
 	adminfile.open(adminfilename, ios::app);
+	ShowPartyInformationNoReturn(id);
 	cout << "请输入你想添加的管理员QQ" << endl;
 	string adminid;
 	cin >> adminid;
@@ -2155,12 +2161,33 @@ void QQToolsBase_CHC::GetQQParty() //从文件读取该QQ的群，并保存到�
 
 	//int ThisAdmin;
 	/*vector<string> AdminQQ;*/
+
+	
+
+
 	for (int i = 0; i < size(QQ[Myqq]->ReturnPartyList()); i++)
 	{
 		ThidPartyID = QQ[Myqq]->ReturnPartyList()[i]->ReturnPartyID();
 
+
+		fstream CheckPartyAdminFile;
+		string GetLinkFileName = "QQ\\Parties\\" + ThidPartyID + "\\" + ThidPartyID + "admin.txt";
+		CheckPartyAdminFile.open(GetLinkFileName, ios::in);
+		if (!CheckPartyAdminFile)
+		{
+			CheckPartyAdminFile.close();
+			CheckPartyAdminFile.open(GetLinkFileName, ios::out);
+		}
+		CheckPartyAdminFile.close();
+
+
+
 		adminfilename = "QQ\\Parties\\" + ThidPartyID + "\\" + ThidPartyID + "admin.txt";
 		adminfile.open(adminfilename);
+
+
+		
+
 
 		while (!adminfile.eof())
 		{
@@ -2206,7 +2233,7 @@ void QQToolsBase_CHC::ShowQQParty()
 	cout << "你共有" << QQ[Myqq]->ReturnPartyNumber() << "个群" << endl;
 	for (int i = 0; i < QQ[Myqq]->ReturnPartyNumber(); i++)
 	{
-		cout << "第" << QQ[Myqq]->ReturnPartyNumber() << "个群" << endl;
+		cout << "第" << i + 1 << "个群" << endl;
 		cout << "群号:" << QQ[Myqq]->ReturnPartyList()[i]->ReturnPartyID() << endl;
 		cout << "群名称:" << QQ[Myqq]->ReturnPartyList()[i]->ReturnPartyName() << endl;
 		cout << "群主:" << QQ[Myqq]->ReturnPartyList()[i]->ReturnCreatUserID() << endl;
@@ -2221,9 +2248,13 @@ void QQToolsBase_CHC::ShowQQParty()
 void QQToolsBase_CHC::AddPartyMember()
 {
 	system("CLS");
-	cout << "请输入你想加入的群" << endl;
+	cout << "请输入你想加入的群,或输入#返回QQ主页" << endl;
 	string partyid;
 	cin >> partyid;
+	if (partyid == "#")
+	{
+		QQMenu();
+	}
 	PartyMember = partyid;
 	string id;
 	int Myqq;
@@ -2250,7 +2281,49 @@ void QQToolsBase_CHC::AddPartyMember()
 			QQMenu();
 		}
 	}
+
+	fstream CheckPartyListFile;
+	string GetLinkFileName = "PartyList.txt";
+	CheckPartyListFile.open(GetLinkFileName, ios::in);
+	if (!CheckPartyListFile)
+	{
+		CheckPartyListFile.close();
+		CheckPartyListFile.open(GetLinkFileName, ios::out);
+	}
+	CheckPartyListFile.close();
+
+	bool IsPartyFlag = false;
+	fstream IsPartyFile;
+	string ISpartyFileName = "PartyList.txt";
+	vector<string>AllPartyIDList;
+	string IsPartyTemp;
+	IsPartyFile.open(ISpartyFileName);
+	while (!IsPartyFile.eof())
+	{
+		getline(IsPartyFile, IsPartyTemp);
+
+		AllPartyIDList.emplace_back(IsPartyTemp);
+	}
+	IsPartyFile.close();
+	for (int i = 0; i < size(AllPartyIDList); i++)
+	{
+		if (AllPartyIDList[i] == partyid)
+		{
+			IsPartyFlag = true;
+			break;
+		}
+	}
 	
+	if (IsPartyFlag == false)
+	{
+		cout << "没有此群，按任意键返回QQ主页" << endl;
+		_getch();
+		_getch();
+		QQMenu();
+	}
+
+
+
 	string filename = "QQ\\Parties\\" + partyid + "\\" + partyid + ".txt";
 	ofstream ofile;
 	ofile.open(filename,ios::app);
@@ -2406,6 +2479,7 @@ void QQToolsBase_CHC::AgreeMember()//群主查看申请
 		cout << "没有加群申请" << endl;
 		cout << "按任意键返回QQ主页" << endl;
 		_getch();
+		_getch();
 		QQMenu();
 	}
 		//}
@@ -2484,6 +2558,7 @@ void QQToolsBase_CHC::AgreeMember()//群主查看申请
 
 			cout << "按任意键返回QQ主页" << endl;
 			_getch();
+			_getch();
 			QQMenu();
 
 			break;
@@ -2548,6 +2623,7 @@ void QQToolsBase_CHC::AgreeMember()//群主查看申请
 			outfile.close();
 
 			cout << "按任意键返回QQ主页" << endl;
+			_getch();
 			_getch();
 			QQMenu();
 
@@ -2704,9 +2780,14 @@ void QQToolsBase_CHC::DeletePartyMember()//未测试
 	}
 
 
-	cout << "请输入要踢出的成员QQ号" << endl;
+	ShowPartyInformationNoReturn(id);
+	cout << "请输入要踢出的成员QQ号,或输入#返回QQ主页" << endl;
 	string DeleteMemberQQ;
 	cin >> DeleteMemberQQ;
+	if (DeleteMemberQQ == "#")
+	{
+		QQMenu();
+	}
 
 
 	//检查输入QQ是否是群主或是自己
@@ -2719,8 +2800,12 @@ void QQToolsBase_CHC::DeletePartyMember()//未测试
 		{
 			if (DeleteMemberQQ == PartyOwner || DeleteMemberQQ == QQid)
 			{
-				cout << "无法踢出群主或自己，请重新输入" << endl;
+				cout << "无法踢出群主或自己，请重新输入或输入#返回QQ主页" << endl;
 				cin >> DeleteMemberQQ;
+				if (DeleteMemberQQ == "#")
+				{
+					QQMenu();
+				}
 				continue;
 			}
 
@@ -2735,8 +2820,12 @@ void QQToolsBase_CHC::DeletePartyMember()//未测试
 
 			if (checkflag == false)
 			{
-				cout << "没有此成员请重新输入" << endl;
+				cout << "没有此成员请重新输入,或输入#返回QQ主页" << endl;
 				cin >> DeleteMemberQQ;
+				if (DeleteMemberQQ == "#")
+				{
+					QQMenu();
+				}
 				continue;
 			}
 
@@ -2761,8 +2850,12 @@ void QQToolsBase_CHC::DeletePartyMember()//未测试
 			}
 			else
 			{
-				cout << "无法踢出群主或自己，请重新输入" << endl;
+				cout << "无法踢出群主或自己，请重新输入或输入#返回QQ主页" << endl;
 				cin >> DeleteMemberQQ;
+				if (DeleteMemberQQ == "#")
+				{
+					QQMenu();
+				}
 				continue;
 			}
 
@@ -2790,6 +2883,7 @@ void QQToolsBase_CHC::DeletePartyMember()//未测试
 		if (memeberpartylistcontent[i] == id)
 		{
 			memeberpartylistcontent.erase(memeberpartylistcontent.begin() + i);
+			break;
 		}
 	}
 	memeberpartylistcontent.shrink_to_fit();
@@ -2828,6 +2922,7 @@ void QQToolsBase_CHC::DeletePartyMember()//未测试
 	}
 	PartyMemberListContent.shrink_to_fit();
 
+
 	PartyMemberListFile.close();
 	PartyMemberListFile.open(PartyMEmberListFileName, ios::trunc | ios::out);
 	for (int i = 0; i < size(PartyMemberListContent); i++)
@@ -2837,6 +2932,35 @@ void QQToolsBase_CHC::DeletePartyMember()//未测试
 		
 	}
 	PartyMemberListFile.close();
+
+
+	int ThisParty;
+	int Myqq;
+	for (int i = 0; i < size(QQ); i++)
+	{
+		if (QQ[i]->ReturnID() == QQid)
+		{
+			Myqq = i;
+			break;
+		}
+	}
+	for (int i = 0; i < size(QQ[Myqq]->ReturnPartyList()); i++)
+	{
+		if (QQ[Myqq]->ReturnPartyList()[i]->ReturnPartyID() == id)
+		{
+			ThisParty = i;
+			break;
+		}
+	}
+	for (int i = 0; i < size(QQ[Myqq]->ReturnPartyList()[ThisParty]->ReturnPartyMembers()); i++)
+	{
+		if (QQ[Myqq]->ReturnPartyList()[ThisParty]->ReturnPartyMembers()[i] == DeleteMemberQQ)
+		{
+			QQ[Myqq]->ReturnPartyList()[ThisParty]->ReturnPartyMembers().erase(QQ[Myqq]->ReturnPartyList()[ThisParty]->ReturnPartyMembers().begin() + i);
+			break;
+		}
+	}
+	QQ[Myqq]->ReturnPartyList()[ThisParty]->ReturnPartyMembers().shrink_to_fit();
 
 
 
@@ -2877,12 +3001,15 @@ void QQToolsBase_CHC::Client()//聊天服务器
 {
 	system("CLS");
 	// 创建套节字
-	cout << "按#键返回QQ主页" << endl;
+	cout << "若想返回QQ主页请输入#" << endl;
 	SOCKET s = ::socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if (s == INVALID_SOCKET)
 	{
 		printf(" 创建失败 socket() \n");
-		exit(0);
+		cout << "按任意键返回QQ主页" << endl;
+		_getch();
+		_getch();
+		QQMenu();
 	}
 
 	// 也可以在这里调用bind函数绑定一个本地地址
@@ -2898,8 +3025,9 @@ void QQToolsBase_CHC::Client()//聊天服务器
 
 	if (::connect(s, (sockaddr*)&servAddr, sizeof(servAddr)) == -1)
 	{
-		printf(" 连接聊天服务器失败connect() \n");
+		printf("聊天室服务器还没有开启 \n");
 		cout << "按任意键返回QQ主页" << endl;
+		_getch();
 		_getch();
 		QQMenu();
 	}
@@ -2936,11 +3064,15 @@ void QQToolsBase_CHC::Client()//聊天服务器
 
 void QQToolsBase_CHC::PlayGame()
 {
+
+	GameReturnFlag = 1;
 	Controller c;//声明一个Controller类
 
 	c.Game();//整个游戏循环
 
 	_getch();
+
+
 
 }
 
@@ -3348,7 +3480,7 @@ void QQToolsBase_CHC::ShowQQPartyNoReturn()
 	cout << "你共有" << QQ[Myqq]->ReturnPartyNumber() << "个群" << endl;
 	for (int i = 0; i < QQ[Myqq]->ReturnPartyNumber(); i++)
 	{
-		cout << "第" << QQ[Myqq]->ReturnPartyNumber() << "个群" << endl;
+		cout << "第" << i + 1 << "个群" << endl;
 		cout << "群号:" << QQ[Myqq]->ReturnPartyList()[i]->ReturnPartyID() << endl;
 		cout << "群名称:" << QQ[Myqq]->ReturnPartyList()[i]->ReturnPartyName() << endl;
 		cout << "群主:" << QQ[Myqq]->ReturnPartyList()[i]->ReturnCreatUserID() << endl;
@@ -3402,6 +3534,125 @@ void QQToolsBase_CHC::ShowQQPartyNoReturn()
 //	_getch();
 //	QQMenu();
 //}
+void QQToolsBase_CHC::ShowPartyInformationNoReturn(string partyId)
+{
+	string  QQPartyID;
+	QQPartyID  = partyId;
+	if (QQPartyID == "#")
+	{
+		QQMenu();
+	}
+	/*cout << "请输入你要查询信息的成员QQ" << endl;
+	string QQPartyMemberID;
+	cin >> QQPartyMemberID;*/
+	int Myqq;
+	int ThisQQPartyID;
+	int ThisQQ;
+	string ThisQQID;
+
+	for (int i = 0; i < size(QQ); i++)
+	{
+		if (QQ[i]->ReturnID() == QQid)
+		{
+			Myqq = i;
+			break;
+		}
+	}
+
+	bool CheckFlag = false;
+	while (1)
+	{
+		for (int i = 0; i < size(QQ[Myqq]->ReturnPartyList()); i++)
+		{
+			if (QQ[Myqq]->ReturnPartyList()[i]->ReturnPartyID() == QQPartyID)
+			{
+				CheckFlag = true;
+				break;
+			}
+
+		}
+
+		if (CheckFlag == true)
+		{
+			break;
+		}
+		else
+		{
+			cout << "你没有加入此群，请重新输入或输入#返回QQ主菜单" << endl;
+			cin >> QQPartyID;
+			continue;
+		}
+	}
+
+
+	system("CLS");
+	bool AdminFlag = false;
+	for (int i = 0; i < size(QQ[Myqq]->ReturnPartyList()); i++)
+	{
+		if (QQ[Myqq]->ReturnPartyList()[i]->ReturnPartyID() == QQPartyID)
+		{
+			ThisQQPartyID = i;
+			break;
+		}
+	}
+
+	for (int i = 0; i < size(QQ[Myqq]->ReturnPartyList()[ThisQQPartyID]->ReturnPartyMembers()); i++)
+	{
+		int m = size(QQ[Myqq]->ReturnPartyList()[ThisQQPartyID]->ReturnPartyMembers());
+
+		ThisQQID = QQ[Myqq]->ReturnPartyList()[ThisQQPartyID]->ReturnPartyMembers()[i];//从群列表获取群成员QQ
+		for (int i = 0; i < size(QQ); i++)
+		{
+			if (QQ[i]->ReturnID() == ThisQQID)
+			{
+				ThisQQ = i;
+				break;
+			}
+		}
+		for (int i = 0; i < size(QQ[Myqq]->ReturnPartyList()[ThisQQPartyID]->ReturnAdminsID()); i++)
+		{
+			if (QQ[Myqq]->ReturnPartyList()[ThisQQPartyID]->ReturnAdminsID()[i] == ThisQQID)
+			{
+				AdminFlag = true;
+				break;
+			}
+		}
+		if (ThisQQID == QQ[Myqq]->ReturnPartyList()[ThisQQPartyID]->ReturnCreatUserID())
+		{
+			cout << "第" << i + 1 << "个成员信息:" << endl;
+			cout << "帐号:" << QQ[ThisQQ]->ReturnID() << endl;
+			cout << "姓名:" << QQ[ThisQQ]->ReturnName() << endl;
+			cout << "群成员属性:群主" << endl;
+			cout << "所在地区:" << QQ[ThisQQ]->ReturnArea() << endl;
+			cout << "个性签名:" << QQ[ThisQQ]->ReturnAutograph() << endl;
+			cout << endl;
+		}
+		else if (AdminFlag == true)
+		{
+			cout << "第" << i + 1 << "个成员信息:" << endl;
+			cout << "帐号:" << QQ[ThisQQ]->ReturnID() << endl;
+			cout << "姓名:" << QQ[ThisQQ]->ReturnName() << endl;
+			cout << "群成员属性:管理员" << endl;
+			cout << "所在地区:" << QQ[ThisQQ]->ReturnArea() << endl;
+			cout << "个性签名:" << QQ[ThisQQ]->ReturnAutograph() << endl;
+			cout << endl;
+			AdminFlag = false;
+		}
+
+		else
+		{
+			cout << "第" << i + 1 << "个成员信息:" << endl;
+			cout << "帐号:" << QQ[ThisQQ]->ReturnID() << endl;
+			cout << "姓名:" << QQ[ThisQQ]->ReturnName() << endl;
+			cout << "群成员属性:普通成员" << endl;
+			cout << "所在地区:" << QQ[ThisQQ]->ReturnArea() << endl;
+			cout << "个性签名:" << QQ[ThisQQ]->ReturnAutograph() << endl;
+			cout << endl;
+		}
+	}
+
+	cout << endl;
+}
 
 void QQToolsBase_CHC::ShowPartyInformation()
 {
@@ -3654,7 +3905,7 @@ void QQToolsBase_CHC::LinkWeiChat()
 		}
 	}
 
-	cout << "请输入此QQ号的密码" << endl;
+	cout << "请输入此微信号的密码" << endl;
 	cin >> linkpw;
 	bool PWCheckFlag = false;
 	while (1)

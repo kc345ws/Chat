@@ -13,7 +13,7 @@
 #include <cstdlib>
 
 
-
+int GameReturnFlag;
 
 void Controller::Start()//开始界面
 
@@ -1003,7 +1003,7 @@ int Controller::GameOver()//游戏结束界面
 
 	SetCursorPosition(9, 18);
 
-	std::cout << " ┃    嗯，好的        不了，返回WeiChat主页       ┃";
+	std::cout << " ┃    嗯，好的        不了，返回上一级菜单       ┃";
 
 	Sleep(30);
 
@@ -1069,7 +1069,7 @@ int Controller::GameOver()//游戏结束界面
 
 				SetColor(11);
 
-				std::cout << "不了，返回WeiChat主页";
+				std::cout << "不了，返回上一级菜单";
 
 				--tmp_key;
 
@@ -1089,7 +1089,7 @@ int Controller::GameOver()//游戏结束界面
 
 				SetBackColor();
 
-				std::cout << "不了，返回WeiChat主页";
+				std::cout << "不了，返回上一级菜单";
 
 				SetCursorPosition(12, 18);
 
@@ -1145,7 +1145,15 @@ int Controller::GameOver()//游戏结束界面
 
 	case 2:
 
-		QQTools.Menu();
+		if (GameReturnFlag == 1)
+		{
+			QQTools.QQMenu();
+		}
+		else if (GameReturnFlag == 2)
+		{
+			WeiChatTools.WeiChatMenu();
+		}
+		
 		return 2;//退出游戏
 
 	default:

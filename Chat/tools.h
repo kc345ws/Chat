@@ -17,10 +17,12 @@ class WeiChatTools_CHC;
 class MainMenu;
 
 
+
 extern QQTools_CHC QQTools;
 extern WeiBoTools_CHC WeiBoTools;
 extern WeiChatTools_CHC WeiChatTools;
 extern MainMenu mainmenu;
+extern int GameReturnFlag;
 
 class ToolsBase_CHC
 {
@@ -173,6 +175,8 @@ public:
 	/*virtual void PartyMenu();*/
 
 	virtual void PartyType();
+
+	virtual void ShowPartyInformationNoReturn(string partyId);
 
 	vector<QQParties_CHC*> ReturnAllQQTemporaryParty() { return AllQQTemporaryParty; }
 
@@ -350,6 +354,8 @@ public:
 	virtual void AddQQCommonFriend();
 
 	virtual void InvitePartyMember();
+
+	virtual void ShowPartyInformationNoReturn(string partyId);
 
 	virtual vector<WeiChat_CHC*> &ReturnWeiChatList() { return WeiChatList; }
 

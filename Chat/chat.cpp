@@ -153,8 +153,6 @@ void QQ_CHC::GetFriends()
 
 void QQ_CHC::GetLinks()
 {
-
-
 	fstream CheckFile;
 	fstream GetLinksFile;
 	string GetLinkFileName = "QQ\\" + ID + "\\Links.txt";
@@ -194,8 +192,6 @@ void QQ_CHC::GetLinks()
 
 		Links.emplace_back(GetLinksFileTemp);
 	}
-
-
 	if (Links.size() != 0)
 	{
 		LinkedWeiChat = Links[0];
@@ -305,7 +301,7 @@ WeiChat_CHC::WeiChat_CHC()
 	CreateDirectory(WeiChat.c_str(), NULL);//每个微信创建一个文件夹
 }
 
-WeiChat_CHC::WeiChat_CHC(string qqid, int qage, string qqpw, string qqname, string qqpv, string ag)
+WeiChat_CHC::WeiChat_CHC(string qqid, string qage, string qqpw, string qqname, string qqpv, string ag)
 {
 	ID = qqid;
 	Age = qage;

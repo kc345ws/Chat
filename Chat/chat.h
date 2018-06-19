@@ -23,7 +23,7 @@ public:
 		return Age;
 	}
 
-	virtual int ReturnFriendNumber(){return FriendNumber;}
+	virtual int ReturnFriendNumber() {return FriendNumber;}
 
 	virtual int ReturnPartyNumber() { return PartyNumber; }
 
@@ -129,13 +129,14 @@ public:
 
 	vector<QQParties_CHC*>& ReturnTemporaryPartyList() { return TemporaryPartyList;}
 
+	void ChangeLinkedWeiChat(string weichat) { LinkedWeiChat = weichat; }
+
 	string &ReturnLinkedWeiChat() { return LinkedWeiChat; }
 
 	void GetFriends();
 
 	void GetLinks();
 
-	void ChangeLinkedWeiChat(string weichat) { LinkedWeiChat = weichat; }
 
 	
 
@@ -190,19 +191,20 @@ public:
 
 	friend class QQ_CHC;
 
-	string ReturnPartyID(){return PartyID;}
-
-	string ReturnPartyName(){return PartyName;}
-
-	string ReturnCreatUserID(){return CreatUserID;}
-
 	QQParties_CHC(string id , string name ,string userid);
 
 	vector<string> &ReturnPartyMembers() { return PartyMembrs; }
 
 	vector<string> &ReturnAdminsID() { return AdminsList; }
 
+	string ReturnPartyID() { return PartyID; }
+
+	string ReturnPartyName() { return PartyName; }
+
+	string ReturnCreatUserID() { return CreatUserID; }
+
 	void ChangeTypeID(int id) { TypeID = id; }
+
 
 protected:
 
@@ -241,7 +243,7 @@ class WeiBo_CHC: public Tencent_CHC//Œ¢≤©¿‡
 {
 public:
 
-	vector<string> &ReturnWeiBoContent() { return WeiBoContent; }
+	
 
 	WeiBo_CHC(){}
 
@@ -250,6 +252,8 @@ public:
 	vector<QQFriends_CHC*>& ReturnFriendList() { return FriendList; }
 
 	vector<QQParties_CHC*>& ReturnPartyList() { return PartyList; }
+
+	vector<string> &ReturnWeiBoContent() { return WeiBoContent; }
 
 
 private:
@@ -272,7 +276,7 @@ public:
 
 	WeiChat_CHC();
 
-	WeiChat_CHC(string qqid, int qage, string qqpw, string qqname, string qqpv, string ag);
+	WeiChat_CHC(string qqid, string qage, string qqpw, string qqname, string qqpv, string ag);
 
 	~WeiChat_CHC();
 
@@ -282,11 +286,13 @@ public:
 
 	string &ReturnLinkedQQ() { return LinkedQQ; }
 
+	void ChangeLinkedQQ(string qq) { LinkedQQ = qq; }
+
 	void GetLinks();
 
 	void GetFriends();
 
-	void ChangeLinkedQQ(string qq) { LinkedQQ = qq; }
+	
 
 
 private:
