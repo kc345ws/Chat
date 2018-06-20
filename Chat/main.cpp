@@ -10,7 +10,7 @@ using namespace std;
 //void MainMenu();
 //void Loding();
 
-extern QQTools_CHC QQTools;
+extern QQTools_CHC;
 extern WeiBoTools_CHC WeiBoTools;
 extern WeiChatTools_CHC WeiChatTools;
 extern MainMenu mainmenu;
@@ -38,6 +38,9 @@ int main()
 	CreateDirectory(WeiChat.c_str(), NULL);
 	CreateDirectory(WeiBo.c_str(), NULL);
 	CreateDirectory(Parties.c_str(), NULL);
+	
+	string Parties1 = "WeiChat\\Parties";
+	CreateDirectory(Parties1.c_str(), NULL);
 	/*Menu();*/
 	WeiBoTools.GetWeiBo();
 	QQTools.GetQQ();

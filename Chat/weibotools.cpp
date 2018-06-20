@@ -58,7 +58,7 @@ void WeiBoToolsBase_CHC::Login()
 	int ThisWeiBo;
 	bool isCheckFlag = false;
 	bool PWCheckFlag = false;
-	cout << "ÇëÊäÈëÄãµÄÎ¢²©(WeiChat)ºÅ" << endl;
+	cout << "ÇëÊäÈëÄãµÄÎ¢²©(QQ)ºÅ" << endl;
 	cin >> WeiBoID;
 	
 

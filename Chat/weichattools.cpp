@@ -547,7 +547,7 @@ void WeiChatToolsBase_CHC::WeiChatMenu()
 		WeiChatList[Myqq]->ReturnPartyList().clear();
 		WeiChatList[Myqq]->ReturnPartyList().shrink_to_fit();
 		
-		QQTools.Menu();
+		mainmenu.Menu();
 		break;
 
 	default:
@@ -3721,7 +3721,7 @@ void WeiChatToolsBase_CHC::InvitePartyMember()
 		}
 		if (CheckFlag == true)
 		{
-			WeiChatMenu();
+			break;
 		}
 	}
 
@@ -3729,10 +3729,16 @@ void WeiChatToolsBase_CHC::InvitePartyMember()
 	
 	
 	fstream InvitePartyFile;
-	string InvitePartyFileName = "WeiChat\\Parties" + inviteparty + "\\" + inviteparty + ".txt";
+	string InvitePartyFileName = "WeiChat\\Parties\\" + inviteparty + "\\" + inviteparty + ".txt";
 	InvitePartyFile.open(InvitePartyFileName, ios::app);
 	InvitePartyFile << invitefriend;
 	InvitePartyFile.close();
+
+	fstream InviteFriendFile;
+	string InviteFriendFileName = "WeiChat\\" + invitefriend + "\\" + invitefriend + "PartyList.txt";
+	InviteFriendFile.open(InviteFriendFileName, ios::app);
+	InviteFriendFile << inviteparty;
+	InviteFriendFile.close();
 
 	
 	cout << "邀请好友进群成功" << endl;
